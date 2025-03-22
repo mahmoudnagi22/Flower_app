@@ -1,9 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
-import '../resources/constants_manager.dart';
 
-// @singleton
+
+@singleton
 class ApiManager {
 
   final Dio dio = Dio();
@@ -73,6 +74,9 @@ class ApiManager {
     return connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi);
   }
+
+
+
 
 
 }
