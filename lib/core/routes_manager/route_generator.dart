@@ -3,11 +3,15 @@ import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
+
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const Login());
+      case Routes.registerRoute:
+        return MaterialPageRoute(builder: (_) => const SignupScreen());
       default:
         return unDefinedRoute();
     }

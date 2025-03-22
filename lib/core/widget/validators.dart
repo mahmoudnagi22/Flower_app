@@ -1,5 +1,3 @@
-
-
 class AppValidators {
   AppValidators._();
 
@@ -52,6 +50,7 @@ class AppValidators {
       return null;
     }
   }
+
   static String? validateFullName(String? val) {
     if (val == null || val.isEmpty) {
       return 'this field is required';
@@ -59,7 +58,6 @@ class AppValidators {
       return null;
     }
   }
-
 
   static String? validatePhoneNumber(String? val) {
     if (val == null) {
@@ -72,8 +70,4 @@ class AppValidators {
       return null;
     }
   }
-
-
-
-
 }
