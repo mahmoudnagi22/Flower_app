@@ -1,5 +1,5 @@
-class SignupEntity {
-  SignupEntity({
+class SignupResponseEntity {
+  SignupResponseEntity({
     this.message,
     this.user,
     this.token,

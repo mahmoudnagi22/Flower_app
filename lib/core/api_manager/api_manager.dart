@@ -1,18 +1,22 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/resources/constants_manager.dart';
+import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
+import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
-
-
 
 @singleton
 class ApiManager {
-
   final Dio dio = Dio();
 
   // TODO : =================== GetRequest ==============
-  Future<Response?> getRequest(String endpoint, {Map<String, dynamic>? queryParameters}) async {
+  Future<Response?> getRequest(String endpoint,
+      {Map<String, dynamic>? queryParameters}) async {
     try {
-      Response response = await dio.get(endpoint, queryParameters: queryParameters);
+      Response response =
+          await dio.get(endpoint, queryParameters: queryParameters);
       return response;
     } on DioException catch (error) {
       print("Get Error: " '${error.message}');
@@ -22,9 +26,11 @@ class ApiManager {
 
   // TODO : =================== PostRequest ==============
 
-  Future<Response?> postRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
+  Future<Response?> postRequest(String endpoint, dynamic data,
+      {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.post(endpoint, data: data, options: Options(headers: headers));
+      Response response = await dio.post(endpoint,
+          data: data, options: Options(headers: headers));
       return response;
     } on DioException catch (error) {
       print("Post Error: " '${error.message}');
@@ -33,9 +39,11 @@ class ApiManager {
   }
 
   // TODO : =================== PutRequest ==============
-  Future<Response?> putRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
+  Future<Response?> putRequest(String endpoint, dynamic data,
+      {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.put(endpoint, data: data, options: Options(headers: headers));
+      Response response = await dio.put(endpoint,
+          data: data, options: Options(headers: headers));
       return response;
     } on DioException catch (error) {
       print("Put Error: " '${error.message}');
@@ -44,39 +52,65 @@ class ApiManager {
   }
 
 // TODO : =================== PatchRequest ==============
-  Future<Response?> patchRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
+  Future<Response?> patchRequest(String endpoint, dynamic data,
+      {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.patch(endpoint, data: data, options: Options(headers: headers));
+      Response response = await dio.patch(endpoint,
+          data: data, options: Options(headers: headers));
       return response;
-    }  on DioException catch (error) {
+    } on DioException catch (error) {
       print("Patch Error: " '${error.message}');
       return null;
     }
   }
 
   // TODO : =================== DeleteRequest ==============
-  Future<Response?> deleteRequest(String endpoint, {Map<String, String>? headers}) async {
+  Future<Response?> deleteRequest(String endpoint,
+      {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.delete(endpoint, options: Options(headers: headers));
+      Response response =
+          await dio.delete(endpoint, options: Options(headers: headers));
       return response;
-    }  on DioException catch (error) {
+    } on DioException catch (error) {
       print("Delete Error: " '${error.message}');
       return null;
     }
   }
 
-
-
 //TODO:====================== Function IS Connected =======
   Future<bool> _isConnected() async {
     final List<ConnectivityResult> connectivityResult =
-    await Connectivity().checkConnectivity();
+        await Connectivity().checkConnectivity();
     return connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi);
   }
 
-
-
-
+  Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please check internet connection'),
+      );
+    }
+    try {
+      final response = await postRequest(AppConstants.baseUrlAuth+AppConstants.sinUp, signup.toJson());
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(data: SignupResponseDto.fromJson(response.data));
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: 'Unexpected error occurred'),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(errorMessage: e.message ?? 'An unexpected error occurred'),
+      );
+    }
+  }
 
 }
