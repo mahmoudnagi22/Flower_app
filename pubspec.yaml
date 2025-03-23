@@ -45,6 +45,7 @@ dependencies:
   auto_size_text: ^3.0.0
   connectivity_plus: ^6.1.3
   get_it: ^8.0.3
+  font_awesome_flutter: ^10.8.0
 
 
 dev_dependencies:
