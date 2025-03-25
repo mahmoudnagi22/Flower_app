@@ -34,13 +34,14 @@ class _SignupScreenState extends State<SignupScreen> {
             body: BlocListener<SignupCubit, SignupState>(
               listener: (context, state) {
                 if (state.signupState == Status.loading) {
-                  DialogUtils.showLoading(context, 'Loading...');
+                  DialogUtils.showLoading(context, 'Loading ...');
                 } else {
                   DialogUtils.hideLoading(context);
                   if (state.signupState == Status.error) {
-                    DialogUtils.showMessage(
-                        context, state.signupError ?? 'Registration failed');
+                    DialogUtils.showError(context, state.signupError ?? '');
                   } else if (state.signupState == Status.success) {
+                    DialogUtils.showSuccess(
+                        context, "Operation completed successfully");
                     Navigator.pop(context);
                     Navigator.push(
                         context,

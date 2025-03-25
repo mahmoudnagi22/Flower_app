@@ -20,7 +20,7 @@ class ApiManager {
       return response;
     } on DioException catch (error) {
       print("Get Error: " '${error.message}');
-      return null;
+      return error.response;
     }
   }
 
@@ -35,7 +35,7 @@ class ApiManager {
     } on DioException catch (error) {
       print("Post Error: " '${error.message}');
       return error.response;
-      // return null;
+
     }
   }
 
@@ -48,7 +48,7 @@ class ApiManager {
       return response;
     } on DioException catch (error) {
       print("Put Error: " '${error.message}');
-      return null;
+      return error.response;
     }
   }
 
@@ -61,7 +61,7 @@ class ApiManager {
       return response;
     } on DioException catch (error) {
       print("Patch Error: " '${error.message}');
-      return null;
+      return error.response;
     }
   }
 
@@ -74,7 +74,7 @@ class ApiManager {
       return response;
     } on DioException catch (error) {
       print("Delete Error: " '${error.message}');
-      return null;
+      return error.response;
     }
   }
 
@@ -86,19 +86,16 @@ class ApiManager {
         connectivityResult.contains(ConnectivityResult.wifi);
   }
 
+//TODO:====================== Function IS SignUp =======
   Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
           failures: NetworkError(errorMessage: 'Please Check your internet'));
     }
     try {
-      print("Signup URL: ${AppConstants.baseUrlAuth + AppConstants.sinUp}");
-      // print("Signup Request Data: ${signup.toJson()}");
       final response = await postRequest(
           AppConstants.baseUrlAuth + AppConstants.sinUp, signup.toJson());
 
-      print("Status code: " '${response?.statusCode}');
-      print("Status code: " '${signup.toJson()}');
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return ApiSuccessResult(
