@@ -34,7 +34,8 @@ class ApiManager {
       return response;
     } on DioException catch (error) {
       print("Post Error: " '${error.message}');
-      return null;
+      return error.response;
+      // return null;
     }
   }
 
@@ -88,17 +89,23 @@ class ApiManager {
   Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
-        failures: NetworkError(errorMessage: 'Please check internet connection'),
-      );
+          failures: NetworkError(errorMessage: 'Please Check your internet'));
     }
     try {
-      final response = await postRequest(AppConstants.baseUrlAuth+AppConstants.sinUp, signup.toJson());
+      print("Signup URL: ${AppConstants.baseUrlAuth + AppConstants.sinUp}");
+      // print("Signup Request Data: ${signup.toJson()}");
+      final response = await postRequest(
+          AppConstants.baseUrlAuth + AppConstants.sinUp, signup.toJson());
+
+      print("Status code: " '${response?.statusCode}');
+      print("Status code: " '${signup.toJson()}');
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          return ApiSuccessResult(data: SignupResponseDto.fromJson(response.data));
+          return ApiSuccessResult(
+              data: SignupResponseDto.fromJson(response.data));
         } else {
           return ApiErrorResult(
-            failures: ServerError(errorMessage: 'Unexpected error occurred'),
+            failures: ServerError(errorMessage: response.data.toString()),
           );
         }
       } else {
@@ -108,9 +115,9 @@ class ApiManager {
       }
     } on DioException catch (e) {
       return ApiErrorResult(
-        failures: ServerError(errorMessage: e.message ?? 'An unexpected error occurred'),
+        failures: ServerError(
+            errorMessage: e.message ?? 'An unexpected error occurred'),
       );
     }
   }
-
 }

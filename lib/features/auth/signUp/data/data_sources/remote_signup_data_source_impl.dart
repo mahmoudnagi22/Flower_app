@@ -3,6 +3,7 @@ import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
+import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/utils/failures.dart';
@@ -15,7 +16,7 @@ class RemoteSignupDataSourceImpl implements RemoteSignupDataSourceContract {
   RemoteSignupDataSourceImpl({required this.apiManager});
 
   @override
-  Future<ApiResult<SignupResponseEntity>> signup(
+  Future<ApiResult<SignupResponseDto>> signup(
       SignupRequestDto signup) async {
     try {
       var response = await apiManager.signup(signup);

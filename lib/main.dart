@@ -3,7 +3,10 @@ import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/di/di.dart';
+
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -27,3 +30,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//flutter packages pub run build_runner watch
+//flutter packages pub run build_runner build
