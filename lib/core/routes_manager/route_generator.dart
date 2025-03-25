@@ -1,5 +1,6 @@
 
 import 'package:flower_app/core/routes_manager/routes.dart';
+import 'package:flower_app/features/app_sections/Screen/bottom_navigation_screen.dart';
 import 'package:flower_app/features/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const Login());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+        case Routes.bottomNav:
+        return MaterialPageRoute(builder: (_) =>  BottomNavigationScreen());
+
       default:
         return unDefinedRoute();
     }
