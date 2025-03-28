@@ -83,7 +83,8 @@ class ApiManager {
     final List<ConnectivityResult> connectivityResult =
         await Connectivity().checkConnectivity();
     return connectivityResult.contains(ConnectivityResult.mobile) ||
-        connectivityResult.contains(ConnectivityResult.wifi);
+        connectivityResult.contains(ConnectivityResult.wifi) ||
+        connectivityResult.contains(ConnectivityResult.vpn);
   }
 
 //TODO:====================== Function IS SignUp =======
