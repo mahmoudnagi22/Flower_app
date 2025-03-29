@@ -9,12 +9,12 @@ import 'core/helpers/block_observer.dart';
 
 
 
-void main()  {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  configureDependencies();
+  //configureDependencies();
   runApp(const MyApp());
-
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
