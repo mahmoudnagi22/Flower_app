@@ -1,14 +1,14 @@
 class AppValidators {
   AppValidators._();
 
-  static String? validateEmail(String? val) {
+  static String? validateEmail(String? value) {
     RegExp emailRegex = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (val == null) {
+    if (value == null) {
       return 'this field is required';
-    } else if (val.trim().isEmpty) {
+    } else if (value.trim().isEmpty) {
       return 'this field is required';
-    } else if (emailRegex.hasMatch(val) == false) {
+    } else if (emailRegex.hasMatch(value) == false) {
       return 'enter valid email';
     } else {
       return null;
@@ -16,23 +16,22 @@ class AppValidators {
   }
 
   static String? validatePassword(String? val) {
-    RegExp passwordRegex = RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])');
-    if (val == null) {
-      return 'this field is required';
-    } else if (val.isEmpty) {
-      return 'this field is required';
-    } else if (val.length < 8 || !passwordRegex.hasMatch(val)) {
-      return 'strong password please';
-    } else {
-      return null;
+    RegExp passwordRegex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$');
+
+    if (val == null || val.trim().isEmpty) {
+      return 'This field is required';
+    } else if (!passwordRegex.hasMatch(val)) {
+      return 'Password must be at least 8 characters and include uppercase, lowercase, numbers, and symbols';
     }
+    return null;
   }
 
+
   static String? validateConfirmPassword(String? val, String? password) {
-    if (val == null || val.isEmpty) {
+    if (val == null ||val.trim().isEmpty) {
       return 'this field is required';
     } else if (val != password) {
-      return 'same password';
+      return 'Passwords do not match';
     } else {
       return null;
     }
@@ -42,7 +41,7 @@ class AppValidators {
     RegExp usernameRegex = RegExp(r'^[a-zA-Z0-9,.-]+$');
     if (val == null) {
       return 'this field is required';
-    } else if (val.isEmpty) {
+    } else if (val.trim().isEmpty) {
       return 'this field is required';
     } else if (!usernameRegex.hasMatch(val)) {
       return 'enter valid username';
@@ -52,7 +51,7 @@ class AppValidators {
   }
 
   static String? validateFullName(String? val) {
-    if (val == null || val.isEmpty) {
+    if (val == null || val.trim().isEmpty) {
       return 'this field is required';
     } else {
       return null;
@@ -64,7 +63,7 @@ class AppValidators {
       return 'this field is required';
     } else if (int.tryParse(val.trim()) == null) {
       return 'enter numbers only';
-    } else if (val.trim().length != 11) {
+    } else if (val.trim().length != 12) {
       return 'enter value must equal 11 digit';
     } else {
       return null;

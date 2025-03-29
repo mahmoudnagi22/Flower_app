@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class ColorManager {
+  static const Color appColor = Color(0xffD21E6A);
 static const Color  white = const Color(0xffF9F9F9);
 static const Color  transparent = Colors.transparent;
 static const Color  black = const Color(0xff0C1015);

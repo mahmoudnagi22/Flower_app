@@ -12,8 +12,8 @@ import 'core/helpers/block_observer.dart';
 void main()  {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
+  configureDependencies();
   runApp(const MyApp());
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -37,3 +37,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//flutter packages pub run build_runner watch
+//flutter packages pub run build_runner build
