@@ -15,7 +15,7 @@ void main() {
   late MockSignupRepo repo;
   late SignupUseCase signupUseCase;
 
-  setUp(() {
+  setUpAll(() {
     repo = MockSignupRepo();
     signupUseCase = SignupUseCase(signupRepo: repo);
   });
@@ -47,7 +47,6 @@ void main() {
         verify(repo.signup(request)).called(1);
         expect(actual, isA<ApiSuccessResult<SignupResponseEntity>>());
       });
-
       test('when call call function then should be return error', () async {
         // Arrange
         SignupRequestEntity request = SignupRequestEntity(
