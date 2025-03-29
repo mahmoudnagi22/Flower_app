@@ -6,7 +6,11 @@ import '../resources/constants_manager.dart';
 // @singleton
 class ApiManager {
 
-  final Dio dio = Dio();
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: AppConstants.baseUrlAuth,
+    )
+  );
 
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(String endpoint, {Map<String, dynamic>? queryParameters}) async {
