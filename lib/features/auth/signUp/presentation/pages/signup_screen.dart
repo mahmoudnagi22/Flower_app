@@ -1,7 +1,6 @@
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_text.dart';
-import 'package:flower_app/features/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +9,7 @@ import '../../../../../core/di/di.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/utils/dialog_utils.dart';
 import '../../../../../core/utils/status.dart';
+import '../../../login/presentation/screens/login.dart';
 import '../cubit/signup_cubit.dart';
 import '../widgets/custom_form_field.dart';
 
