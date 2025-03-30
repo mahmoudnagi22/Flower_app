@@ -12,7 +12,7 @@ class ApiManager {
 
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: AppConstants.baseUrlAuth,
+      baseUrl: AppConstants.baseUrl,
     )
   );
 
@@ -99,7 +99,7 @@ class ApiManager {
     }
     try {
       final response = await postRequest(
-          AppConstants.baseUrlAuth + AppConstants.sinUp, signup.toJson());
+          AppConstants.baseUrl + AppConstants.sinUp, signup.toJson());
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

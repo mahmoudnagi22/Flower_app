@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/di/di.dart';
 import 'core/helpers/block_observer.dart';
 
 
@@ -12,7 +13,7 @@ import 'core/helpers/block_observer.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  //configureDependencies();
+  configureDependencies();
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: child,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.loginRoute,
+          initialRoute: Routes.registerRoute,
         ),
       ),
     );
