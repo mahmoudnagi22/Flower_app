@@ -23,7 +23,7 @@ void main() {
     var expectedResult = ApiSuccessResult(data: responseEntity);
     provideDummy<ApiResult<SignupResponseEntity>>(expectedResult);
     when(mockSignupRepo.signup(requestEntity)).thenAnswer(
-      (realInvocation) async => ApiSuccessResult(data: responseEntity),
+      (_) async => ApiSuccessResult(data: responseEntity),
     );
     final result = await mockSignupRepo.signup(requestEntity);
 
@@ -38,7 +38,7 @@ void main() {
         ApiErrorResult<SignupResponseEntity>(failures: failures);
     provideDummy<ApiResult<SignupResponseEntity>>(expectedResult);
     when(mockSignupRepo.signup(requestEntity)).thenAnswer(
-      (realInvocation) async => ApiErrorResult(failures: failures),
+      (_) async => ApiErrorResult(failures: failures),
     );
     //Act
     final result = await mockSignupRepo.signup(requestEntity);

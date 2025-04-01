@@ -1,10 +1,12 @@
-import 'package:flower_app/core/routes_manager/route_generator.dart';
+import
+'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/di/di.dart';
-
+import 'core/routes_manager/route_generator.dart';
+import 'core/routes_manager/routes.dart';
 void main() {
   configureDependencies();
   runApp(const MyApp());

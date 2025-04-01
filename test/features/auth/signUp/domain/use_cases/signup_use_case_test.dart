@@ -59,6 +59,7 @@ void main() {
           gender: "Male",
         );
         Failures failures = Failures(errorMessage: 'signup failed');
+
         var expectedResult = ApiErrorResult<SignupResponseEntity>(
           failures: failures,
         );

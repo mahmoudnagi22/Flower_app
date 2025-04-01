@@ -43,8 +43,10 @@ dependencies:
   dio: ^5.8.0+1
   auto_size_text: ^3.0.0
   connectivity_plus: ^6.1.3
-  get_it: ^8.0.3
   font_awesome_flutter: ^10.8.0
+
+  get_it: ^8.0.3
+  mockito: ^5.4.5
 
 
 dev_dependencies:
