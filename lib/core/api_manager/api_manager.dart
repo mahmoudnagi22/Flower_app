@@ -9,7 +9,12 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class ApiManager {
-  final Dio dio = Dio();
+
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: AppConstants.baseUrl,
+    )
+  );
 
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(String endpoint,
@@ -95,7 +100,7 @@ class ApiManager {
     }
     try {
       final response = await postRequest(
-          AppConstants.baseUrlAuth + AppConstants.sinUp, signup.toJson());
+          AppConstants.baseUrl + AppConstants.sinUp, signup.toJson());
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

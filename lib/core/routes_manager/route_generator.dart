@@ -1,7 +1,7 @@
 
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/Screen/bottom_navigation_screen.dart';
-import 'package:flower_app/features/login/presentation/screens/login.dart';
+import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
