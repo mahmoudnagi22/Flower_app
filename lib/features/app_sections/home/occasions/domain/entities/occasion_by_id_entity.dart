@@ -1,5 +1,5 @@
-class OccasionsIdEntity {
-  OccasionsIdEntity({
+class OccasionsByIdEntity {
+  OccasionsByIdEntity({
       this.message,
       this.occasion,});
 
