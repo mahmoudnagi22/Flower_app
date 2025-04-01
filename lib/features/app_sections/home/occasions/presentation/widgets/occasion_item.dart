@@ -21,6 +21,7 @@ class _OccasionItemState extends State<OccasionItem> {
       child: Column(
         children: [
           TabBar(
+
             isScrollable: true,
             indicatorColor: ColorManager.appColor,
             labelColor: ColorManager.appColor,
@@ -28,7 +29,6 @@ class _OccasionItemState extends State<OccasionItem> {
             dividerColor: Colors.transparent,
             tabAlignment: TabAlignment.center,
             onTap: (value) {
-
             },
             tabs:
                 widget.state.occasionList?.map((occasion) {
