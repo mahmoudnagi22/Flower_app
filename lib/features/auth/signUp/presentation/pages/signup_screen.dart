@@ -1,5 +1,5 @@
 import 'package:flower_app/core/widget/validators.dart';
-import 'package:flower_app/features/app_sections/Screen/bottom_navigation_screen.dart';
+import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
