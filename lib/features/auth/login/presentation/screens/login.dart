@@ -164,7 +164,7 @@ class _LoginState extends State<Login> {
                       color: ColorManager.bank,
                       onPressed: () {
                         if (formState.currentState!.validate()) {
-                          log("SOFO");
+                          // log("SOFO");
                           BlocProvider.of<LoginCubit>(context).login(
                             LoginUserResponse(
                               email: email.text,

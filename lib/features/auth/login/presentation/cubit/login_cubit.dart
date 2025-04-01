@@ -25,10 +25,10 @@ class LoginCubit extends Cubit<LoginCubitState>{
     var response = await  loginUseCase.call(parameters);
     response.fold((l) {
       emit(LoginErrorState(massage:l.failure));
-      log("errrror");
+      // log("errrror");
     },(r) {
       emit(LoginSuccessState());
-      log("Susssss");
+      // log("Susssss");
     },);
   }
 

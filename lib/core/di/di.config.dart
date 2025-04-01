@@ -24,6 +24,13 @@ import '../../features/app_sections/home/occasions/domain/use_cases/occasion_use
     as _i1018;
 import '../../features/app_sections/home/occasions/presentation/cubit/occasion_cubit.dart'
     as _i157;
+import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
+    as _i1040;
+import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
+    as _i675;
+import '../../features/auth/login/data/repository_impl/login_repo_impl.dart'
+    as _i580;
+import '../../features/auth/login/presentation/cubit/login_cubit.dart' as _i126;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart'
     as _i807;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_impl.dart'
@@ -45,8 +52,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i157.OccasionCubit>(() => _i157.OccasionCubit());
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
+    gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
+    gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
     gh.factory<_i992.RemoteOccasionDataSourceContract>(
       () => _i783.RemoteOccasionDataSourceImpl(
         apiManager: gh<_i266.ApiManager>(),
@@ -55,6 +63,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
           _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i580.LoginRepositoryImpl>(
+      () => _i580.LoginRepositoryImpl(
+        loginDataSource: gh<_i1040.LoginDataSource>(),
+      ),
     );
     gh.factory<_i729.SignupRepo>(
       () => _i234.SignupRepoImpl(
@@ -76,6 +89,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1018.OccasionUseCase>(
       () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
+    );
+    gh.factory<_i157.OccasionCubit>(
+      () => _i157.OccasionCubit(occasionUseCase: gh<_i1018.OccasionUseCase>()),
     );
     return this;
   }

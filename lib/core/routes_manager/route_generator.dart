@@ -17,7 +17,7 @@ class RouteGenerator {
         case Routes.bottomNav:
         return MaterialPageRoute(builder: (_) =>  const BottomNavigationScreen());
       case Routes.occasions:
-        return MaterialPageRoute(builder: (_) =>  const OccasionScreen());
+        return MaterialPageRoute(builder: (_) =>   OccasionScreen());
 
       default:
         return unDefinedRoute();
