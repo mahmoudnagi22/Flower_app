@@ -6,10 +6,10 @@ import '../entities/occasion_by_id_entity.dart';
 import '../repositories/occasion_repo.dart';
 
 @injectable
-class OccasionUseCase {
+class OccasionByIdUseCase {
   OccasionRepo occasionRepo;
 
-  OccasionUseCase({required this.occasionRepo});
+  OccasionByIdUseCase({required this.occasionRepo});
 
   Future<ApiResult<OccasionByIdEntity>> call(String occasionId){
     return occasionRepo.getOccasionById(occasionId);
