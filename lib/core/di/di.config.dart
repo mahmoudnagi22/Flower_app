@@ -27,26 +27,29 @@ import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
 import '../api_manager/api_manager.dart' as _i266;
 
 extension GetItInjectableX on _i174.GetIt {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
-      this,
-      environment,
-      environmentFilter,
-    );
+    final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
-    gh.factory<_i807.RemoteSignupDataSourceContract>(() =>
-        _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()));
-    gh.factory<_i729.SignupRepo>(() => _i234.SignupRepoImpl(
+    gh.factory<_i807.RemoteSignupDataSourceContract>(
+      () =>
+          _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i729.SignupRepo>(
+      () => _i234.SignupRepoImpl(
         remoteSignupDataSourceContract:
-            gh<_i807.RemoteSignupDataSourceContract>()));
+            gh<_i807.RemoteSignupDataSourceContract>(),
+      ),
+    );
     gh.factory<_i211.SignupUseCase>(
-        () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()));
+      () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
+    );
     gh.factory<_i959.SignupCubit>(
-        () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()));
+      () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
+    );
     return this;
   }
 }
