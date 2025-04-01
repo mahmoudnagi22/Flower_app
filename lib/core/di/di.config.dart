@@ -12,6 +12,16 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
+    as _i992;
+import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
+    as _i783;
+import '../../features/app_sections/home/occasions/data/repositories/occasion_repo_impl.dart'
+    as _i419;
+import '../../features/app_sections/home/occasions/domain/repositories/occasion_repo.dart'
+    as _i424;
+import '../../features/app_sections/home/occasions/domain/use_cases/occasion_use_case.dart'
+    as _i1018;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart'
     as _i807;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_impl.dart'
@@ -34,6 +44,11 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
+    gh.factory<_i992.RemoteOccasionDataSourceContract>(
+      () => _i783.RemoteOccasionDataSourceImpl(
+        apiManager: gh<_i266.ApiManager>(),
+      ),
+    );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
           _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
@@ -49,6 +64,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
+    );
+    gh.factory<_i424.OccasionRepo>(
+      () => _i419.OccasionRepoImpl(
+        remoteOccasionDataSourceContract:
+            gh<_i992.RemoteOccasionDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i1018.OccasionUseCase>(
+      () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
     );
     return this;
   }

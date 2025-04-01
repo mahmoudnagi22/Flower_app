@@ -1,28 +1,21 @@
 class OccasionEntity {
-  OccasionEntity({
-      this.message, 
-      this.metadata, 
-      this.occasions,});
-
+  OccasionEntity({this.message, this.occasions});
 
   String? message;
-  MetadataEntity? metadata;
+
   List<OccasionsEntity>? occasions;
-
-
-
 }
 
 class OccasionsEntity {
   OccasionsEntity({
-      this.id, 
-      this.name, 
-      this.slug, 
-      this.image, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.productsCount,});
-
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
+    this.productsCount,
+  });
 
   String? id;
   String? name;
@@ -31,24 +24,4 @@ class OccasionsEntity {
   String? createdAt;
   String? updatedAt;
   num? productsCount;
-
-
-
-}
-
-class MetadataEntity {
-  MetadataEntity({
-      this.currentPage, 
-      this.limit, 
-      this.totalPages, 
-      this.totalItems,});
-
-
-  num? currentPage;
-  num? limit;
-  num? totalPages;
-  num? totalItems;
-
-
-
 }
