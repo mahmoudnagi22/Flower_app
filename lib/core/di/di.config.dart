@@ -22,6 +22,8 @@ import '../../features/app_sections/home/occasions/domain/repositories/occasion_
     as _i424;
 import '../../features/app_sections/home/occasions/domain/use_cases/occasion_use_case.dart'
     as _i1018;
+import '../../features/app_sections/home/occasions/presentation/cubit/occasion_cubit.dart'
+    as _i157;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart'
     as _i807;
 import '../../features/auth/signUp/data/data_sources/remote_signup_data_source_impl.dart'
@@ -43,6 +45,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i157.OccasionCubit>(() => _i157.OccasionCubit());
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
     gh.factory<_i992.RemoteOccasionDataSourceContract>(
       () => _i783.RemoteOccasionDataSourceImpl(
