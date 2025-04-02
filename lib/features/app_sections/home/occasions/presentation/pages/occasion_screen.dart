@@ -45,47 +45,67 @@ class OccasionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(10.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
-                    10.verticalSpace,
-
-
                     DefaultTabController(
                       length: state.occasionList?.length ?? 0,
-                      child: Column(
-                        children: [
-                          TabBar(
-                            isScrollable: true,
-                            indicatorColor: ColorManager.appColor,
-                            labelColor: ColorManager.appColor,
-                            unselectedLabelColor: ColorManager.gray,
-                            dividerColor: Colors.transparent,
-                            tabAlignment: TabAlignment.center,
-
-                            onTap: (index) {
-                              final selectedOccasion =
-                                  state.occasionList?[index];
-                              if (selectedOccasion != null && selectedOccasion.id != null) {
-                                context.read<OccasionCubit>().getOccasionById(
-                                  selectedOccasion.id!,
-                                );
-                                 Text(selectedOccasion.name??'');
-                              }
-                            },
-                            tabs:
-                                state.occasionList?.map((occasion) {
-                                  return Text(occasion.name ?? 'asd ');
-                                }).toList() ??
-                                [],
-                          ),
-                        ],
+                      child: TabBar(
+                        isScrollable: true,
+                        indicatorColor: ColorManager.appColor,
+                        dividerColor: Colors.transparent,
+                        labelColor: ColorManager.appColor,
+                        unselectedLabelColor: ColorManager.gray,
+                        tabAlignment: TabAlignment.center,
+                        onTap: (index) {
+                          final selectedOccasion = state.occasionList?[index];
+                          if (selectedOccasion != null &&
+                              selectedOccasion.id != null) {
+                            context.read<OccasionCubit>().getOccasionById(
+                              selectedOccasion.id!,
+                            );
+                          }
+                        },
+                        tabs:
+                            state.occasionList?.map((occasion) {
+                              return Tab(text: occasion.name ?? '');
+                            }).toList() ??
+                            [],
                       ),
                     ),
-                    OccasionItem(state: state),
+                    30.verticalSpace,
+
+                    if (state.occasionByIdState == Status.loading)
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: ColorManager.appColor,
+                        ),
+                      ),
+
+                    if (state.occasionByIdState == Status.success) ...[
+                      Text(
+                        state.occasionById?.occasion?.name ??
+                            "No name available",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      10.verticalSpace,
+                      Image.network(
+                        state.occasionById?.occasion?.image ?? '',
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.broken_image, size: 100);
+                        },
+                      ),
+                    ],
                   ],
                 ),
               );
             }
-            return SizedBox(child: Text('asdasdasd'),);
+            return const SizedBox();
           },
         ),
       ),

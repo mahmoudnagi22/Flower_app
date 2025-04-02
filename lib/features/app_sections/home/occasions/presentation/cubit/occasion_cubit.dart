@@ -32,6 +32,10 @@ class OccasionCubit extends Cubit<OccasionState> {
             occasionState: Status.success,
           ),
         );
+        if (result.data.isNotEmpty) {
+          getOccasionById(result.data.first.id!);
+        }
+        break;
       case ApiErrorResult<List<OccasionsEntity>>():
         emit(
           state.copyWith(
