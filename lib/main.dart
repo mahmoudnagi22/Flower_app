@@ -12,7 +12,7 @@ import 'core/routes_manager/route_generator.dart';
 import 'core/routes_manager/routes.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = AppBlocObserver();
+  // Bloc.observer = AppBlocObserver();
   configureDependencies();
   runApp(const MyApp());
 }

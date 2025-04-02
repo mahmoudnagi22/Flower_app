@@ -32,17 +32,16 @@ void main() {
   });
 
   test('TODO: Implement tests for signup_repo error ', () async {
-    //Arrange
+    // TODO:Arrange
     Failures failures = Failures(errorMessage: 'signup failed');
-    var expectedResult =
-        ApiErrorResult<SignupResponseEntity>(failures: failures);
+    var expectedResult = ApiErrorResult<SignupResponseEntity>(failures: failures);
     provideDummy<ApiResult<SignupResponseEntity>>(expectedResult);
     when(mockSignupRepo.signup(requestEntity)).thenAnswer(
-      (_) async => ApiErrorResult(failures: failures),
+      (_) async => expectedResult,
     );
-    //Act
+    // TODO:Act
     final result = await mockSignupRepo.signup(requestEntity);
-    //Assert
+    // TODO:Assert
     expect(expectedResult, isA<ApiResult<SignupResponseEntity>>());
     verify(mockSignupRepo.signup(requestEntity)).called(1);
   });

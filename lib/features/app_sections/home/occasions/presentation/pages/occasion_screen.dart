@@ -31,7 +31,7 @@ class OccasionScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) =>  getIt<OccasionCubit>()..getOccasions(),
+        create: (context) => getIt<OccasionCubit>()..getOccasions(),
         child: BlocBuilder<OccasionCubit, OccasionState>(
           builder: (context, state) {
             if (state.occasionState == Status.loading) {
@@ -47,13 +47,45 @@ class OccasionScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     10.verticalSpace,
-                    OccasionItem(state: state),
 
+
+                    DefaultTabController(
+                      length: state.occasionList?.length ?? 0,
+                      child: Column(
+                        children: [
+                          TabBar(
+                            isScrollable: true,
+                            indicatorColor: ColorManager.appColor,
+                            labelColor: ColorManager.appColor,
+                            unselectedLabelColor: ColorManager.gray,
+                            dividerColor: Colors.transparent,
+                            tabAlignment: TabAlignment.center,
+
+                            onTap: (index) {
+                              final selectedOccasion =
+                                  state.occasionList?[index];
+                              if (selectedOccasion != null && selectedOccasion.id != null) {
+                                context.read<OccasionCubit>().getOccasionById(
+                                  selectedOccasion.id!,
+                                );
+                                 Text(selectedOccasion.name??'');
+                              }
+                            },
+                            tabs:
+                                state.occasionList?.map((occasion) {
+                                  return Text(occasion.name ?? 'asd ');
+                                }).toList() ??
+                                [],
+                          ),
+                        ],
+                      ),
+                    ),
+                    OccasionItem(state: state),
                   ],
                 ),
               );
             }
-            return SizedBox();
+            return SizedBox(child: Text('asdasdasd'),);
           },
         ),
       ),

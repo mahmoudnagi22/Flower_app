@@ -8,6 +8,8 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.d
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart';
+
 @singleton
 class ApiManager {
   final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
@@ -165,6 +167,7 @@ class ApiManager {
     }
   }
 
+  //TODO:====================== Function IS Get Occasion =======
   Future<ApiResult<List<OccasionsDto>>> getOccasions() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -190,6 +193,39 @@ class ApiManager {
       } else {
         return ApiErrorResult(
           failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  //TODO:====================== Function IS Get Occasion By Id=======
+  Future<ApiResult<OccasionsByIdDto>> getOccasionById(String occasionId) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+          errorMessage: 'Please check your internet connection',
+        ),
+      );
+    }
+
+    try {
+      final response = await getRequest(
+        '${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId',
+      );
+
+      if (response!.statusCode! >= 200 && response.statusCode! < 300) {
+        final result = OccasionsByIdDto.fromJson(response.data);
+
+        return ApiSuccessResult(data: result);
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: response.data.toString()),
         );
       }
     } on DioException catch (e) {
