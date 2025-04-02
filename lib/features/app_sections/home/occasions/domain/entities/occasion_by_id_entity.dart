@@ -1,25 +1,19 @@
 class OccasionsByIdEntity {
-  OccasionsByIdEntity({
-      this.message,
-      this.occasion,});
-
+  OccasionsByIdEntity({this.message, this.occasion});
 
   String? message;
   OccasionByIdEntity? occasion;
-
-
-
 }
 
 class OccasionByIdEntity {
   OccasionByIdEntity({
-      this.id,
-      this.name,
-      this.slug,
-      this.image,
-      this.createdAt,
-      this.updatedAt,});
-
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   String? id;
   String? name;
@@ -27,7 +21,4 @@ class OccasionByIdEntity {
   String? image;
   String? createdAt;
   String? updatedAt;
-
-
-
 }

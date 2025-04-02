@@ -6,7 +6,7 @@ class OccasionState extends Equatable {
   final String? occasionError;
   final String? occasionByIdError;
   final List<OccasionsEntity>? occasionList;
-  final List<OccasionByIdEntity>? occasionByIdList;
+  final OccasionsByIdEntity? occasionById;
 
   const OccasionState({
     this.occasionState = Status.initial,
@@ -14,7 +14,7 @@ class OccasionState extends Equatable {
     this.occasionError,
     this.occasionByIdError,
     this.occasionList,
-    this.occasionByIdList,
+    this.occasionById,
   });
 
   @override
@@ -25,7 +25,7 @@ class OccasionState extends Equatable {
     occasionError,
     occasionByIdError,
     occasionList,
-    occasionByIdList,
+    occasionById,
   ];
 
   OccasionState copyWith({
@@ -34,7 +34,7 @@ class OccasionState extends Equatable {
     String? occasionError,
     String? occasionByIdError,
     List<OccasionsEntity>? occasionList,
-    List<OccasionByIdEntity>? occasionByIdList,
+    OccasionsByIdEntity? occasionById,
   }) {
     return OccasionState(
       occasionState: occasionState ?? this.occasionState,
@@ -42,7 +42,7 @@ class OccasionState extends Equatable {
       occasionError: occasionError ?? this.occasionError,
       occasionByIdError: occasionByIdError ?? this.occasionByIdError,
       occasionList: occasionList ?? this.occasionList,
-      occasionByIdList: occasionByIdList ?? this.occasionByIdList,
+      occasionById: occasionById ?? this.occasionById,
     );
   }
 }

@@ -7,13 +7,13 @@ class OccasionsByIdDto extends OccasionsByIdEntity {
     message = json['message'];
     occasion =
         json['occasion'] != null
-            ? OccasionByIdDto.fromJson(json['occasion'])
+            ? oneOccasionByIdDto.fromJson(json['occasion'])
             : null;
   }
 }
 
-class OccasionByIdDto extends OccasionByIdEntity {
-  OccasionByIdDto({
+class oneOccasionByIdDto extends OccasionByIdEntity {
+  oneOccasionByIdDto({
     super.id,
     super.name,
     super.slug,
@@ -22,7 +22,7 @@ class OccasionByIdDto extends OccasionByIdEntity {
     super.updatedAt,
   });
 
-  OccasionByIdDto.fromJson(dynamic json) {
+  oneOccasionByIdDto.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
     slug = json['slug'];

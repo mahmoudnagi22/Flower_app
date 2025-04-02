@@ -158,18 +158,17 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
           as _i4.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>);
 
   @override
-  _i4.Future<_i5.ApiResult<List<_i10.OccasionByIdDto>>> getOccasionById(
+  _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>> getOccasionById(
     String? occasionId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#getOccasionById, [occasionId]),
-            returnValue:
-                _i4.Future<_i5.ApiResult<List<_i10.OccasionByIdDto>>>.value(
-                  _i8.dummyValue<_i5.ApiResult<List<_i10.OccasionByIdDto>>>(
-                    this,
-                    Invocation.method(#getOccasionById, [occasionId]),
-                  ),
-                ),
+            returnValue: _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>>.value(
+              _i8.dummyValue<_i5.ApiResult<_i10.OccasionsByIdDto>>(
+                this,
+                Invocation.method(#getOccasionById, [occasionId]),
+              ),
+            ),
           )
-          as _i4.Future<_i5.ApiResult<List<_i10.OccasionByIdDto>>>);
+          as _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>>);
 }

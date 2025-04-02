@@ -167,6 +167,7 @@ class ApiManager {
     }
   }
 
+  //TODO:====================== Function IS Get Occasion =======
   Future<ApiResult<List<OccasionsDto>>> getOccasions() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -203,28 +204,28 @@ class ApiManager {
     }
   }
 
-  Future<ApiResult<List<OccasionByIdDto>>> getOccasionById(String occasionId) async {
+  //TODO:====================== Function IS Get Occasion By Id=======
+  Future<ApiResult<OccasionsByIdDto>> getOccasionById(String occasionId) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
-        failures: NetworkError(errorMessage: 'Please Check your internet'),
+        failures: NetworkError(
+          errorMessage: 'Please check your internet connection',
+        ),
       );
     }
+
     try {
       final response = await getRequest(
-        AppConstants.baseUrl + AppConstants.occasions + occasionId,
+        '${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId',
       );
 
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          return ApiSuccessResult(data: response.data);
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data.toString()),
-          );
-        }
+      if (response!.statusCode! >= 200 && response.statusCode! < 300) {
+        final result = OccasionsByIdDto.fromJson(response.data);
+
+        return ApiSuccessResult(data: result);
       } else {
         return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
+          failures: ServerError(errorMessage: response.data.toString()),
         );
       }
     } on DioException catch (e) {

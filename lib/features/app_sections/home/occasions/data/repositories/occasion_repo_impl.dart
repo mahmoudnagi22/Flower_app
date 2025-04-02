@@ -5,6 +5,8 @@ import 'package:flower_app/features/app_sections/home/occasions/domain/entities/
 import 'package:flower_app/features/app_sections/home/occasions/domain/repositories/occasion_repo.dart';
 import 'package:injectable/injectable.dart';
 
+import '../models/occasions_by_id_dto.dart';
+
 @Injectable(as: OccasionRepo)
 class OccasionRepoImpl implements OccasionRepo {
   RemoteOccasionDataSourceContract remoteOccasionDataSourceContract;
@@ -15,7 +17,7 @@ class OccasionRepoImpl implements OccasionRepo {
   }
 
   @override
-  Future<ApiResult<List<OccasionByIdEntity>>> getOccasionById(String occasionId) async{
+  Future<ApiResult<OccasionsByIdEntity>> getOccasionById(String occasionId) async {
     return await remoteOccasionDataSourceContract.getOccasionById(occasionId);
   }
 

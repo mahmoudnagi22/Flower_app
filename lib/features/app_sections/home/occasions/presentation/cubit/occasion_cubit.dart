@@ -43,22 +43,20 @@ class OccasionCubit extends Cubit<OccasionState> {
   }
 
   void getOccasionById(String occasionId) async {
-    emit(state.copyWith(occasionState: Status.loading));
-    ApiResult<List<OccasionByIdEntity>> result = await occasionByIdUseCase.call(
+    emit(state.copyWith(occasionByIdState: Status.loading));
+    ApiResult<OccasionsByIdEntity> result = await occasionByIdUseCase.call(
       occasionId,
     );
 
     switch (result) {
-
-
-      case ApiSuccessResult<List<OccasionByIdEntity>>():
+      case ApiSuccessResult<OccasionsByIdEntity>():
         emit(
           state.copyWith(
             occasionByIdState: Status.success,
-            occasionByIdList: result.data,
+            occasionById: result.data,
           ),
         );
-      case ApiErrorResult<List<OccasionByIdEntity>>():
+      case ApiErrorResult<OccasionsByIdEntity>():
         emit(
           state.copyWith(
             occasionByIdError: result.failures.errorMessage,
@@ -68,7 +66,3 @@ class OccasionCubit extends Cubit<OccasionState> {
     }
   }
 }
-
-
-
-
