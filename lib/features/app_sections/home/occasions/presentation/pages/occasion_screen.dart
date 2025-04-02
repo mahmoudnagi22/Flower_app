@@ -31,7 +31,7 @@ class OccasionScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) =>  getIt<OccasionCubit>()..getOccasions(),
+        create: (context) => getIt<OccasionCubit>()..getOccasions(),
         child: BlocBuilder<OccasionCubit, OccasionState>(
           builder: (context, state) {
             if (state.occasionState == Status.loading) {
@@ -47,8 +47,19 @@ class OccasionScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     10.verticalSpace,
+
                     OccasionItem(state: state),
 
+
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: state.occasionByIdList?.length,
+                        itemBuilder: (context, index) {
+                          print('asdasdasd: ' '${state.occasionByIdList?.length}');
+                          return Text(state.occasionByIdList?[index].name??'');
+                        },
+                      ),
+                    ),
                   ],
                 ),
               );

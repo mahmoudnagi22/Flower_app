@@ -5,6 +5,6 @@ import '../../domain/entities/occasion_by_id_entity.dart';
 
 abstract class RemoteOccasionDataSourceContract {
   Future<ApiResult<List<OccasionsEntity>>> getOccasion();
-  Future<ApiResult<OccasionByIdEntity>> getOccasionById(String occasionId);
+  Future<ApiResult<List<OccasionByIdEntity>>> getOccasionById(String occasionId);
 
 }

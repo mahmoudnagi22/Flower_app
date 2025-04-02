@@ -203,7 +203,7 @@ class ApiManager {
     }
   }
 
-  Future<ApiResult<OccasionByIdDto>> getOccasionById(String occasionId) async {
+  Future<ApiResult<List<OccasionByIdDto>>> getOccasionById(String occasionId) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),

@@ -15,7 +15,7 @@ class OccasionRepoImpl implements OccasionRepo {
   }
 
   @override
-  Future<ApiResult<OccasionByIdEntity>> getOccasionById(String occasionId) async{
+  Future<ApiResult<List<OccasionByIdEntity>>> getOccasionById(String occasionId) async{
     return await remoteOccasionDataSourceContract.getOccasionById(occasionId);
   }
 

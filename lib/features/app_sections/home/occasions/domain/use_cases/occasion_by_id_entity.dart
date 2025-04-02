@@ -11,7 +11,7 @@ class OccasionByIdUseCase {
 
   OccasionByIdUseCase({required this.occasionRepo});
 
-  Future<ApiResult<OccasionByIdEntity>> call(String occasionId){
+  Future<ApiResult<List<OccasionByIdEntity>>> call(String occasionId){
     return occasionRepo.getOccasionById(occasionId);
   }
 }

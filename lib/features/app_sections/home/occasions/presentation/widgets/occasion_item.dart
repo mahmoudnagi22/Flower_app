@@ -2,12 +2,15 @@ import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../core/di/di.dart';
 import '../cubit/occasion_cubit.dart';
 
 class OccasionItem extends StatefulWidget {
-  const OccasionItem({super.key, required this.state});
+   OccasionItem({super.key, required this.state});
 
   final OccasionState state;
+  OccasionCubit viewModel = getIt.get<OccasionCubit>();
+
 
   @override
   _OccasionItemState createState() => _OccasionItemState();
@@ -29,6 +32,7 @@ class _OccasionItemState extends State<OccasionItem> {
             dividerColor: Colors.transparent,
             tabAlignment: TabAlignment.center,
             onTap: (value) {
+              // widget.viewModel.getOccasionById(widget.state.occasionByIdList?.id??'');
             },
             tabs:
                 widget.state.occasionList?.map((occasion) {

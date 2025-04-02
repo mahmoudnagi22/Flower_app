@@ -20,6 +20,8 @@ import '../../features/app_sections/home/occasions/data/repositories/occasion_re
     as _i419;
 import '../../features/app_sections/home/occasions/domain/repositories/occasion_repo.dart'
     as _i424;
+import '../../features/app_sections/home/occasions/domain/use_cases/occasion_by_id_entity.dart'
+    as _i1072;
 import '../../features/app_sections/home/occasions/domain/use_cases/occasion_use_case.dart'
     as _i1018;
 import '../../features/app_sections/home/occasions/presentation/cubit/occasion_cubit.dart'
@@ -90,8 +92,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1018.OccasionUseCase>(
       () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
     );
+    gh.factory<_i1072.OccasionByIdUseCase>(
+      () => _i1072.OccasionByIdUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
+    );
     gh.factory<_i157.OccasionCubit>(
-      () => _i157.OccasionCubit(occasionUseCase: gh<_i1018.OccasionUseCase>()),
+      () => _i157.OccasionCubit(
+        occasionUseCase: gh<_i1018.OccasionUseCase>(),
+        occasionByIdUseCase: gh<_i1072.OccasionByIdUseCase>(),
+      ),
     );
     return this;
   }

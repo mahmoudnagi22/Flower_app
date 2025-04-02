@@ -27,7 +27,7 @@ class RemoteOccasionDataSourceImpl implements RemoteOccasionDataSourceContract {
   }
 
   @override
-  Future<ApiResult<OccasionByIdEntity>> getOccasionById(
+  Future<ApiResult<List<OccasionByIdEntity>>> getOccasionById(
       String occasionId) async {
     try {
       return await apiManager.getOccasionById(occasionId);

@@ -5,5 +5,5 @@ import '../entities/occasion_by_id_entity.dart';
 
 abstract class OccasionRepo {
   Future<ApiResult<List<OccasionsEntity>>> getOccasion();
-  Future<ApiResult<OccasionByIdEntity>> getOccasionById(String occasionId);
+  Future<ApiResult<List<OccasionByIdEntity>>> getOccasionById(String occasionId);
 }
