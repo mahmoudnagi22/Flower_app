@@ -5,6 +5,7 @@ import 'package:flower_app/features/app_sections/home/occasions/presentation/pag
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/app_sections/home/categories/presentation/pages/categories_screen.dart';
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
 
 class RouteGenerator {
@@ -18,6 +19,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  const BottomNavigationScreen());
       case Routes.occasions:
         return MaterialPageRoute(builder: (_) =>   OccasionScreen());
+      case Routes.categories:
+        return MaterialPageRoute(builder: (_) =>   CategoriesScreen());
 
       default:
         return unDefinedRoute();
