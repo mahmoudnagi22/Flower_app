@@ -25,27 +25,13 @@ class OccasionItem extends StatelessWidget {
           final occasion = state.occasionById?.occasion;
 
           if (occasion != null) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    occasion.name ?? "No name available",
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  Image.network(
-                    occasion.image ?? '',
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(Icons.broken_image, size: 100);
-                    },
-                  ),
-                ],
-              ),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                const SizedBox(height: 10),
+
+              ],
             );
           } else {
             return const Center(child: Text("No occasion selected"));
