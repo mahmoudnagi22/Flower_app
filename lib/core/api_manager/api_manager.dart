@@ -213,16 +213,12 @@ class ApiManager {
         ),
       );
     }
-
     try {
       final response = await getRequest(
         '${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId',
       );
-
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
-        final result = OccasionsByIdDto.fromJson(response.data);
-
-        return ApiSuccessResult(data: result);
+        return ApiSuccessResult(data: OccasionsByIdDto.fromJson(response.data));
       } else {
         return ApiErrorResult(
           failures: ServerError(errorMessage: response.data.toString()),

@@ -31,7 +31,9 @@ class OccasionScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) => getIt<OccasionCubit>()..getOccasions(),
+        create: (context) =>
+        getIt<OccasionCubit>()
+          ..getOccasions(),
         child: BlocBuilder<OccasionCubit, OccasionState>(
           builder: (context, state) {
             if (state.occasionState == Status.loading) {
@@ -45,7 +47,6 @@ class OccasionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(10.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     DefaultTabController(
                       length: state.occasionList?.length ?? 0,
@@ -66,21 +67,19 @@ class OccasionScreen extends StatelessWidget {
                           }
                         },
                         tabs:
-                            state.occasionList?.map((occasion) {
-                              return Tab(text: occasion.name ?? '');
-                            }).toList() ??
+                        state.occasionList?.map((occasion) {
+                          return Tab(text: occasion.name ?? '');
+                        }).toList() ??
                             [],
                       ),
                     ),
                     30.verticalSpace,
-
                     if (state.occasionByIdState == Status.loading)
                       const Center(
                         child: CircularProgressIndicator(
                           color: ColorManager.appColor,
                         ),
                       ),
-
                     if (state.occasionByIdState == Status.success) ...[
                       Text(
                         state.occasionById?.occasion?.name ??
