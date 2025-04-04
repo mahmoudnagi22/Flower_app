@@ -17,8 +17,7 @@ class CategoriesRepoImpl implements CategoriesRepo {
   }
 
   @override
-  Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId) {
-    // TODO: implement getCategoryById
-    throw UnimplementedError();
+  Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId) async{
+    return await categoriesDataSourceContract.getCategoryById(categoryId);
   }
 }

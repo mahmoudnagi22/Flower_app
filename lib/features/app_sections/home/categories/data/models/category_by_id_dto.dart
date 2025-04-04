@@ -6,24 +6,24 @@ import 'dart:convert';
 
 import 'package:flower_app/features/app_sections/home/categories/domain/entities/category_by_id_entity.dart';
 
-CategoryByIdDto categoryByIdDtoFromJson(String str) =>
-    CategoryByIdDto.fromJson(json.decode(str));
+CategoriesByIdDto categoryByIdDtoFromJson(String str) =>
+    CategoriesByIdDto.fromJson(json.decode(str));
 
-class CategoryByIdDto extends CategoriesByIdEntity {
-  CategoryByIdDto({super.message, super.category});
+class CategoriesByIdDto extends CategoriesByIdEntity {
+  CategoriesByIdDto({super.message, super.category});
 
-  factory CategoryByIdDto.fromJson(Map<String, dynamic> json) =>
-      CategoryByIdDto(
+  factory CategoriesByIdDto.fromJson(Map<String, dynamic> json) =>
+      CategoriesByIdDto(
         message: json["message"],
         category:
             json["category"] == null
                 ? null
-                : CategoryDto.fromJson(json["category"]),
+                : CategoryByIdDto.fromJson(json["category"]),
       );
 }
 
-class CategoryDto extends CategoryByIdEntity {
-  CategoryDto({
+class CategoryByIdDto extends CategoryByIdEntity {
+  CategoryByIdDto({
     super.id,
     super.name,
     super.slug,
@@ -32,7 +32,7 @@ class CategoryDto extends CategoryByIdEntity {
     super.updatedAt,
   });
 
-  factory CategoryDto.fromJson(Map<String, dynamic> json) => CategoryDto(
+  factory CategoryByIdDto.fromJson(Map<String, dynamic> json) => CategoryByIdDto(
     id: json["_id"],
     name: json["name"],
     slug: json["slug"],
