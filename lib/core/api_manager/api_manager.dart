@@ -3,11 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart';
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart';
 
 @singleton
@@ -222,6 +224,74 @@ class ApiManager {
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final result = OccasionsByIdDto.fromJson(response.data);
 
+        return ApiSuccessResult(data: result);
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: response.data.toString()),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  //TODO:====================== Function IS Get Categories =======
+  Future<ApiResult<List<CategoryDto>>> getCategories() async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await getRequest(
+        AppConstants.baseUrl + AppConstants.categories,
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['categories'] ?? [];
+          final List<CategoryDto> categoriesJson = result.map((json) => CategoryDto.fromJson(json)).toList();
+          return ApiSuccessResult(data: categoriesJson);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  //TODO:====================== Function IS Get Categories By Id=======
+  Future<ApiResult<CategoriesByIdDto>> getCategoriesById(String categoryId) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+          errorMessage: 'Please check your internet connection',
+        ),
+      );
+    }
+
+    try {
+      final response = await getRequest(
+        '${AppConstants.baseUrl}${AppConstants.categories}/$categoryId',
+      );
+
+      if (response!.statusCode! >= 200 && response.statusCode! < 300) {
+        final result = CategoriesByIdDto.fromJson(response.data);
         return ApiSuccessResult(data: result);
       } else {
         return ApiErrorResult(
