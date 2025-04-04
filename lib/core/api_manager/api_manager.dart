@@ -252,7 +252,7 @@ class ApiManager {
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final List<CategoryDto> result = response.data['categories'] ?? [];
+          final List<dynamic> result = response.data['categories'] ?? [];
           final List<CategoryDto> categoriesJson = result.map((json) => CategoryDto.fromJson(json)).toList();
           return ApiSuccessResult(data: categoriesJson);
         } else {

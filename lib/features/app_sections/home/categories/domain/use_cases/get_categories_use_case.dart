@@ -4,10 +4,10 @@ import 'package:flower_app/features/app_sections/home/categories/domain/reposito
 import 'package:injectable/injectable.dart';
 
 @injectable
-class CategoriesUseCase {
+class GetCategoriesUseCase {
   CategoriesRepo repo;
 
-  CategoriesUseCase({required this.repo});
+  GetCategoriesUseCase({required this.repo});
 
   Future<ApiResult<List<CategoryEntity>>> call() {
     return repo.getCategories();

@@ -12,6 +12,18 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/app_sections/home/categories/data/data_sources/categories_data_source_contract.dart'
+    as _i190;
+import '../../features/app_sections/home/categories/data/data_sources/categories_data_source_impl.dart'
+    as _i69;
+import '../../features/app_sections/home/categories/data/repositories/categories_repo_impl.dart'
+    as _i98;
+import '../../features/app_sections/home/categories/domain/repositories/categories_repo.dart'
+    as _i1000;
+import '../../features/app_sections/home/categories/domain/use_cases/get_categories_use_case.dart'
+    as _i937;
+import '../../features/app_sections/home/categories/presentation/cubit/categories_cubit.dart'
+    as _i679;
 import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
     as _i992;
 import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
@@ -71,6 +83,14 @@ extension GetItInjectableX on _i174.GetIt {
         loginDataSource: gh<_i1040.LoginDataSource>(),
       ),
     );
+    gh.factory<_i190.CategoriesDataSourceContract>(
+      () => _i69.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i1000.CategoriesRepo>(
+      () => _i98.CategoriesRepoImpl(
+        categoriesDataSourceContract: gh<_i190.CategoriesDataSourceContract>(),
+      ),
+    );
     gh.factory<_i729.SignupRepo>(
       () => _i234.SignupRepoImpl(
         remoteSignupDataSourceContract:
@@ -88,6 +108,12 @@ extension GetItInjectableX on _i174.GetIt {
         remoteOccasionDataSourceContract:
             gh<_i992.RemoteOccasionDataSourceContract>(),
       ),
+    );
+    gh.factory<_i937.GetCategoriesUseCase>(
+      () => _i937.GetCategoriesUseCase(repo: gh<_i1000.CategoriesRepo>()),
+    );
+    gh.factory<_i679.CategoriesCubit>(
+      () => _i679.CategoriesCubit(useCase: gh<_i937.GetCategoriesUseCase>()),
     );
     gh.factory<_i1018.OccasionUseCase>(
       () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),

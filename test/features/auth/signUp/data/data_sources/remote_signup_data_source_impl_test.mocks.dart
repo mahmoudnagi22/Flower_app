@@ -8,6 +8,8 @@ import 'dart:async' as _i4;
 import 'package:dio/dio.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
+import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart'
+    as _i11;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart'
     as _i10;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
@@ -171,4 +173,18 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
             ),
           )
           as _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>>);
+
+  @override
+  _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>> getCategories() =>
+      (super.noSuchMethod(
+            Invocation.method(#getCategories, []),
+            returnValue:
+                _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>>.value(
+                  _i8.dummyValue<_i5.ApiResult<List<_i11.CategoryDto>>>(
+                    this,
+                    Invocation.method(#getCategories, []),
+                  ),
+                ),
+          )
+          as _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>>);
 }
