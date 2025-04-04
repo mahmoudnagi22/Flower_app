@@ -10,6 +10,8 @@ import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
 import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart'
     as _i11;
+import 'package:flower_app/features/app_sections/home/categories/data/models/category_by_id_dto.dart'
+    as _i12;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart'
     as _i10;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
@@ -187,4 +189,20 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
                 ),
           )
           as _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>>);
+
+  @override
+  _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>> getCategoriesById(
+    String? categoryId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getCategoriesById, [categoryId]),
+            returnValue:
+                _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>>.value(
+                  _i8.dummyValue<_i5.ApiResult<_i12.CategoriesByIdDto>>(
+                    this,
+                    Invocation.method(#getCategoriesById, [categoryId]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>>);
 }

@@ -32,6 +32,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categoryList: result.data,
           ),
         );
+        getCategoriesById(result.data.first.id!);
+
       case ApiErrorResult<List<CategoryEntity>>():
         emit(
           state.copyWith(

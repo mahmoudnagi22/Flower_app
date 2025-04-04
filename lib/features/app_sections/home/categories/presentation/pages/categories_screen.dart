@@ -62,54 +62,54 @@ class CategoriesScreen extends StatelessWidget {
                         unselectedLabelColor: ColorManager.gray,
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
-                          // final selectedCategory = state.categoryList?[index];
-                          // if (selectedCategory != null &&
-                          //     selectedCategory.id != null) {
-                          //   context.read<OccasionCubit>().getOccasionById(
-                          //     selectedCategory.id!,
-                          //   );
-                          // }
+                          final selectedCategory = state.categoryList?[index];
+                          if (selectedCategory != null &&
+                              selectedCategory.id != null) {
+                            context.read<CategoriesCubit>().getCategoriesById(
+                              selectedCategory.id!,
+                            );
+                          }
                         },
                         tabs:
-                            state.categoryList?.map((occasion) {
-                              return Tab(text: occasion.name ?? '');
+                            state.categoryList?.map((categories) {
+                              return Tab(text: categories.name ?? '');
                             }).toList() ??
                             [],
                       ),
                     ),
                     30.verticalSpace,
 
-                    // if (state.occasionByIdState == Status.loading)
-                    //   const Column(
-                    //     children: [
-                    //       Center(
-                    //         child: CircularProgressIndicator(
-                    //           color: ColorManager.appColor,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    //
-                    // if (state.occasionByIdState == Status.success) ...[
-                    //   Text(
-                    //     state.occasionById?.occasion?.name ??
-                    //         "No name available",
-                    //     style: const TextStyle(
-                    //       fontSize: 16,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    //   10.verticalSpace,
-                    //   Image.network(
-                    //     state.occasionById?.occasion?.image ?? '',
-                    //     height: 200,
-                    //     width: double.infinity,
-                    //     fit: BoxFit.cover,
-                    //     errorBuilder: (context, error, stackTrace) {
-                    //       return const Icon(Icons.broken_image, size: 100);
-                    //     },
-                    //   ),
-                    // ],
+                    if (state.categoriesByIdState == Status.loading)
+                      const Column(
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(
+                              color: ColorManager.appColor,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    if (state.categoriesByIdState == Status.success) ...[
+                      Text(
+                        state.categoryById?.category?.name ??
+                            "No name available",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      10.verticalSpace,
+                      Image.network(
+                        state.categoryById?.category?.image ?? '',
+                        // height: 150,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.broken_image, size: 100);
+                        },
+                      ),
+                    ],
                   ],
                 ),
               );

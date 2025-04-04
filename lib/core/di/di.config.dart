@@ -20,8 +20,10 @@ import '../../features/app_sections/home/categories/data/repositories/categories
     as _i98;
 import '../../features/app_sections/home/categories/domain/repositories/categories_repo.dart'
     as _i1000;
+import '../../features/app_sections/home/categories/domain/use_cases/get_categories_by_id_use_case.dart'
+    as _i1025;
 import '../../features/app_sections/home/categories/domain/use_cases/get_categories_use_case.dart'
-    as _i937;
+    as _i158;
 import '../../features/app_sections/home/categories/presentation/cubit/categories_cubit.dart'
     as _i679;
 import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
@@ -109,17 +111,23 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i992.RemoteOccasionDataSourceContract>(),
       ),
     );
-    gh.factory<_i937.GetCategoriesUseCase>(
-      () => _i937.GetCategoriesUseCase(repo: gh<_i1000.CategoriesRepo>()),
+    gh.factory<_i1025.GetCategoriesByIdUseCase>(
+      () => _i1025.GetCategoriesByIdUseCase(repo: gh<_i1000.CategoriesRepo>()),
     );
-    gh.factory<_i679.CategoriesCubit>(
-      () => _i679.CategoriesCubit(useCase: gh<_i937.GetCategoriesUseCase>()),
+    gh.factory<_i158.GetCategoriesUseCase>(
+      () => _i158.GetCategoriesUseCase(repo: gh<_i1000.CategoriesRepo>()),
     );
     gh.factory<_i1018.OccasionUseCase>(
       () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
     );
     gh.factory<_i1072.OccasionByIdUseCase>(
       () => _i1072.OccasionByIdUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
+    );
+    gh.factory<_i679.CategoriesCubit>(
+      () => _i679.CategoriesCubit(
+        useCase: gh<_i158.GetCategoriesUseCase>(),
+        categoriesByIdUseCase: gh<_i1025.GetCategoriesByIdUseCase>(),
+      ),
     );
     gh.factory<_i157.OccasionCubit>(
       () => _i157.OccasionCubit(

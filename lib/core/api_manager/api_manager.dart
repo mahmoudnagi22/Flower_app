@@ -291,7 +291,7 @@ class ApiManager {
       );
 
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
-        final result = categoryByIdDtoFromJson(response.data);
+        final result = CategoriesByIdDto.fromJson(response.data);
         return ApiSuccessResult(data: result);
       } else {
         return ApiErrorResult(
