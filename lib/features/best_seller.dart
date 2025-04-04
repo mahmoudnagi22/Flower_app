@@ -8,7 +8,7 @@ class BestSeller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomSliverScreen(
-      isSearch: false,
+      isSearch: true,
       appBarTitle: "Best Seller",
       appBarSubTitle: "Bloom with our exquisite best sellers",
       image: ImageAssets.image,
@@ -16,6 +16,8 @@ class BestSeller extends StatelessWidget {
       price: 600,
       oldPrice: 800,
       discount: 20, multipleChoice: true,
-      categories: ["All", "Roses", "Tulips", "Bouquets", "Gifts","Vases","Boxes"],);
+
+      categories: ["All", "Roses", "Tulips", "Bouquets", "Gifts","Vases","Boxes"],
+    );
   }
 }
