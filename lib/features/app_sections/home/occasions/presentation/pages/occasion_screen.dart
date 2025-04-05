@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
-import '../widgets/occasion_item.dart';
 
 class OccasionScreen extends StatelessWidget {
   OccasionScreen({super.key});

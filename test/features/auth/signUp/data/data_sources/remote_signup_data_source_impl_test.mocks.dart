@@ -8,7 +8,7 @@ import 'dart:async' as _i4;
 import 'package:dio/dio.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart'
+import 'package:flower_app/features/app_sections/home/occasions/data/models/occasion_by_id_dto.dart'
     as _i10;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
     as _i9;

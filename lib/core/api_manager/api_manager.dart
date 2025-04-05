@@ -8,7 +8,8 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.d
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart';
+import '../../features/app_sections/home/occasions/data/models/occasion_by_id_dto.dart';
+
 
 @singleton
 class ApiManager {

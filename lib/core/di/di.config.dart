@@ -89,11 +89,11 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i992.RemoteOccasionDataSourceContract>(),
       ),
     );
-    gh.factory<_i1018.OccasionUseCase>(
-      () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
-    );
     gh.factory<_i1072.OccasionByIdUseCase>(
       () => _i1072.OccasionByIdUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
+    );
+    gh.factory<_i1018.OccasionUseCase>(
+      () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
     );
     gh.factory<_i157.OccasionCubit>(
       () => _i157.OccasionCubit(
