@@ -2,6 +2,7 @@ C/C++ Structured Logc
 a
 _C:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	Û¹À±à2 ¢†«Žß2`
 ^
 \C:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\android_gradle_build.json	Û¹À±à2› ¥†«Žß2e
@@ -26,3 +27,29 @@ UC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\prefab_confi
 ZC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\symbol_folder_index.txt	Û¹À±à2Q À†«Žß2Q
 O
 ME:\sdkss\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	Û¹À±à2§ †çÑ³Ô2
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	À†‰Žà2 ¢†«Žß2`
+^
+\C:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\android_gradle_build.json	À†‰Žà2› ¥†«Žß2e
+c
+aC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\android_gradle_build_mini.json	Á†‰Žà2ø º†«Žß2R
+P
+NC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\build.ninja	Á†‰Žà2¨Ò ¦…«Žß2V
+T
+RC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\build.ninja.txt	Á†‰Žà2[
+Y
+WC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\build_file_index.txt	Á†‰Žà2M Â†«Žß2\
+Z
+XC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\compile_commands.json	Á†‰Žà2`
+^
+\C:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\compile_commands.json.bin	Á†‰Žà2	f
+d
+bC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\metadata_generation_command.txt	Á†‰Žà2
+ ½†«Žß2Y
+W
+UC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\prefab_config.json	Á†‰Žà2( ¿†«Žß2^
+\
+ZC:\flutter_projects\Flower_app\android\app\.cxx\Debug\s3j3a121\x86\symbol_folder_index.txt	Á†‰Žà2Q À†«Žß2Q
+O
+ME:\sdkss\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	Â†‰Žà2§ †çÑ³Ô2
+>>>>>>> development

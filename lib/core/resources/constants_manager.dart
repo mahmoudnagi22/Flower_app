@@ -6,5 +6,5 @@ class AppConstants {
   static const String loginEndPoint = 'auth/signin';
   static const String tokenKey = 'token';
   static const String occasions = 'occasions';
-
+  static const String categories = 'categories';
 }
