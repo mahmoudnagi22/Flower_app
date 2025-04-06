@@ -8,18 +8,14 @@ import 'dart:async' as _i4;
 import 'package:dio/dio.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
-<<<<<<< HEAD
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasion_by_id_dto.dart'
-=======
 import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart'
     as _i11;
 import 'package:flower_app/features/app_sections/home/categories/data/models/category_by_id_dto.dart'
     as _i12;
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart'
->>>>>>> development
-    as _i10;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
     as _i9;
+import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart'
+    as _i10;
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart'
     as _i7;
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart'
@@ -166,19 +162,19 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
           as _i4.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>);
 
   @override
-  _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>> getOccasionById(
+  _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>> getProducts(
     String? occasionId,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#getOccasionById, [occasionId]),
-            returnValue: _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>>.value(
-              _i8.dummyValue<_i5.ApiResult<_i10.OccasionsByIdDto>>(
+            Invocation.method(#getProducts, [occasionId]),
+            returnValue: _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
+              _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
                 this,
-                Invocation.method(#getOccasionById, [occasionId]),
+                Invocation.method(#getProducts, [occasionId]),
               ),
             ),
           )
-          as _i4.Future<_i5.ApiResult<_i10.OccasionsByIdDto>>);
+          as _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
 
   @override
   _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>> getCategories() =>

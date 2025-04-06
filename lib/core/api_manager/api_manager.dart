@@ -5,17 +5,12 @@ import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart';
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart';
+import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
-<<<<<<< HEAD
-import '../../features/app_sections/home/occasions/data/models/occasion_by_id_dto.dart';
-
-=======
 import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
-import '../../features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart';
->>>>>>> development
 
 @singleton
 class ApiManager {
@@ -211,8 +206,8 @@ class ApiManager {
     }
   }
 
-  //TODO:====================== Function IS Get Occasion By Id=======
-  Future<ApiResult<OccasionsByIdDto>> getOccasionById(String occasionId) async {
+  //TODO:====================== Function IS Get Products By Id=======
+  Future<ApiResult<List<ProductDto>>> getProducts(String occasionId) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -222,10 +217,14 @@ class ApiManager {
     }
     try {
       final response = await getRequest(
-        '${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId',
+        '${AppConstants.baseUrl}${AppConstants.products}/',
+        queryParameters: {'occasion': occasionId},
       );
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
-        return ApiSuccessResult(data: OccasionsByIdDto.fromJson(response.data));
+        final List<dynamic> productsJson = response.data['products'] ?? [];
+        final List<ProductDto> productsList =
+            productsJson.map((json) => ProductDto.fromJson(json)).toList();
+        return ApiSuccessResult(data: productsList);
       } else {
         return ApiErrorResult(
           failures: ServerError(errorMessage: response.data.toString()),
@@ -255,7 +254,8 @@ class ApiManager {
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final List<dynamic> result = response.data['categories'] ?? [];
-          final List<CategoryDto> categoriesJson = result.map((json) => CategoryDto.fromJson(json)).toList();
+          final List<CategoryDto> categoriesJson =
+              result.map((json) => CategoryDto.fromJson(json)).toList();
           return ApiSuccessResult(data: categoriesJson);
         } else {
           return ApiErrorResult(
@@ -277,7 +277,9 @@ class ApiManager {
   }
 
   //TODO:====================== Function IS Get Categories By Id=======
-  Future<ApiResult<CategoriesByIdDto>> getCategoriesById(String categoryId) async {
+  Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
+    String categoryId,
+  ) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(

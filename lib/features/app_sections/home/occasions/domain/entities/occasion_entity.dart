@@ -2,7 +2,7 @@ class OccasionEntity {
   OccasionEntity({this.message, this.occasions});
 
   String? message;
-
+   String? categoryId;
   List<OccasionsEntity>? occasions;
 }
 
@@ -15,8 +15,9 @@ class OccasionsEntity {
     this.createdAt,
     this.updatedAt,
     this.productsCount,
+    this.categoryId
   });
-
+  String? categoryId;
   String? id;
   String? name;
   String? slug;

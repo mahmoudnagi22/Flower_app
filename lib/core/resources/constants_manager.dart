@@ -7,4 +7,5 @@ class AppConstants {
   static const String tokenKey = 'token';
   static const String occasions = 'occasions';
   static const String categories = 'categories';
+  static const String products = 'products';
 }

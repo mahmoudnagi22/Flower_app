@@ -1,17 +1,16 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/api_manager/api_result.dart';
-import '../entities/occasion_entity.dart';
-import '../entities/occasion_by_id_entity.dart';
+import '../entities/products_entity.dart';
 import '../repositories/occasion_repo.dart';
 
 @injectable
-class OccasionByIdUseCase {
-  OccasionRepo occasionRepo;
+class ProductsUseCase {
+  final OccasionRepo repository;
 
-  OccasionByIdUseCase({required this.occasionRepo});
+  ProductsUseCase(this.repository);
 
-  Future<ApiResult<OccasionsByIdEntity>> call(String occasionId){
-    return occasionRepo.getOccasionById(occasionId);
+  Future<ApiResult<List<ProductEntity>>> call(String occasionId) {
+    return repository.getProducts(occasionId);
   }
 }
