@@ -120,19 +120,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1018.OccasionUseCase>(
       () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
     );
-    gh.factory<_i1072.OccasionByIdUseCase>(
-      () => _i1072.OccasionByIdUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
-    );
     gh.factory<_i679.CategoriesCubit>(
       () => _i679.CategoriesCubit(
         useCase: gh<_i158.GetCategoriesUseCase>(),
         categoriesByIdUseCase: gh<_i1025.GetCategoriesByIdUseCase>(),
       ),
     );
+    gh.factory<_i1072.ProductsUseCase>(
+      () => _i1072.ProductsUseCase(gh<_i424.OccasionRepo>()),
+    );
     gh.factory<_i157.OccasionCubit>(
       () => _i157.OccasionCubit(
         occasionUseCase: gh<_i1018.OccasionUseCase>(),
-        occasionByIdUseCase: gh<_i1072.OccasionByIdUseCase>(),
+        productsUseCase: gh<_i1072.ProductsUseCase>(),
       ),
     );
     return this;

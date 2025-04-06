@@ -2,47 +2,43 @@ part of 'occasion_cubit.dart';
 
 class OccasionState extends Equatable {
   final Status occasionState;
-  final Status occasionByIdState;
+  final Status productsState;
   final String? occasionError;
-  final String? occasionByIdError;
   final List<OccasionsEntity>? occasionList;
-  final OccasionsByIdEntity? occasionById;
+  final List<ProductEntity>? products;
 
   const OccasionState({
     this.occasionState = Status.initial,
-    this.occasionByIdState = Status.initial,
+    this.productsState = Status.initial,
     this.occasionError,
-    this.occasionByIdError,
+
     this.occasionList,
-    this.occasionById,
+    this.products,
   });
 
   @override
   // TODO: implement props
   List<Object?> get props => [
     occasionState,
-    occasionByIdState,
+    productsState,
     occasionError,
-    occasionByIdError,
     occasionList,
-    occasionById,
+    products,
   ];
 
   OccasionState copyWith({
     Status? occasionState,
-    Status? occasionByIdState,
+    Status? productsState,
     String? occasionError,
-    String? occasionByIdError,
     List<OccasionsEntity>? occasionList,
-    OccasionsByIdEntity? occasionById,
+    List<ProductEntity>? products,
   }) {
     return OccasionState(
       occasionState: occasionState ?? this.occasionState,
-      occasionByIdState: occasionByIdState ?? this.occasionByIdState,
+      productsState: productsState ?? this.productsState,
       occasionError: occasionError ?? this.occasionError,
-      occasionByIdError: occasionByIdError ?? this.occasionByIdError,
       occasionList: occasionList ?? this.occasionList,
-      occasionById: occasionById ?? this.occasionById,
+      products: products ?? this.products,
     );
   }
 }

@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/utils/status.dart';
-import 'package:flower_app/features/app_sections/home/occasions/domain/entities/occasion_by_id_entity.dart';
 import 'package:flower_app/features/app_sections/home/occasions/domain/entities/occasion_entity.dart';
+import 'package:flower_app/features/app_sections/home/occasions/domain/entities/products_entity.dart';
 import 'package:flower_app/features/app_sections/home/occasions/domain/use_cases/occasion_by_id_entity.dart';
 import 'package:flower_app/features/app_sections/home/occasions/domain/use_cases/occasion_use_case.dart';
 import 'package:injectable/injectable.dart';
@@ -14,11 +14,11 @@ part 'occasion_state.dart';
 class OccasionCubit extends Cubit<OccasionState> {
   OccasionCubit({
     required this.occasionUseCase,
-    required this.occasionByIdUseCase,
+    required this.productsUseCase,
   }) : super(const OccasionState());
 
   OccasionUseCase occasionUseCase;
-  OccasionByIdUseCase occasionByIdUseCase;
+  ProductsUseCase productsUseCase;
 
   void getOccasions() async {
     emit(state.copyWith(occasionState: Status.loading));
@@ -33,7 +33,8 @@ class OccasionCubit extends Cubit<OccasionState> {
           ),
         );
         if (result.data.isNotEmpty) {
-          getOccasionById(result.data.first.id!);
+          String categoryId = "673c46fd1159920171827c85";
+          getProducts(result.data.first.id.toString());
         }
         break;
       case ApiErrorResult<List<OccasionsEntity>>():
@@ -46,27 +47,21 @@ class OccasionCubit extends Cubit<OccasionState> {
     }
   }
 
-  void getOccasionById(String occasionId) async {
-    emit(state.copyWith(occasionByIdState: Status.loading));
-    ApiResult<OccasionsByIdEntity> result = await occasionByIdUseCase.call(
-      occasionId,
-    );
+  void getProducts(String occasionId) async {
 
-    switch (result) {
-      case ApiSuccessResult<OccasionsByIdEntity>():
-        emit(
-          state.copyWith(
-            occasionByIdState: Status.success,
-            occasionById: result.data,
-          ),
-        );
-      case ApiErrorResult<OccasionsByIdEntity>():
-        emit(
-          state.copyWith(
-            occasionByIdError: result.failures.errorMessage,
-            occasionByIdState: Status.error,
-          ),
-        );
+    emit(state.copyWith(productsState: Status.loading));
+
+
+    ApiResult<List<ProductEntity>> result = await productsUseCase.call(occasionId);
+
+    switch(result){
+
+      case ApiSuccessResult<List<ProductEntity>>():
+        emit(state.copyWith(productsState: Status.success,products: result.data));
+        break;
+      case ApiErrorResult<List<ProductEntity>>():
+        emit(state.copyWith(productsState: Status.error,occasionError: result.failures.errorMessage));
+        break;
     }
   }
 }
