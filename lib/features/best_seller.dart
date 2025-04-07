@@ -15,9 +15,18 @@ class BestSeller extends StatelessWidget {
       title: 'Red roses',
       price: 600,
       oldPrice: 800,
-      discount: 20, multipleChoice: true,
+      discount: 20,
+      multipleChoice: true,
 
-      categories: ["All", "Roses", "Tulips", "Bouquets", "Gifts","Vases","Boxes"],
+      categories: [
+        "All",
+        "Roses",
+        "Tulips",
+        "Bouquets",
+        "Gifts",
+        "Vases",
+        "Boxes",
+      ],
     );
   }
 }

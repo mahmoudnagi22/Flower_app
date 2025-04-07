@@ -1,3 +1,4 @@
+import 'package:flower_app/core/widget/shared_ui_widget.dart';
 import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart';
 import 'package:flower_app/features/app_sections/home/categories/presentation/widgets/custom_search.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/dialog_utils.dart';
 import '../../../../../../core/utils/status.dart';
-import '../../../occasions/presentation/cubit/occasion_cubit.dart';
 import '../cubit/categories_cubit.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -32,7 +32,15 @@ class CategoriesScreen extends StatelessWidget {
                   border: Border.all(color: ColorManager.gray),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: const Icon(Icons.filter_list_rounded),
+                child: Center(
+                  child: SvgPicture.asset(
+                    IconsAssets.filter,
+                    width: 18.w,
+                    height: 12.h,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+
               ),
             ),
           ],
@@ -53,7 +61,6 @@ class CategoriesScreen extends StatelessWidget {
                 padding: EdgeInsets.all(10.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     DefaultTabController(
                       length: state.categoryList?.length ?? 0,
@@ -65,31 +72,26 @@ class CategoriesScreen extends StatelessWidget {
                         unselectedLabelColor: ColorManager.gray,
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
-                          final selectedCategory = state.categoryList?[index];
-                          context.read<OccasionCubit>().getProducts(
-                            ProductFilter(categoryId: selectedCategory!.id)
+                          final selectedCategory =
+                              state.categoryList?[index].id;
+                          context.read<CategoriesCubit>().getProducts(
+                            ProductFilter(categoryId: selectedCategory),
                           );
                         },
                         tabs:
-                            state.categoryList?.map((categories) {
-                              return Tab(text: categories.name ?? '');
+                            state.categoryList?.map((category) {
+                              return Tab(text: category.name ?? '');
                             }).toList() ??
                             [],
                       ),
                     ),
-                    30.verticalSpace,
-
+                    10.verticalSpace,
                     if (state.productsState == Status.loading)
-                      const Column(
-                        children: [
-                          Center(
-                            child: CircularProgressIndicator(
-                              color: ColorManager.appColor,
-                            ),
-                          ),
-                        ],
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: ColorManager.appColor,
+                        ),
                       ),
-
                     if (state.productsState == Status.success) ...[
                       Expanded(
                         child: CustomScrollView(
@@ -98,9 +100,9 @@ class CategoriesScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(0),
                               sliver: SliverGrid(
                                 delegate: SliverChildBuilderDelegate((
-                                    context,
-                                    index,
-                                    ) {
+                                  context,
+                                  index,
+                                ) {
                                   return Card(
                                     color: ColorManager.white,
                                     elevation: 0,
@@ -115,7 +117,7 @@ class CategoriesScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Expanded(
                                             child: Image.network(
@@ -166,10 +168,10 @@ class CategoriesScreen extends StatelessWidget {
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 12.sp,
                                                     decoration:
-                                                    TextDecoration
-                                                        .lineThrough,
+                                                        TextDecoration
+                                                            .lineThrough,
                                                     decorationColor:
-                                                    ColorManager.gray,
+                                                        ColorManager.gray,
                                                   ),
                                                 ),
                                                 SizedBox(width: 5.w),
@@ -193,11 +195,11 @@ class CategoriesScreen extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 color: ColorManager.appColor,
                                                 borderRadius:
-                                                BorderRadius.circular(25.r),
+                                                    BorderRadius.circular(25.r),
                                               ),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   SvgPicture.asset(
                                                     IconsAssets.cart,
@@ -211,7 +213,7 @@ class CategoriesScreen extends StatelessWidget {
                                                       color: ColorManager.white,
                                                       fontSize: 13.sp,
                                                       fontWeight:
-                                                      FontWeight.w500,
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
@@ -224,12 +226,12 @@ class CategoriesScreen extends StatelessWidget {
                                   );
                                 }, childCount: state.products?.length),
                                 gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 16,
-                                  crossAxisSpacing: 16,
-                                  childAspectRatio: 0.75,
-                                ),
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 16,
+                                      crossAxisSpacing: 16,
+                                      childAspectRatio: 0.75,
+                                    ),
                               ),
                             ),
                           ],

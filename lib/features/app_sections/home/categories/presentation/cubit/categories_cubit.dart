@@ -36,7 +36,9 @@ class CategoriesCubit extends Cubit<CategoriesState> {
           ),
         );
 
-        getProducts(ProductFilter(categoryId: result.data.first.id));
+        if (result.data.isNotEmpty) {
+          getProducts(ProductFilter(categoryId: result.data.first.id));
+        }
       case ApiErrorResult<List<CategoryEntity>>():
         emit(
           state.copyWith(
@@ -47,7 +49,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     }
   }
 
-  void getProducts(ProductFilter filter) async {
+  Future<void> getProducts(ProductFilter filter) async {
     emit(state.copyWith(productsState: Status.loading));
 
     ApiResult<List<ProductEntity>> result = await productsUseCase.call(filter);

@@ -58,9 +58,9 @@ class OccasionScreen extends StatelessWidget {
                         unselectedLabelColor: ColorManager.gray,
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
-                          final selectedOccasion = state.occasionList?[index];
+                          final selectedOccasion = state.occasionList?[index].id;
                           context.read<OccasionCubit>().getProducts(
-                            ProductFilter(occasionId: selectedOccasion?.id)
+                            ProductFilter(occasionId: selectedOccasion)
                           );
                         },
                         tabs:

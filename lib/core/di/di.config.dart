@@ -20,8 +20,6 @@ import '../../features/app_sections/home/categories/data/repositories/categories
     as _i98;
 import '../../features/app_sections/home/categories/domain/repositories/categories_repo.dart'
     as _i1000;
-import '../../features/app_sections/home/categories/domain/use_cases/get_categories_by_id_use_case.dart'
-    as _i1025;
 import '../../features/app_sections/home/categories/domain/use_cases/get_categories_use_case.dart'
     as _i158;
 import '../../features/app_sections/home/categories/presentation/cubit/categories_cubit.dart'
@@ -110,9 +108,6 @@ extension GetItInjectableX on _i174.GetIt {
         remoteOccasionDataSourceContract:
             gh<_i992.RemoteOccasionDataSourceContract>(),
       ),
-    );
-    gh.factory<_i1025.GetCategoriesByIdUseCase>(
-      () => _i1025.GetCategoriesByIdUseCase(repo: gh<_i1000.CategoriesRepo>()),
     );
     gh.factory<_i158.GetCategoriesUseCase>(
       () => _i158.GetCategoriesUseCase(repo: gh<_i1000.CategoriesRepo>()),
