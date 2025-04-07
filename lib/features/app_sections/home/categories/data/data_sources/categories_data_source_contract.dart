@@ -5,5 +5,5 @@ import '../../../../../../core/api_manager/api_result.dart';
 
 abstract class CategoriesDataSourceContract {
   Future<ApiResult<List<CategoryEntity>>> getCategories();
-  Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId);
+  // Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId);
 }

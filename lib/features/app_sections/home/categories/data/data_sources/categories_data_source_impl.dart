@@ -24,16 +24,16 @@ class CategoriesDataSourceImpl implements CategoriesDataSourceContract {
     }
   }
 
-  @override
-  Future<ApiResult<CategoriesByIdEntity>> getCategoryById(
-    String categoryId,
-  ) async {
-    try {
-      return apiManager.getCategoriesById(categoryId);
-    } on DioException catch (errorMessage) {
-      return ApiErrorResult(
-        failures: NetworkError(errorMessage: errorMessage.message ?? ''),
-      );
-    }
-  }
+  // @override
+  // Future<ApiResult<CategoriesByIdEntity>> getCategoryById(
+  //   String categoryId,
+  // ) async {
+  //   try {
+  //     return apiManager.getCategoriesById(categoryId);
+  //   } on DioException catch (errorMessage) {
+  //     return ApiErrorResult(
+  //       failures: NetworkError(errorMessage: errorMessage.message ?? ''),
+  //     );
+  //   }
+  // }
 }

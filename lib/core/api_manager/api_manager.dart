@@ -11,6 +11,7 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.
 import 'package:injectable/injectable.dart';
 
 import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
+import '../../features/app_sections/home/categories/domain/entities/product_filter.dart';
 
 @singleton
 class ApiManager {
@@ -207,7 +208,7 @@ class ApiManager {
   }
 
   //TODO:====================== Function IS Get Products By Id=======
-  Future<ApiResult<List<ProductDto>>> getProducts(String occasionId) async {
+  Future<ApiResult<List<ProductDto>>> getProducts(ProductFilter filter) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -215,15 +216,27 @@ class ApiManager {
         ),
       );
     }
+
     try {
+      final Map<String, dynamic> queryParameters = {};
+
+      if (filter.occasionId != null) {
+        queryParameters['occasion'] = filter.occasionId;
+      }
+
+      if (filter.categoryId != null) {
+        queryParameters['category'] = filter.categoryId;
+      }
+
       final response = await getRequest(
         '${AppConstants.baseUrl}${AppConstants.products}/',
-        queryParameters: {'occasion': occasionId},
+        queryParameters: queryParameters,
       );
+
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final List<dynamic> productsJson = response.data['products'] ?? [];
         final List<ProductDto> productsList =
-            productsJson.map((json) => ProductDto.fromJson(json)).toList();
+        productsJson.map((json) => ProductDto.fromJson(json)).toList();
         return ApiSuccessResult(data: productsList);
       } else {
         return ApiErrorResult(
@@ -238,6 +251,7 @@ class ApiManager {
       );
     }
   }
+
 
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {

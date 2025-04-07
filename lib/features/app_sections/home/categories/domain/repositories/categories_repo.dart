@@ -4,5 +4,5 @@ import 'package:flower_app/features/app_sections/home/categories/domain/entities
 
 abstract class CategoriesRepo {
   Future<ApiResult<List<CategoryEntity>>> getCategories();
-  Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId);
+  // Future<ApiResult<CategoriesByIdEntity>> getCategoryById(String categoryId);
 }

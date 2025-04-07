@@ -2,17 +2,18 @@ part of 'categories_cubit.dart';
 
 class CategoriesState extends Equatable {
   final Status categoriesState;
-  final Status categoriesByIdState;
+  final Status productsState;
   final String? categoriesError;
   final List<CategoryEntity>? categoryList;
-  final CategoriesByIdEntity? categoryById;
+  final List<ProductEntity>? products;
+
 
   const CategoriesState({
     this.categoriesState = Status.initial,
-    this.categoriesByIdState = Status.initial,
+    this.productsState = Status.initial,
     this.categoriesError,
     this.categoryList,
-    this.categoryById,
+    this.products
   });
 
   @override
@@ -21,22 +22,23 @@ class CategoriesState extends Equatable {
     categoriesState,
     categoriesError,
     categoryList,
-    categoryById,
+    products,
   ];
 
   CategoriesState copyWith({
     Status? categoriesState,
-    Status? categoriesByIdState,
+    Status? productsState,
     String? categoriesError,
     List<CategoryEntity>? categoryList,
-    CategoriesByIdEntity? categoryById,
+    List<ProductEntity>? products,
   }) {
     return CategoriesState(
       categoriesState: categoriesState ?? this.categoriesState,
-      categoriesByIdState: categoriesByIdState ?? this.categoriesByIdState,
+      productsState: productsState ?? this.productsState,
       categoriesError: categoriesError ?? this.categoriesError,
       categoryList: categoryList ?? this.categoryList,
-      categoryById: categoryById ?? this.categoryById,
+      products: products ?? this.products,
     );
   }
+
 }
