@@ -1,9 +1,12 @@
+import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart';
 import 'package:flower_app/features/app_sections/home/categories/presentation/widgets/custom_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../core/di/di.dart';
+import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/dialog_utils.dart';
 import '../../../../../../core/utils/status.dart';
@@ -63,12 +66,9 @@ class CategoriesScreen extends StatelessWidget {
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
                           final selectedCategory = state.categoryList?[index];
-                          if (selectedCategory != null &&
-                              selectedCategory.id != null) {
-                            context.read<CategoriesCubit>().getCategoriesById(
-                              selectedCategory.id!,
-                            );
-                          }
+                          context.read<OccasionCubit>().getProducts(
+                            ProductFilter(categoryId: selectedCategory!.id)
+                          );
                         },
                         tabs:
                             state.categoryList?.map((categories) {
@@ -79,7 +79,7 @@ class CategoriesScreen extends StatelessWidget {
                     ),
                     30.verticalSpace,
 
-                    if (state.categoriesByIdState == Status.loading)
+                    if (state.productsState == Status.loading)
                       const Column(
                         children: [
                           Center(
@@ -90,24 +90,150 @@ class CategoriesScreen extends StatelessWidget {
                         ],
                       ),
 
-                    if (state.categoriesByIdState == Status.success) ...[
-                      Text(
-                        state.categoryById?.category?.name ??
-                            "No name available",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                    if (state.productsState == Status.success) ...[
+                      Expanded(
+                        child: CustomScrollView(
+                          slivers: [
+                            SliverPadding(
+                              padding: const EdgeInsets.all(0),
+                              sliver: SliverGrid(
+                                delegate: SliverChildBuilderDelegate((
+                                    context,
+                                    index,
+                                    ) {
+                                  return Card(
+                                    color: ColorManager.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: BorderSide(
+                                        color: ColorManager.textField
+                                            .withOpacity(.7),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Image.network(
+                                              state.products![index].imgCover
+                                                  .toString(),
+                                              width: double.infinity,
+                                              height: 200.h,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text(
+                                                state.products![index].title
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  color: ColorManager.black,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "EGP ${state.products![index].priceAfterDiscount}",
+                                                  style: TextStyle(
+                                                    color: ColorManager.black,
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.w),
+                                                Text(
+                                                  "${state.products![index].price}",
+                                                  style: TextStyle(
+                                                    color: ColorManager.gray,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12.sp,
+                                                    decoration:
+                                                    TextDecoration
+                                                        .lineThrough,
+                                                    decorationColor:
+                                                    ColorManager.gray,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.w),
+                                                Text(
+                                                  "${state.products![index].discount}%",
+                                                  style: TextStyle(
+                                                    color: ColorManager.green,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          GestureDetector(
+                                            onTap: () {},
+                                            child: Container(
+                                              width: 147.w,
+                                              height: 30.h,
+                                              decoration: BoxDecoration(
+                                                color: ColorManager.appColor,
+                                                borderRadius:
+                                                BorderRadius.circular(25.r),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    IconsAssets.cart,
+                                                    height: 18,
+                                                    width: 18,
+                                                  ),
+                                                  SizedBox(width: 8.w),
+                                                  Text(
+                                                    "Add to cart",
+                                                    style: TextStyle(
+                                                      color: ColorManager.white,
+                                                      fontSize: 13.sp,
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }, childCount: state.products?.length),
+                                gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 16,
+                                  crossAxisSpacing: 16,
+                                  childAspectRatio: 0.75,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      10.verticalSpace,
-                      Image.network(
-                        state.categoryById?.category?.image ?? '',
-                        // height: 150,
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.broken_image, size: 100);
-                        },
                       ),
                     ],
                   ],

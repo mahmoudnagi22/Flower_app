@@ -9,9 +9,11 @@ import 'package:dio/dio.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
 import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart'
-    as _i11;
-import 'package:flower_app/features/app_sections/home/categories/data/models/category_by_id_dto.dart'
     as _i12;
+import 'package:flower_app/features/app_sections/home/categories/data/models/category_by_id_dto.dart'
+    as _i13;
+import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart'
+    as _i11;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
     as _i9;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart'
@@ -163,46 +165,46 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
 
   @override
   _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>> getProducts(
-    String? occasionId,
+    _i11.ProductFilter? filter,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#getProducts, [occasionId]),
+            Invocation.method(#getProducts, [filter]),
             returnValue: _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
               _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
                 this,
-                Invocation.method(#getProducts, [occasionId]),
+                Invocation.method(#getProducts, [filter]),
               ),
             ),
           )
           as _i4.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
 
   @override
-  _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>> getCategories() =>
+  _i4.Future<_i5.ApiResult<List<_i12.CategoryDto>>> getCategories() =>
       (super.noSuchMethod(
             Invocation.method(#getCategories, []),
             returnValue:
-                _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>>.value(
-                  _i8.dummyValue<_i5.ApiResult<List<_i11.CategoryDto>>>(
+                _i4.Future<_i5.ApiResult<List<_i12.CategoryDto>>>.value(
+                  _i8.dummyValue<_i5.ApiResult<List<_i12.CategoryDto>>>(
                     this,
                     Invocation.method(#getCategories, []),
                   ),
                 ),
           )
-          as _i4.Future<_i5.ApiResult<List<_i11.CategoryDto>>>);
+          as _i4.Future<_i5.ApiResult<List<_i12.CategoryDto>>>);
 
   @override
-  _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>> getCategoriesById(
+  _i4.Future<_i5.ApiResult<_i13.CategoriesByIdDto>> getCategoriesById(
     String? categoryId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#getCategoriesById, [categoryId]),
             returnValue:
-                _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>>.value(
-                  _i8.dummyValue<_i5.ApiResult<_i12.CategoriesByIdDto>>(
+                _i4.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>.value(
+                  _i8.dummyValue<_i5.ApiResult<_i13.CategoriesByIdDto>>(
                     this,
                     Invocation.method(#getCategoriesById, [categoryId]),
                   ),
                 ),
           )
-          as _i4.Future<_i5.ApiResult<_i12.CategoriesByIdDto>>);
+          as _i4.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>);
 }

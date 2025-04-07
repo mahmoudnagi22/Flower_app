@@ -1,5 +1,6 @@
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
+import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart';
 import 'package:flower_app/features/app_sections/home/occasions/presentation/cubit/occasion_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +60,7 @@ class OccasionScreen extends StatelessWidget {
                         onTap: (index) {
                           final selectedOccasion = state.occasionList?[index];
                           context.read<OccasionCubit>().getProducts(
-                            selectedOccasion!.id.toString(),
+                            ProductFilter(occasionId: selectedOccasion?.id)
                           );
                         },
                         tabs:

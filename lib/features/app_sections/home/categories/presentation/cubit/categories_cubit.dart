@@ -3,21 +3,24 @@ import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/features/app_sections/home/categories/domain/entities/categories_entity.dart';
 import 'package:flower_app/features/app_sections/home/categories/domain/entities/category_by_id_entity.dart';
+import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart';
 import 'package:flower_app/features/app_sections/home/categories/domain/use_cases/get_categories_by_id_use_case.dart';
 import 'package:flower_app/features/app_sections/home/categories/domain/use_cases/get_categories_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/utils/status.dart';
+import '../../../occasions/domain/entities/products_entity.dart';
+import '../../../occasions/domain/use_cases/product_use_case.dart';
 
 part 'categories_state.dart';
 
 @injectable
 class CategoriesCubit extends Cubit<CategoriesState> {
-  CategoriesCubit({required this.useCase, required this.categoriesByIdUseCase})
+  CategoriesCubit({required this.useCase, required this.productsUseCase})
     : super(const CategoriesState());
 
   GetCategoriesUseCase useCase;
-  GetCategoriesByIdUseCase categoriesByIdUseCase;
+  ProductsUseCase productsUseCase;
 
   void getCategories() async {
     emit(state.copyWith(categoriesState: Status.loading));
@@ -32,8 +35,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categoryList: result.data,
           ),
         );
-        getCategoriesById(result.data.first.id!);
 
+        getProducts(ProductFilter(categoryId: result.data.first.id));
       case ApiErrorResult<List<CategoryEntity>>():
         emit(
           state.copyWith(
@@ -44,25 +47,20 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     }
   }
 
-  void getCategoriesById(String categoryId) async {
-    emit(state.copyWith(categoriesByIdState: Status.loading));
+  void getProducts(ProductFilter filter) async {
+    emit(state.copyWith(productsState: Status.loading));
 
-    ApiResult<CategoriesByIdEntity> result = await categoriesByIdUseCase.call(
-      categoryId,
-    );
+    ApiResult<List<ProductEntity>> result = await productsUseCase.call(filter);
 
     switch (result) {
-      case ApiSuccessResult<CategoriesByIdEntity>():
+      case ApiSuccessResult<List<ProductEntity>>():
         emit(
-          state.copyWith(
-            categoriesByIdState: Status.success,
-            categoryById: result.data,
-          ),
+          state.copyWith(productsState: Status.success, products: result.data),
         );
-      case ApiErrorResult<CategoriesByIdEntity>():
+      case ApiErrorResult<List<ProductEntity>>():
         emit(
           state.copyWith(
-            categoriesByIdState: Status.error,
+            productsState: Status.error,
             categoriesError: result.failures.errorMessage,
           ),
         );
