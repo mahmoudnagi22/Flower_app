@@ -20,6 +20,7 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             const Expanded(flex: 4, child: CustomSearch()),
@@ -27,8 +28,9 @@ class CategoriesScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 width: 64.w,
-                height: 48.h,
+                height: 45.h,
                 decoration: BoxDecoration(
+                  //color: Colors.yellowAccent,
                   border: Border.all(color: ColorManager.gray),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
@@ -38,6 +40,7 @@ class CategoriesScreen extends StatelessWidget {
                     width: 18.w,
                     height: 12.h,
                     fit: BoxFit.contain,
+
                   ),
                 ),
 
@@ -156,7 +159,7 @@ class CategoriesScreen extends StatelessWidget {
                                                   "EGP ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
-                                                    fontSize: 14.sp,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),

@@ -13,6 +13,8 @@ import 'package:injectable/injectable.dart';
 import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/home/categories/domain/entities/product_filter.dart';
 
+import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
+
 @singleton
 class ApiManager {
   final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
@@ -320,6 +322,39 @@ class ApiManager {
         failures: ServerError(
           errorMessage: e.message ?? 'An unexpected error occurred',
         ),
+      );
+    }
+  }
+
+
+
+//TODO:====================== Function IS home tab =======
+  Future<ApiResult<HomeDataResponse>> homeTab() async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+          failures: NetworkError(errorMessage: 'Please Check your internet'));
+    }
+    try {
+      final response = await getRequest(AppConstants.baseUrl + AppConstants.homeTab);
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(
+              data: HomeDataResponse.fromJson(response.data));
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+            errorMessage: e.message ?? 'An unexpected error occurred'),
       );
     }
   }

@@ -25,9 +25,12 @@ class OccasionScreen extends StatelessWidget {
           children: [
             15.verticalSpace,
             const Text('Occasion'),
-            Text(
-              'Bloom with our exquisite best sellers',
-              style: TextStyle(fontSize: 13, color: ColorManager.gray),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                'Bloom with our exquisite best sellers',
+                style: TextStyle(fontSize: 13, color: ColorManager.gray),
+              ),
             ),
           ],
         ),
@@ -141,7 +144,7 @@ class OccasionScreen extends StatelessWidget {
                                                   "EGP ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
-                                                    fontSize: 14.sp,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
