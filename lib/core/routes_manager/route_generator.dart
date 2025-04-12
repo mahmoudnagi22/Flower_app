@@ -1,6 +1,7 @@
 
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
+import 'package:flower_app/features/app_sections/cart/presentation/pages/cart_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>   const CategoriesScreen());
       case Routes.best:
         return MaterialPageRoute(builder: (_) =>   const BestSeller());
+      case Routes.cart:
+        return MaterialPageRoute(builder: (_) =>   const CartScreen());
 
       default:
         return unDefinedRoute();
