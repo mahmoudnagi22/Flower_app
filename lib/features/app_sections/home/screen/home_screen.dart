@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<HomeTabCubit, HomeStates>(
       builder: (context, state) {
         if(state is HomeLoadingStates){
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: ColorManager.appColor,));
         }
         if (state is HomeSuccessStates) {
           return Padding(
@@ -47,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Column(
                     children: [
-                      AppBarSearch(),
-                      Location(),
+                      const AppBarSearch(),
+                      const Location(),
                       TitleOfGroup(nameOfGroup: "Categories" , routesNamed:  Routes.categories,),
                       SizedBox(
                         height: 100.h,

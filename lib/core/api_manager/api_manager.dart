@@ -3,17 +3,16 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
-import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
-import '../../features/app_sections/home/categories/domain/entities/product_filter.dart';
-
+import '../../features/app_sections/categories/data/models/categories_dto.dart';
+import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
+import '../../features/app_sections/categories/domain/entities/product_filter.dart';
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
+import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
+import '../../features/app_sections/occasions/data/models/products_dto.dart';
 
 @singleton
 class ApiManager {
