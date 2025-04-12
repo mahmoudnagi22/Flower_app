@@ -1,12 +1,12 @@
 
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
-import 'package:flower_app/features/app_sections/home/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
 import 'package:flutter/material.dart';
 
-import '../../features/app_sections/home/categories/presentation/pages/categories_screen.dart';
+import '../../features/app_sections/categories/presentation/pages/categories_screen.dart';
+import '../../features/app_sections/occasions/presentation/pages/occasion_screen.dart';
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
 
 class RouteGenerator {

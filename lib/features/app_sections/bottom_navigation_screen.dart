@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'home/categories/presentation/pages/categories_screen.dart';
+import 'categories/presentation/pages/categories_screen.dart';
 import 'home/screen/home_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
