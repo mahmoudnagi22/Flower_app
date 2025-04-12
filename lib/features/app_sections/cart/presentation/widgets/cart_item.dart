@@ -134,47 +134,7 @@ class _CartItemState extends State<CartItem> {
           ),
         ),
         30.verticalSpace,
-        Row(
-          children: [
-            Text(
-              'Sub Total',
-              style: TextStyle(color: ColorManager.gray, fontSize: 16),
-            ),
-            Spacer(),
-            Text(
-              '100\$',
-              style: TextStyle(color: ColorManager.gray, fontSize: 16),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text(
-              'Sub Total',
-              style: TextStyle(color: ColorManager.gray, fontSize: 16),
-            ),
-            Spacer(),
-            Text(
-              '100\$',
-              style: TextStyle(color: ColorManager.gray, fontSize: 16),
-            ),
-          ],
-        ),
-        Divider(),
-        Row(
-          children: [
-            Text('Total',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
-            Spacer(),
-            Text(
-              '110\$',
-              style: TextStyle(color: ColorManager.black, fontSize: 16,fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        50.verticalSpace,
-        CustomButton(onPressed: () {
-          
-        }, text: 'Checkout')
+
       ],
     );
   }

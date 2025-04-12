@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/app_sections/cart/data/models/update_quantity_response_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -65,7 +66,7 @@ class ApiManager {
   Future<Response?> putRequest(
     String endpoint,
     dynamic data, {
-    Map<String, String>? headers,
+        Map<String, dynamic>? headers,
   }) async {
     try {
       Response response = await dio.put(
@@ -293,8 +294,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Categories By Id=======
   Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
-    String categoryId,
-  ) async {
+      String categoryId,) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -357,4 +357,48 @@ class ApiManager {
       );
     }
   }
+
+//TODO:====================== Function IS update quantity =======
+  Future<ApiResult<UpdateQuantityResponseDto>> updateQuantity(String cartId,
+      int quantity) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+
+    try {
+      final response = await putRequest(
+        '${AppConstants.baseUrl}${AppConstants.cart}/$cartId',
+        {
+          'quantity': quantity,
+        },
+      );
+      print('Response is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(
+            data: UpdateQuantityResponseDto.fromJson(response.data),
+          );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
 }

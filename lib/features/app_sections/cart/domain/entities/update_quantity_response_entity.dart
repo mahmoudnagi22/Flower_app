@@ -3,11 +3,11 @@ class UpdateQuantityResponseEntity {
 
   String? message;
   num? numOfCartItems;
-  Cart? cart;
+  CartEntity? cart;
 }
 
-class Cart {
-  Cart({
+class CartEntity {
+  CartEntity({
     this.id,
     this.user,
     this.cartItems,
@@ -21,7 +21,7 @@ class Cart {
 
   String? id;
   String? user;
-  List<CartItems>? cartItems;
+  List<CartItemsEntity>? cartItems;
   num? discount;
   num? totalPrice;
   num? totalPriceAfterDiscount;
@@ -30,17 +30,17 @@ class Cart {
   num? v;
 }
 
-class CartItems {
-  CartItems({this.product, this.price, this.quantity, this.id});
+class CartItemsEntity {
+  CartItemsEntity({this.product, this.price, this.quantity, this.id});
 
-  Product? product;
+  ProductEntity? product;
   num? price;
   num? quantity;
   String? id;
 }
 
-class Product {
-  Product({
+class ProductEntity {
+  ProductEntity({
     this.rateAvg,
     this.rateCount,
     this.id,

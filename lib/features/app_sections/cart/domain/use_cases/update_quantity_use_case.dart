@@ -6,7 +6,7 @@ class UpdateQuantityUseCase {
   UpdateQuantityRepo repo;
   UpdateQuantityUseCase({required this.repo});
 
-  Future<ApiResult<UpdateQuantityResponseEntity>> call(int quantity){
-    return repo.updateQuantity(quantity);
+  Future<ApiResult<UpdateQuantityResponseEntity>> call(String cartId, int quantity){
+    return repo.updateQuantity(cartId,quantity);
   }
 }

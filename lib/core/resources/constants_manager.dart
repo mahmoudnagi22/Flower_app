@@ -9,4 +9,5 @@ class AppConstants {
   static const String categories = 'categories';
   static const String products = 'products';
   static const String homeTab = 'home';
+  static const String cart = 'cart';
 }
