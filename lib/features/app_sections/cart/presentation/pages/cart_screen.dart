@@ -29,7 +29,16 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Cart (3 items)'),
+          title: BlocBuilder<CartCubit, CartState>(
+            bloc: viewModel,
+            builder: (context, state) {
+              int itemCount = 0;
+              if (state.cartStatus == Status.success) {
+                itemCount = state.cartsList?.length ?? 0;
+              }
+              return Text('Cart ($itemCount items)');
+            },
+          ),
         ),
 
         body: BlocBuilder<CartCubit, CartState>(
