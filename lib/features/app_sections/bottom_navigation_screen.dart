@@ -1,4 +1,5 @@
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
+import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,56 +8,60 @@ import 'home/categories/presentation/pages/categories_screen.dart';
 import 'home/screen/home_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
-   const BottomNavigationScreen({super.key});
+  const BottomNavigationScreen({super.key});
 
   @override
   State<BottomNavigationScreen> createState() => _BottomNavigationScreenState();
 }
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
-  int _selectedItem  =0;
+  int _selectedItem = 0;
 
   final List<Widget> _pages = [
-    BlocProvider(
-        create: (context) => HomeTabCubit(),
-        child: HomeScreen()),
+    BlocProvider(create: (context) => HomeTabCubit(), child: HomeScreen()),
     CategoriesScreen(),
     Cart(),
-    Profile(),
+    EditProfileScreen(),
   ];
   void _onItemTapped(int index) {
     setState(() {
-      _selectedItem  =index;
+      _selectedItem = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
+    return Scaffold(
       body: _pages[_selectedItem],
-      bottomNavigationBar: BottomNavigationBar(showUnselectedLabels: true,
+      bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: true,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.pink,
-        currentIndex: _selectedItem ,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined),
-            label: 'Home',),
-            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.shapes),
-            label: 'Category',),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Cart',),
-            BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',),
-
-          ]
+        currentIndex: _selectedItem,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.shapes),
+            label: 'Category',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            label: 'Profile',
+          ),
+        ],
       ),
-
-  );
-
+    );
   }
-
-
 }
+
 //for testing
 class Home extends StatelessWidget {
   const Home({super.key});
