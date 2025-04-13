@@ -1,4 +1,4 @@
-import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
+import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,14 +7,16 @@ import '../../../../../core/resources/assets_manager.dart';
 import '../../../../../core/resources/color_manager.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({super.key});
+  CartItem({super.key, required this.state});
+
+  CartState state;
 
   @override
   State<CartItem> createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
-  int quantity = 1;
+  Map<int, int> localQuantities = {};
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,13 @@ class _CartItemState extends State<CartItem> {
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: widget.state.cartsList?.length,
             itemBuilder: (context, index) {
+              final cartItem = widget.state.cartsList![index];
+
+
+              localQuantities[index] ??= cartItem.quantity as int;
+
               return Column(
                 children: [
                   Container(
@@ -41,8 +48,8 @@ class _CartItemState extends State<CartItem> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
-                          child: Image.asset(
-                            'assets/images/Image.png',
+                          child: Image.network(
+                            cartItem.product?.imgCover ?? '',
                             width: 96.w,
                             height: 101.h,
                             fit: BoxFit.fill,
@@ -52,15 +59,15 @@ class _CartItemState extends State<CartItem> {
                           child: Column(
                             children: [
                               ListTile(
-                                title: const Text(
-                                  'Red roses',
-                                  style: TextStyle(
+                                title: Text(
+                                  cartItem.product?.title ?? '',
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 subtitle: Text(
-                                  '15 Pink Rose Bouquet',
+                                  cartItem.product?.description ?? '',
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w400,
@@ -77,9 +84,9 @@ class _CartItemState extends State<CartItem> {
                               Row(
                                 children: [
                                   20.horizontalSpace,
-                                  const Text(
-                                    'EGP 600',
-                                    style: TextStyle(
+                                  Text(
+                                    cartItem.product?.price.toString() ?? '',
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14,
                                     ),
@@ -87,10 +94,10 @@ class _CartItemState extends State<CartItem> {
                                   const Spacer(),
                                   InkWell(
                                     onTap: () {
-                                      if (quantity > 1) {
-                                        quantity--;
+                                      if (localQuantities[index]! > 1) {
                                         setState(() {
-                                          quantity = quantity;
+                                          localQuantities[index] =
+                                              localQuantities[index]! - 1;
                                         });
                                       }
                                     },
@@ -100,7 +107,7 @@ class _CartItemState extends State<CartItem> {
                                   ),
                                   10.horizontalSpace,
                                   Text(
-                                    quantity.toString(),
+                                    localQuantities[index].toString(),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -109,9 +116,9 @@ class _CartItemState extends State<CartItem> {
                                   10.horizontalSpace,
                                   InkWell(
                                     onTap: () {
-                                      quantity++;
                                       setState(() {
-                                        quantity = quantity;
+                                        localQuantities[index] =
+                                            localQuantities[index]! + 1;
                                       });
                                     },
                                     child: SvgPicture.asset(
@@ -134,8 +141,8 @@ class _CartItemState extends State<CartItem> {
           ),
         ),
         30.verticalSpace,
-
       ],
     );
   }
 }
+

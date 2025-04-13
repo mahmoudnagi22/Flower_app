@@ -1,29 +1,29 @@
 part of 'cart_cubit.dart';
 
 class CartState extends Equatable {
-  final Status updateStatus;
+  final Status cartStatus;
   final String? updateError;
-  final List<CartItemsEntity>? updateList;
+  final List<CartItemsEntity>? cartsList;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [updateStatus,updateError,updateList];
+  List<Object?> get props => [cartStatus,updateError,cartsList];
 
   const CartState({
-    this.updateStatus = Status.initial,
+    this.cartStatus = Status.initial,
     this.updateError,
-    this.updateList,
+    this.cartsList,
   });
 
   CartState copyWith({
-    Status? updateStatus,
+    Status? cartStatus,
     String? updateError,
-    List<CartItemsEntity>? updateList,
+    List<CartItemsEntity>? cartsList,
   }) {
     return CartState(
-      updateStatus: updateStatus ?? this.updateStatus,
+      cartStatus: cartStatus ?? this.cartStatus,
       updateError: updateError ?? this.updateError,
-      updateList: updateList ?? this.updateList,
+      cartsList: cartsList ?? this.cartsList,
     );
   }
 }

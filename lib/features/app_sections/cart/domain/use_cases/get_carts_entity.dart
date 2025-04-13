@@ -5,9 +5,9 @@ import '../entities/cart_response_entity.dart';
 import '../repositories/update_quantity_repo.dart';
 
 @injectable
-class UpdateQuantityUseCase {
+class GetCartsUseCase {
   CartsRepo repo;
-  UpdateQuantityUseCase({required this.repo});
+  GetCartsUseCase({required this.repo});
 
   Future<ApiResult<List<CartItemsEntity>>> call(){
     return repo.getCarts();

@@ -20,21 +20,19 @@ class ApiManager {
   final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
 
   // TODO : =================== GetRequest ==============
-  Future<Response?> getRequest(
-    String endpoint, {
+  Future<Response?> getRequest(String endpoint, {
     Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       Response response = await dio.get(
         endpoint,
         queryParameters: queryParameters,
+        options: options,
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Get Error: "
-        '${error.message}',
-      );
+      print("Get Error: ${error.message}");
       return error.response;
     }
   }
@@ -411,14 +409,19 @@ class ApiManager {
     try {
       final response = await getRequest(
         AppConstants.baseUrl + AppConstants.cart,
-      );
+          options: Options(
+              headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjc4YTc4M2QzYzM3OTc0OTI3NDdjOGU2Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzcxMjc5OTd9.ey-sIWm8Z9QpiUNEfK5U-Ma5lzB2NxI7-DbKZfH1wfM',
+              }
+          )
 
+      );
+      print('response:$response');
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final List<dynamic> result = response.data['product'] ?? [];
-          final List<CartItemsDto> productsJson =
-          result.map((json) => CartItemsDto.fromJson(json)).toList();
-          return ApiSuccessResult(data: productsJson);
+          final cartItemsJson = response.data['cart']['cartItems'] as List;
+          final items = cartItemsJson.map((e) => CartItemsDto.fromJson(e)).toList();
+          return ApiSuccessResult(data: items);
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),
