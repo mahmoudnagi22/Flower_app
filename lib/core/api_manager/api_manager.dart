@@ -359,8 +359,7 @@ class ApiManager {
   }
 
 //TODO:====================== Function IS update quantity =======
-  Future<ApiResult<List<CartItemsDto>>> updateQuantity(String cartId,
-      int quantity) async {
+  Future<ApiResult<List<CartItemsDto>>> updateQuantity(String cartId,int quantity) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -402,4 +401,40 @@ class ApiManager {
     }
   }
 
+//TODO:====================== Function IS Get Carts Products =======
+  Future<ApiResult<List<CartItemsDto>>> getCartsItem() async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await getRequest(
+        AppConstants.baseUrl + AppConstants.cart,
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<CartItemsDto> productsJson =
+          result.map((json) => CartItemsDto.fromJson(json)).toList();
+          return ApiSuccessResult(data: productsJson);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
 }

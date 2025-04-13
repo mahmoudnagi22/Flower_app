@@ -3,11 +3,11 @@ import 'package:flower_app/features/app_sections/cart/domain/entities/cart_respo
 import 'package:flower_app/features/app_sections/cart/domain/repositories/update_quantity_repo.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data_sources/update_quantity_contract.dart';
+import '../data_sources/carts_contract.dart';
 
 @Injectable(as: CartsRepo)
 class CartRepoImpl implements CartsRepo {
-  UpdateQuantityContract dataSource;
+  CartsContract dataSource;
   CartRepoImpl({required this.dataSource});
   @override
   Future<ApiResult<List<CartItemsEntity>>> updateQuantity(String cartId,int quantity) {
@@ -15,9 +15,8 @@ class CartRepoImpl implements CartsRepo {
   }
 
   @override
-  Future<ApiResult<List<CartItemsEntity>>> getCarts() {
-    // TODO: implement getCarts
-    throw UnimplementedError();
+  Future<ApiResult<List<CartItemsEntity>>> getCarts() async{
+    return await dataSource.getCarts();
   }
 
 }

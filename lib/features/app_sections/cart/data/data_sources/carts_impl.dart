@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
-import 'package:flower_app/features/app_sections/cart/data/data_sources/update_quantity_contract.dart';
+import 'package:flower_app/features/app_sections/cart/data/data_sources/carts_contract.dart';
 import 'package:flower_app/features/app_sections/cart/domain/entities/cart_response_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/utils/failures.dart';
 
-@Injectable(as: UpdateQuantityContract)
-class UpdateQuantityImpl implements UpdateQuantityContract {
+@Injectable(as: CartsContract)
+class CartsImpl implements CartsContract {
   ApiManager apiManager;
 
-  UpdateQuantityImpl({required this.apiManager});
+  CartsImpl({required this.apiManager});
 
   @override
   Future<ApiResult<List<CartItemsEntity>>> updateQuantity(
@@ -27,6 +27,17 @@ class UpdateQuantityImpl implements UpdateQuantityContract {
           errorMessage: e.message ?? 'An unexpected error occurred',
         ),
       );
+    }
+  }
+
+  @override
+  Future<ApiResult<List<CartItemsEntity>>> getCarts() async {
+    try {
+      var response = await apiManager.getCartsItem();
+      return response;
+    } on DioException catch (e) {
+      return ApiErrorResult(failures: NetworkError(
+          errorMessage: e.message ?? 'An unexpected error occurred'));
     }
   }
 }
