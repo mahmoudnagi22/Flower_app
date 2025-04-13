@@ -1,27 +1,27 @@
-import '../../domain/entities/update_quantity_response_entity.dart';
+import '../../domain/entities/cart_response_entity.dart';
 
-class UpdateQuantityResponseDto extends UpdateQuantityResponseEntity {
+class UpdateQuantityResponseDto extends CartResponseEntity {
   UpdateQuantityResponseDto({super.message, super.numOfCartItems, super.cart});
 
   UpdateQuantityResponseDto.fromJson(dynamic json) {
     message = json['message'];
     numOfCartItems = json['numOfCartItems'];
-    cart = json['cart'] != null ? Cart.fromJson(json['cart']) : null;
+    cart = json['cart'] != null ? CartDto.fromJson(json['cart']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['message'] = message;
     map['numOfCartItems'] = numOfCartItems;
-    if (cart != null && cart is Cart) {
-      map['cart'] = (cart as Cart).toJson();
+    if (cart != null && cart is CartDto) {
+      map['cart'] = (cart as CartDto).toJson();
     }
     return map;
   }
 }
 
-class Cart extends CartEntity {
-  Cart({
+class CartDto extends CartEntity {
+  CartDto({
     super.id,
     super.user,
     super.cartItems,
@@ -33,13 +33,13 @@ class Cart extends CartEntity {
     super.v,
   });
 
-  Cart.fromJson(dynamic json) {
+  CartDto.fromJson(dynamic json) {
     id = json['_id'];
     user = json['user'];
     if (json['cartItems'] != null) {
       cartItems = [];
       json['cartItems'].forEach((v) {
-        cartItems?.add(CartItems.fromJson(v));
+        cartItems?.add(CartItemsDto.fromJson(v));
       });
     }
     discount = json['discount'];
@@ -55,7 +55,7 @@ class Cart extends CartEntity {
     map['_id'] = id;
     map['user'] = user;
     if (cartItems != null) {
-      map['cartItems'] = cartItems?.map((v) => (v as CartItems).toJson()).toList();
+      map['cartItems'] = cartItems?.map((v) => (v as CartItemsDto).toJson()).toList();
     }
     map['discount'] = discount;
     map['totalPrice'] = totalPrice;
@@ -67,10 +67,10 @@ class Cart extends CartEntity {
   }
 }
 
-class CartItems extends CartItemsEntity {
-  CartItems({super.product, super.price, super.quantity, super.id});
+class CartItemsDto extends CartItemsEntity {
+  CartItemsDto({super.product, super.price, super.quantity, super.id});
 
-  CartItems.fromJson(dynamic json) {
+  CartItemsDto.fromJson(dynamic json) {
     product =
     json['product'] != null ? Product.fromJson(json['product']) : null;
     price = json['price'];

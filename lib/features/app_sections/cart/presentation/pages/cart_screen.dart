@@ -1,5 +1,5 @@
 import 'package:flower_app/core/di/di.dart';
-import 'package:flower_app/features/app_sections/cart/presentation/cubit/update_quantity_cubit.dart';
+import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,7 +11,7 @@ import '../widgets/location.dart';
 class CartScreen extends StatelessWidget {
    CartScreen({super.key});
 
-  UpdateQuantityCubit viewModel = getIt.get<UpdateQuantityCubit>();
+  CartCubit viewModel = getIt.get<CartCubit>();
 
   @override
   Widget build(BuildContext context) {

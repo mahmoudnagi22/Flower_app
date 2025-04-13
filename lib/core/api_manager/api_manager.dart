@@ -359,7 +359,7 @@ class ApiManager {
   }
 
 //TODO:====================== Function IS update quantity =======
-  Future<ApiResult<UpdateQuantityResponseDto>> updateQuantity(String cartId,
+  Future<ApiResult<List<CartItemsDto>>> updateQuantity(String cartId,
       int quantity) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -379,9 +379,10 @@ class ApiManager {
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          return ApiSuccessResult(
-            data: UpdateQuantityResponseDto.fromJson(response.data),
-          );
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<CartItemsDto> productJson = result.map((json) =>
+              CartItemsDto.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),

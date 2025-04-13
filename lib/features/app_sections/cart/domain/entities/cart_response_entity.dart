@@ -1,5 +1,5 @@
-class UpdateQuantityResponseEntity {
-  UpdateQuantityResponseEntity({this.message, this.numOfCartItems, this.cart});
+class CartResponseEntity {
+  CartResponseEntity({this.message, this.numOfCartItems, this.cart});
 
   String? message;
   num? numOfCartItems;

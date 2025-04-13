@@ -1,26 +1,26 @@
-part of 'update_quantity_cubit.dart';
+part of 'cart_cubit.dart';
 
-class UpdateQuantityState extends Equatable{
+class CartState extends Equatable {
   final Status updateStatus;
   final String? updateError;
-  final UpdateQuantityResponseEntity? updateList;
+  final List<CartItemsEntity>? updateList;
 
   @override
   // TODO: implement props
   List<Object?> get props => [updateStatus,updateError,updateList];
 
-  const UpdateQuantityState({
-     this.updateStatus = Status.initial,
+  const CartState({
+    this.updateStatus = Status.initial,
     this.updateError,
     this.updateList,
   });
 
-  UpdateQuantityState copyWith({
+  CartState copyWith({
     Status? updateStatus,
     String? updateError,
-    UpdateQuantityResponseEntity? updateList,
+    List<CartItemsEntity>? updateList,
   }) {
-    return UpdateQuantityState(
+    return CartState(
       updateStatus: updateStatus ?? this.updateStatus,
       updateError: updateError ?? this.updateError,
       updateList: updateList ?? this.updateList,

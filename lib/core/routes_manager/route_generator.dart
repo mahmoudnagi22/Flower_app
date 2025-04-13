@@ -26,7 +26,7 @@ class RouteGenerator {
       case Routes.best:
         return MaterialPageRoute(builder: (_) =>   const BestSeller());
       case Routes.cart:
-        return MaterialPageRoute(builder: (_) =>   const CartScreen());
+        return MaterialPageRoute(builder: (_) => CartScreen());
 
       default:
         return unDefinedRoute();

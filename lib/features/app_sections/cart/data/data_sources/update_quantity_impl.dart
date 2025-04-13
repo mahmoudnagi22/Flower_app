@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/features/app_sections/cart/data/data_sources/update_quantity_contract.dart';
-import 'package:flower_app/features/app_sections/cart/domain/entities/update_quantity_response_entity.dart';
+import 'package:flower_app/features/app_sections/cart/domain/entities/cart_response_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/utils/failures.dart';
@@ -14,7 +14,7 @@ class UpdateQuantityImpl implements UpdateQuantityContract {
   UpdateQuantityImpl({required this.apiManager});
 
   @override
-  Future<ApiResult<UpdateQuantityResponseEntity>> updateQuantity(
+  Future<ApiResult<List<CartItemsEntity>>> updateQuantity(
     String cartId,
     int quantity,
   ) async {
