@@ -57,7 +57,15 @@ import '../../features/auth/signUp/domain/use_cases/signup_use_case.dart'
     as _i211;
 import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
     as _i959;
+import '../../features/localization/data/data_source/data_source.dart' as _i254;
+import '../../features/localization/data/data_source_impl/data_source_impl.dart'
+    as _i178;
+import '../../features/localization/domain/use_cases/get_language.dart'
+    as _i702;
+import '../../features/localization/domain/use_cases/set_language.dart'
+    as _i565;
 import '../api_manager/api_manager.dart' as _i266;
+import '../cubits/local_cubit/local_cubit.dart' as _i691;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -69,6 +77,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
+    gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
+    gh.factory<_i702.GetLanguageUseCase>(
+      () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
+    );
+    gh.factory<_i565.SetLanguageUseCase>(
+      () => _i565.SetLanguageUseCase(gh<_i254.LocalDataSource>()),
+    );
     gh.factory<_i510.CategoriesDataSourceContract>(
       () => _i337.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
@@ -90,6 +105,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i234.SignupRepoImpl(
         remoteSignupDataSourceContract:
             gh<_i807.RemoteSignupDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i691.LocalizationCubit>(
+      () => _i691.LocalizationCubit(
+        gh<_i702.GetLanguageUseCase>(),
+        gh<_i565.SetLanguageUseCase>(),
       ),
     );
     gh.factory<_i211.SignupUseCase>(

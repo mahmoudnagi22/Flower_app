@@ -8,6 +8,7 @@ import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,7 +31,6 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     email.dispose();
     password.dispose();
@@ -38,13 +38,14 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
         leading: const Icon(Icons.arrow_back_ios_new_outlined),
         title: Text(
-          "Login",
+          lang.login,
           style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 20),
         ),
       ),
@@ -61,9 +62,9 @@ class _LoginState extends State<Login> {
                     child: BuildTextField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: email,
-                      hintText: "Enter you email",
-                      labelText: "Email",
-                      validatorMessage: "This Email is not valid",
+                      hintText: lang.enterEmail,
+                      labelText: lang.email,
+                      validatorMessage: lang.invalidEmail,
                       validation: AppValidators.validateEmail,
                     ),
                   ),
@@ -71,9 +72,9 @@ class _LoginState extends State<Login> {
                   BuildTextField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: password,
-                    labelText: "Password",
-                    hintText: "Enter you password ",
-                    validatorMessage: "Invalid password",
+                    labelText: lang.password,
+                    hintText: lang.enterPassword,
+                    validatorMessage: lang.invalidPassword,
                     validation: AppValidators.validatePassword,
                   ),
                   SizedBox(height: 15.h),
@@ -87,18 +88,14 @@ class _LoginState extends State<Login> {
                             onChanged: (value) {
                               setState(() {
                                 checkboxState = value!;
-                                // if(checkboxState = true){
-                                //   sta =CheckGetTokenTrueState ;
-                                // }
                               });
                               BlocProvider.of<LoginCubit>(
                                 context,
                               ).getToken(checkboxState);
                             },
                           ),
-                          //SizedBox(width: 0.w),
                           Text(
-                            "Remember me",
+                            lang.rememberMe,
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
@@ -110,7 +107,7 @@ class _LoginState extends State<Login> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Forget password?",
+                          lang.forgetPassword,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
@@ -133,7 +130,7 @@ class _LoginState extends State<Login> {
                         );
                       } else if (state is CheckGetTokenFalseState == false) {}
                       if (state is LoginLoadingState) {
-                        DialogUtils.showLoading(context, 'Loading ...');
+                        DialogUtils.showLoading(context, lang.loading);
                       } else if (state is LoginErrorState) {
                         DialogUtils.hideLoading(context);
                         DialogUtils.showError(context, state.massage);
@@ -164,7 +161,6 @@ class _LoginState extends State<Login> {
                       color: ColorManager.bank,
                       onPressed: () {
                         if (formState.currentState!.validate()) {
-                          // log("SOFO");
                           BlocProvider.of<LoginCubit>(context).login(
                             LoginUserResponse(
                               email: email.text,
@@ -174,7 +170,7 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: Text(
-                        "Login",
+                        lang.login,
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 16.sp,
@@ -209,11 +205,10 @@ class _LoginState extends State<Login> {
                       );
                     },
                     child: Text(
-                      "Continue as guest",
+                      lang.continueAsGuest,
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: 16.sp,
-                        // color: ColorManager.gray,
                       ),
                     ),
                   ),
@@ -222,7 +217,7 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account? ",
+                        lang.dontHaveAccount,
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w400,
                           fontSize: 16.sp,
@@ -233,17 +228,11 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                             context,
-                            Routes.bottomNav,
+                            Routes.registerRoute,
                           );
-                          // push(
-                          //   context,
-                          //   RouteGenerator.getRoute(
-                          //     RouteSettings(name: Routes.registerRoute),
-                          //   ),
-                          // );
                         },
                         child: Text(
-                          "Sign up",
+                          lang.signUp,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 16.sp,
