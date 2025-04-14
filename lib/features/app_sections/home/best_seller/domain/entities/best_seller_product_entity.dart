@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flower_app/features/app_sections/home/best_seller/data/model/best_seller_model.dart';
 
-class BestSellerProductEntity {
+class BestSellerProductEntity extends Equatable {
   final String id;
   final String title;
   final String slug;
@@ -19,7 +20,7 @@ class BestSellerProductEntity {
   final double rateAvg;
   final int rateCount;
 
-  BestSellerProductEntity({
+  const BestSellerProductEntity({
     required this.id,
     required this.title,
     required this.slug,
@@ -60,4 +61,25 @@ class BestSellerProductEntity {
       rateCount: model.rateCount,
     );
   }
+
+  @override
+  List<Object> get props => [
+    id,
+    title,
+    slug,
+    description,
+    imgCover,
+    images,
+    price,
+    priceAfterDiscount,
+    quantity,
+    category,
+    occasion,
+    createdAt,
+    updatedAt,
+    discount,
+    sold,
+    rateAvg,
+    rateCount,
+  ];
 }

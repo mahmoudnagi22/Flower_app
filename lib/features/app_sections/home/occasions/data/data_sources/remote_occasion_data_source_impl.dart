@@ -28,7 +28,8 @@ class RemoteOccasionDataSourceImpl implements RemoteOccasionDataSourceContract {
 
   @override
   Future<ApiResult<OccasionsByIdEntity>> getOccasionById(
-      String occasionId) async {
+    String occasionId,
+  ) async {
     try {
       return await apiManager.getOccasionById(occasionId);
     } on DioException catch (e) {
