@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final IconButton? icon;
   final TextEditingController controller;
   final String? Function(String?)? validator;
@@ -20,7 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.readOnly = false,
     required this.labelText,
-    required this.hintText,
+    this.hintText,
     required this.keyboardType,
     this.icon,
     this.isObscure = false,
@@ -49,9 +49,10 @@ class CustomTextFormField extends StatelessWidget {
             labelText: labelText,
             hintText: hintText,
             hintStyle: const TextStyle(
-                fontSize: 14,
-                color: Color(0xffa6a6a6),
-                fontWeight: FontWeight.w400),
+              fontSize: 14,
+              color: Color(0xffa6a6a6),
+              fontWeight: FontWeight.w400,
+            ),
             labelStyle: const TextStyle(color: Colors.black),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             filled: true,
