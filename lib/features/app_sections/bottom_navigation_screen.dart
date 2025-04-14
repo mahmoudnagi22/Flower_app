@@ -1,5 +1,10 @@
+import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'categories/presentation/pages/categories_screen.dart';
+import 'home/screen/home_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
    const BottomNavigationScreen({super.key});
@@ -11,9 +16,11 @@ class BottomNavigationScreen extends StatefulWidget {
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   int _selectedItem  =0;
 
-  final List<Widget> _pages = const[
-    Home(),
-    Category(),
+  final List<Widget> _pages = [
+    BlocProvider(
+        create: (context) => HomeTabCubit(),
+        child: HomeScreen()),
+    CategoriesScreen(),
     Cart(),
     Profile(),
   ];
