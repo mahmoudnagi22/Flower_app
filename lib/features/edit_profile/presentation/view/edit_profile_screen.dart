@@ -1,6 +1,7 @@
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
+import 'package:flower_app/features/edit_profile/presentation/view/widgets/custom_radio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,6 +22,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool isObscurePassword = true;
   bool isObscureConfirmPassword = true;
+  String selectedGender = 'Female';
 
   @override
   Widget build(BuildContext context) {
@@ -62,95 +64,122 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  CircleAvatar(
-                    radius: 40.r,
-                    backgroundImage: const NetworkImage(
-                      'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    CircleAvatar(
+                      radius: 40.r,
+                      backgroundImage: const NetworkImage(
+                        'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
+                      ),
                     ),
-                  ),
-                  InkWell(
+                    InkWell(
+                      onTap: () {},
+                      child: Image.asset('assets/images/Camera.png'),
+                    ),
+                  ],
+                ),
+                15.verticalSpace,
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextFormField(
+                        readOnly: false,
+                        controller: firstNameController,
+                        labelText: "First Name",
+                        hintText: "Enter first name",
+                        keyboardType: TextInputType.text,
+                        validator:
+                            (value) => AppValidators.validateFullName(value),
+                      ),
+                    ),
+                    10.horizontalSpace,
+                    Expanded(
+                      child: CustomTextFormField(
+                        readOnly: false,
+                        controller: lastNameController,
+                        labelText: "Last Name",
+                        hintText: "Enter last name",
+                        keyboardType: TextInputType.text,
+                        validator:
+                            (value) => AppValidators.validateFullName(value),
+                      ),
+                    ),
+                    10.verticalSpace,
+                  ],
+                ),
+                15.verticalSpace,
+                CustomTextFormField(
+                  readOnly: false,
+                  controller: emailController,
+                  labelText: "Email",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) => AppValidators.validateEmail(value),
+                ),
+                15.verticalSpace,
+                CustomTextFormField(
+                  readOnly: false,
+                  controller: phoneController,
+                  labelText: "Phone number",
+                  hintText: "Enter your Phone number",
+                  keyboardType: TextInputType.phone,
+                  validator:
+                      (value) => AppValidators.validatePhoneNumber(value),
+                ),
+                15.verticalSpace,
+                CustomTextFormField(
+                  readOnly: false,
+                  controller: passwordController,
+                  labelText: "Password",
+                  hintText: "Enter Password",
+                  isObscure: isObscurePassword,
+                  keyboardType: TextInputType.visiblePassword,
+                  suffix: InkWell(
                     onTap: () {},
-                    child: Image.asset('assets/images/Camera.png'),
-                  ),
-                ],
-              ),
-              15.verticalSpace,
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextFormField(
-                      readOnly: false,
-                      controller: firstNameController,
-                      labelText: "First Name",
-                      hintText: "Enter first name",
-                      keyboardType: TextInputType.text,
-                      validator:
-                          (value) => AppValidators.validateFullName(value),
-                    ),
-                  ),
-                  10.horizontalSpace,
-                  Expanded(
-                    child: CustomTextFormField(
-                      readOnly: false,
-                      controller: lastNameController,
-                      labelText: "Last Name",
-                      hintText: "Enter last name",
-                      keyboardType: TextInputType.text,
-                      validator:
-                          (value) => AppValidators.validateFullName(value),
-                    ),
-                  ),
-                  10.verticalSpace,
-                ],
-              ),
-              15.verticalSpace,
-              CustomTextFormField(
-                readOnly: false,
-                controller: emailController,
-                labelText: "Email",
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) => AppValidators.validateEmail(value),
-              ),
-              15.verticalSpace,
-              CustomTextFormField(
-                readOnly: false,
-                controller: phoneController,
-                labelText: "Phone number",
-                hintText: "Enter your Phone number",
-                keyboardType: TextInputType.phone,
-                validator: (value) => AppValidators.validatePhoneNumber(value),
-              ),
-              15.verticalSpace,
-              CustomTextFormField(
-                readOnly: false,
-                controller: passwordController,
-                labelText: "Password",
-                hintText: "Enter Password",
-                isObscure: isObscurePassword,
-                keyboardType: TextInputType.visiblePassword,
-                suffix: InkWell(
-                  onTap: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Text(
-                      'Change',
-                      style: TextStyle(
-                        color: ColorManager.appColor,
-                        fontWeight: FontWeight.w500,
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 8),
+                      child: Text(
+                        'Change',
+                        style: TextStyle(
+                          color: ColorManager.appColor,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
+                  validator: (value) => AppValidators.validatePassword(value),
                 ),
-                validator: (value) => AppValidators.validatePassword(value),
-              ),
-              15.verticalSpace,
-            ],
+                15.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text('Gender', style: TextStyle(fontSize: 16)),
+                    CustomRadio(
+                      gender: 'Female',
+                      selectedGender: selectedGender,
+                      onTap: () {
+                        setState(() {
+                          selectedGender = 'Female';
+                        });
+                      },
+                    ),
+                    CustomRadio(
+                      gender: 'Male',
+                      selectedGender: selectedGender,
+                      onTap: () {
+                        setState(() {
+                          selectedGender = 'Male';
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
