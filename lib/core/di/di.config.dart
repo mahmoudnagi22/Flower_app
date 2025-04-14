@@ -24,6 +24,18 @@ import '../../features/app_sections/categories/domain/use_cases/get_categories_u
     as _i66;
 import '../../features/app_sections/categories/presentation/cubit/categories_cubit.dart'
     as _i776;
+import '../../features/app_sections/home/best_seller/data/data_sources/contract/best_seller_data_socurce_contract.dart'
+    as _i776;
+import '../../features/app_sections/home/best_seller/data/data_sources/remote/best_seller_data_source_remote.dart'
+    as _i919;
+import '../../features/app_sections/home/best_seller/data/repositories/best_seller_repo_impl.dart'
+    as _i0;
+import '../../features/app_sections/home/best_seller/domain/repositories/get_best_seller_product_repo.dart'
+    as _i31;
+import '../../features/app_sections/home/best_seller/domain/use_case/get_best_seller_use_case.dart'
+    as _i382;
+import '../../features/app_sections/home/best_seller/presentation/cubit/best_seller_cubit.dart'
+    as _i632;
 import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
     as _i449;
 import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
@@ -69,6 +81,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
+    gh.factory<_i776.BestSellerDataSourceContract>(
+      () => _i919.BestSellerDataSourceRemote(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i510.CategoriesDataSourceContract>(
       () => _i337.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
@@ -81,6 +96,9 @@ extension GetItInjectableX on _i174.GetIt {
         loginDataSource: gh<_i1040.LoginDataSource>(),
       ),
     );
+    gh.factory<_i31.GetBestSellerProductRepo>(
+      () => _i0.BestSellerRepoImpl(gh<_i776.BestSellerDataSourceContract>()),
+    );
     gh.factory<_i449.RemoteOccasionDataSourceContract>(
       () => _i683.RemoteOccasionDataSourceImpl(
         apiManager: gh<_i266.ApiManager>(),
@@ -91,6 +109,9 @@ extension GetItInjectableX on _i174.GetIt {
         remoteSignupDataSourceContract:
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
+    );
+    gh.factory<_i382.GetBestSellerUseCase>(
+      () => _i382.GetBestSellerUseCase(gh<_i31.GetBestSellerProductRepo>()),
     );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
@@ -108,6 +129,9 @@ extension GetItInjectableX on _i174.GetIt {
         remoteOccasionDataSourceContract:
             gh<_i449.RemoteOccasionDataSourceContract>(),
       ),
+    );
+    gh.factory<_i632.BestSellerCubit>(
+      () => _i632.BestSellerCubit(gh<_i382.GetBestSellerUseCase>()),
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
