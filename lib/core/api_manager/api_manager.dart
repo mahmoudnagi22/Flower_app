@@ -3,393 +3,177 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart';
+import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart';
+import 'package:flower_app/features/app_sections/categories/domain/entities/product_filter.dart';
 import 'package:flower_app/features/app_sections/home/best_seller/data/model/best_seller_model.dart';
-import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart';
-import 'package:flower_app/features/app_sections/home/categories/data/models/category_by_id_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_by_id_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart';
+import 'package:flower_app/features/app_sections/home/data/model/HomeDataResponse.dart';
+import 'package:flower_app/features/app_sections/occasions/data/models/occasions_dto.dart';
+import 'package:flower_app/features/app_sections/occasions/data/models/products_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../features/app_sections/categories/data/models/categories_dto.dart';
-import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
-import '../../features/app_sections/categories/domain/entities/product_filter.dart';
-import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
-import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
-import '../../features/app_sections/occasions/data/models/products_dto.dart';
 
 @singleton
 class ApiManager {
   final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
 
-  // Centralized method for handling request responses
+  // Centralized network checker
+  Future<bool> _isConnected() async {
+    final result = await Connectivity().checkConnectivity();
+    return result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.vpn;
+  }
+
+  // Centralized request handler
   Future<ApiResult<T>> _handleRequest<T>(
-    Future<Response?> request,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+      Future<Response?> request,
+      T Function(Map<String, dynamic>) fromJson,
+      ) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
-        failures: NetworkError(
-          errorMessage: 'Please check your internet connection',
-        ),
+        failures: NetworkError(errorMessage: 'Please check your internet connection'),
       );
     }
 
     try {
       final response = await request;
-
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return ApiSuccessResult(data: fromJson(response.data));
         } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data.toString()),
-          );
+          return ApiErrorResult(failures: ServerError(errorMessage: response.data.toString()));
         }
       } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
+        return ApiErrorResult(failures: ServerError(errorMessage: 'No response from server'));
       }
     } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
+      return ApiErrorResult(failures: ServerError(errorMessage: e.message ?? 'Unexpected error'));
     }
   }
-  // TODO : getOccasions = > Method
 
-  Future<ApiResult<List<OccasionsDto>>> getOccasions() async {
-    return _handleRequest<List<OccasionsDto>>(
-      getRequest(AppConstants.baseUrl + AppConstants.occasions),
-      (data) {
-        final List<dynamic> occasionsJson = data['occasions'] ?? [];
-        return occasionsJson
-            .map((json) => OccasionsDto.fromJson(json))
-            .toList();
-      },
-    );
-  }
-
-  // TODO : getBestSellerProduct = > Method
-  Future<ApiResult<List<ProductModel>>> getBestSellers() async {
-    return _handleRequest<List<ProductModel>>(
-      getRequest(AppConstants.baseUrl + AppConstants.bestSeller),
-      (data) {
-        final List<dynamic> bestSellerJson = data['bestSeller'] ?? [];
-        return bestSellerJson
-            .map((productJson) => ProductModel.fromJson(productJson))
-            .toList();
-      },
-    );
-  }
-
-  //TODO: Method to check internet connectivity
-  Future<bool> _isConnected() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    return connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.vpn;
-  }
-
-  // TODO : signup = > Method
-  Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
-    return _handleRequest<SignupResponseDto>(
-      postRequest(AppConstants.baseUrl + AppConstants.sinUp, signup.toJson()),
-      (data) => SignupResponseDto.fromJson(data),
-    );
-  }
-
-  //TODO: Common GET request method
-  Future<Response?> getRequest(
-    String endpoint, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
+  // GET method
+  Future<Response?> getRequest(String endpoint, {Map<String, dynamic>? queryParameters}) async {
     try {
       return await dio.get(endpoint, queryParameters: queryParameters);
     } on DioException catch (error) {
-      print("Get Error: ${error.message}");
+      print("GET Error: ${error.message}");
       return error.response;
     }
   }
 
-  //TODO: Simplified POST request method
-  Future<Response?> postRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+  // POST method
+  Future<Response?> postRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
     try {
-      return await dio.post(
-        endpoint,
-        data: data,
-        options: Options(headers: headers),
-      );
-      return response;
+      return await dio.post(endpoint, data: data, options: Options(headers: headers));
     } on DioException catch (error) {
-      print("Post Error: ${error.message}");
+      print("POST Error: ${error.message}");
       return error.response;
     }
   }
 
-  // TODO : getOccasionById = > Method
-  Future<ApiResult<OccasionsByIdDto>> getOccasionById(String occasionId) async {
-    return _handleRequest<OccasionsByIdDto>(
-      getRequest(
-        '${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId',
-      ),
-      (data) => OccasionsByIdDto.fromJson(data),
-    );
-  // TODO : =================== PutRequest ==============
-  Future<Response?> putRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+  // PUT method
+  Future<Response?> putRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.put(
-        endpoint,
-        data: data,
-        options: Options(headers: headers),
-      );
-      return response;
+      return await dio.put(endpoint, data: data, options: Options(headers: headers));
     } on DioException catch (error) {
-      print(
-        "Put Error: "
-        '${error.message}',
-      );
+      print("PUT Error: ${error.message}");
       return error.response;
     }
   }
 
-  // TODO : =================== PatchRequest ==============
-  Future<Response?> patchRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+  // PATCH method
+  Future<Response?> patchRequest(String endpoint, dynamic data, {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.patch(
-        endpoint,
-        data: data,
-        options: Options(headers: headers),
-      );
-      return response;
+      return await dio.patch(endpoint, data: data, options: Options(headers: headers));
     } on DioException catch (error) {
-      print(
-        "Patch Error: "
-        '${error.message}',
-      );
+      print("PATCH Error: ${error.message}");
       return error.response;
     }
   }
 
-  // TODO : =================== DeleteRequest ==============
-  Future<Response?> deleteRequest(
-    String endpoint, {
-    Map<String, String>? headers,
-  }) async {
+  // DELETE method
+  Future<Response?> deleteRequest(String endpoint, {Map<String, String>? headers}) async {
     try {
-      Response response = await dio.delete(
-        endpoint,
-        options: Options(headers: headers),
-      );
-      return response;
+      return await dio.delete(endpoint, options: Options(headers: headers));
     } on DioException catch (error) {
-      print(
-        "Delete Error: "
-        '${error.message}',
-      );
+      print("DELETE Error: ${error.message}");
       return error.response;
     }
   }
 
-  //TODO:====================== Function IS Connected =======
-  Future<bool> _isConnected() async {
-    final List<ConnectivityResult> connectivityResult =
-        await Connectivity().checkConnectivity();
-    return connectivityResult.contains(ConnectivityResult.mobile) ||
-        connectivityResult.contains(ConnectivityResult.wifi) ||
-        connectivityResult.contains(ConnectivityResult.vpn);
-  }
+  // ==================== API METHODS ====================
 
-  //TODO:====================== Function IS SignUp =======
   Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
-    if (!await _isConnected()) {
-      return ApiErrorResult(
-        failures: NetworkError(errorMessage: 'Please Check your internet'),
-      );
-    }
-    try {
-      final response = await postRequest(
-        AppConstants.baseUrl + AppConstants.sinUp,
-        signup.toJson(),
-      );
-
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          return ApiSuccessResult(
-            data: SignupResponseDto.fromJson(response.data),
-          );
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data.toString()),
-          );
-        }
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
-    }
+    return _handleRequest(
+      postRequest(AppConstants.baseUrl + AppConstants.sinUp, signup.toJson()),
+          (data) => SignupResponseDto.fromJson(data),
+    );
   }
 
-  //TODO:====================== Function IS Get Occasion =======
   Future<ApiResult<List<OccasionsDto>>> getOccasions() async {
-    if (!await _isConnected()) {
-      return ApiErrorResult(
-        failures: NetworkError(errorMessage: 'Please Check your internet'),
-      );
-    }
-    try {
-      final response = await getRequest(
-        AppConstants.baseUrl + AppConstants.occasions,
-      );
-
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final List<dynamic> occasionsJson = response.data['occasions'] ?? [];
-          final List<OccasionsDto> occasionsList =
-              occasionsJson.map((json) => OccasionsDto.fromJson(json)).toList();
-          return ApiSuccessResult(data: occasionsList);
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data.toString()),
-          );
-        }
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
-    }
-  }
-
-  //TODO:====================== Function IS Get Products By Id=======
-  Future<ApiResult<List<ProductDto>>> getProducts(ProductFilter filter) async {
-    if (!await _isConnected()) {
-      return ApiErrorResult(
-        failures: NetworkError(
-          errorMessage: 'Please check your internet connection',
-        ),
-      );
-    }
-
-    try {
-      final Map<String, dynamic> queryParameters = {};
-
-      if (filter.occasionId != null) {
-        queryParameters['occasion'] = filter.occasionId;
-      }
-
-      if (filter.categoryId != null) {
-        queryParameters['category'] = filter.categoryId;
-      }
-
-      final response = await getRequest(
-        '${AppConstants.baseUrl}${AppConstants.products}/',
-        queryParameters: queryParameters,
-      );
-
-      if (response!.statusCode! >= 200 && response.statusCode! < 300) {
-        final List<dynamic> productsJson = response.data['products'] ?? [];
-        final List<ProductDto> productsList =
-        productsJson.map((json) => ProductDto.fromJson(json)).toList();
-        return ApiSuccessResult(data: productsList);
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: response.data.toString()),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
-    }
-  }
-  // TODO : getCategories = > Method
-
-  Future<ApiResult<List<CategoryDto>>> getCategories() async {
-    return _handleRequest<List<CategoryDto>>(
-      getRequest(AppConstants.baseUrl + AppConstants.categories),
-      (data) {
-        final List<dynamic> categoriesJson = data['categories'] ?? [];
-        return categoriesJson
-            .map((json) => CategoryDto.fromJson(json))
-            .toList();
+    return _handleRequest(
+      getRequest(AppConstants.baseUrl + AppConstants.occasions),
+          (data) {
+        final List<dynamic> jsonList = data['occasions'] ?? [];
+        return jsonList.map((e) => OccasionsDto.fromJson(e)).toList();
       },
     );
   }
-  // TODO : getCategoriesById = > Method
 
-  Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
-    String categoryId,
-  ) async {
-    return _handleRequest<CategoriesByIdDto>(
-      getRequest(
-        '${AppConstants.baseUrl}${AppConstants.categories}/$categoryId',
-      ),
-      (data) => CategoriesByIdDto.fromJson(data),
+  Future<ApiResult<List<ProductModel>>> getBestSellers() async {
+    return _handleRequest(
+      getRequest(AppConstants.baseUrl + AppConstants.bestSeller),
+          (data) {
+        final List<dynamic> jsonList = data['bestSeller'] ?? [];
+        return jsonList.map((e) => ProductModel.fromJson(e)).toList();
+      },
     );
   }
 
+  Future<ApiResult<OccasionDto>> getOccasionById(String occasionId) async {
+    return _handleRequest(
+      getRequest('${AppConstants.baseUrl}${AppConstants.occasions}/$occasionId'),
+          (data) => OccasionDto.fromJson(data),
+    );
+  }
 
+  Future<ApiResult<List<ProductDto>>> getProducts(ProductFilter filter) async {
+    final Map<String, dynamic> queryParameters = {};
+    if (filter.occasionId != null) queryParameters['occasion'] = filter.occasionId;
+    if (filter.categoryId != null) queryParameters['category'] = filter.categoryId;
 
-//TODO:====================== Function IS home tab =======
+    return _handleRequest(
+      getRequest('${AppConstants.baseUrl}${AppConstants.products}/', queryParameters: queryParameters),
+          (data) {
+        final List<dynamic> jsonList = data['products'] ?? [];
+        return jsonList.map((e) => ProductDto.fromJson(e)).toList();
+      },
+    );
+  }
+
+  Future<ApiResult<List<CategoryDto>>> getCategories() async {
+    return _handleRequest(
+      getRequest(AppConstants.baseUrl + AppConstants.categories),
+          (data) {
+        final List<dynamic> jsonList = data['categories'] ?? [];
+        return jsonList.map((e) => CategoryDto.fromJson(e)).toList();
+      },
+    );
+  }
+
+  Future<ApiResult<CategoriesByIdDto>> getCategoriesById(String categoryId) async {
+    return _handleRequest(
+      getRequest('${AppConstants.baseUrl}${AppConstants.categories}/$categoryId'),
+          (data) => CategoriesByIdDto.fromJson(data),
+    );
+  }
+
   Future<ApiResult<HomeDataResponse>> homeTab() async {
-    if (!await _isConnected()) {
-      return ApiErrorResult(
-          failures: NetworkError(errorMessage: 'Please Check your internet'));
-    }
-    try {
-      final response = await getRequest(AppConstants.baseUrl + AppConstants.homeTab);
-
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          return ApiSuccessResult(
-              data: HomeDataResponse.fromJson(response.data));
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data.toString()),
-          );
-        }
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-            errorMessage: e.message ?? 'An unexpected error occurred'),
-      );
-    }
+    return _handleRequest(
+      getRequest(AppConstants.baseUrl + AppConstants.homeTab),
+          (data) => HomeDataResponse.fromJson(data),
+    );
   }
 }
