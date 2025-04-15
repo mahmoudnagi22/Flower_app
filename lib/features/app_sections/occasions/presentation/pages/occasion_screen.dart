@@ -10,6 +10,8 @@ import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class OccasionScreen extends StatelessWidget {
   OccasionScreen({super.key});
@@ -18,13 +20,14 @@ class OccasionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.verticalSpace,
-            const Text('Occasion'),
+             Text(lang!.occasions),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
@@ -141,7 +144,7 @@ class OccasionScreen extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "EGP ${state.products![index].priceAfterDiscount}",
+                                                  "${lang.currency} ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
                                                     fontSize: 12.sp,
@@ -196,7 +199,7 @@ class OccasionScreen extends StatelessWidget {
                                                   ),
                                                   SizedBox(width: 8.w),
                                                   Text(
-                                                    "Add to cart",
+                                                    lang.addToCart,
                                                     style: TextStyle(
                                                       color: ColorManager.white,
                                                       fontSize: 13.sp,
