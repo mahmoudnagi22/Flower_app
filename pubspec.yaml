@@ -52,7 +52,6 @@ dependencies:
   mockito: ^5.4.5
   injectable: ^2.5.0
   equatable: ^2.0.7
-  
 
 
 dev_dependencies:
@@ -67,6 +66,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  json_serializable: ^6.9.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

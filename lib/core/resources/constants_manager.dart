@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   static const String baseUrl = 'https://flower.elevateegy.com/api/v1/';
   static const String sinUp = 'auth/signup';
@@ -7,5 +9,4 @@ class AppConstants {
   static const String categories = 'categories';
   static const String products = 'products';
   static const String homeTab = 'home';
-  static const String bestSeller = 'best-seller';
 }
