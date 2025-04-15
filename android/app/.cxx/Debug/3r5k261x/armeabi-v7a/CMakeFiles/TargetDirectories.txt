@@ -1,2 +1,0 @@
-C:/Users/abdel/flutter_projcet/Flower_app/android/app/.cxx/Debug/3r5k261x/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/abdel/flutter_projcet/Flower_app/android/app/.cxx/Debug/3r5k261x/armeabi-v7a/CMakeFiles/rebuild_cache.dir
