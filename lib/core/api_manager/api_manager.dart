@@ -238,7 +238,7 @@ class ApiManager {
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final List<dynamic> productsJson = response.data['products'] ?? [];
         final List<ProductDto> productsList =
-        productsJson.map((json) => ProductDto.fromJson(json)).toList();
+            productsJson.map((json) => ProductDto.fromJson(json)).toList();
         return ApiSuccessResult(data: productsList);
       } else {
         return ApiErrorResult(
@@ -253,7 +253,6 @@ class ApiManager {
       );
     }
   }
-
 
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {
@@ -326,21 +325,23 @@ class ApiManager {
     }
   }
 
-
-
-//TODO:====================== Function IS home tab =======
+  //TODO:====================== Function IS home tab =======
   Future<ApiResult<HomeDataResponse>> homeTab() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
-          failures: NetworkError(errorMessage: 'Please Check your internet'));
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
     }
     try {
-      final response = await getRequest(AppConstants.baseUrl + AppConstants.homeTab);
+      final response = await getRequest(
+        AppConstants.baseUrl + AppConstants.homeTab,
+      );
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return ApiSuccessResult(
-              data: HomeDataResponse.fromJson(response.data));
+            data: HomeDataResponse.fromJson(response.data),
+          );
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),
@@ -354,7 +355,8 @@ class ApiManager {
     } on DioException catch (e) {
       return ApiErrorResult(
         failures: ServerError(
-            errorMessage: e.message ?? 'An unexpected error occurred'),
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
       );
     }
   }

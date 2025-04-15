@@ -10,12 +10,24 @@ class UserProfileModel extends UserProfileEntity {
     required super.imagePath,
   });
 
-  Map<String, dynamic> toJson() => {
-    "first_name": firstName,
-    "last_name": lastName,
-    "email": email,
-    "phone": phone,
-    "gender": gender,
-    "imagePath": imagePath,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'phone': phone,
+      'gender': gender,
+    };
+  }
+
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    return UserProfileModel(
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      email: json['email'],
+      phone: json['phone'],
+      gender: json['gender'],
+      imagePath: json['profile_image'],
+    );
+  }
 }

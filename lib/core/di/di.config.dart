@@ -57,6 +57,16 @@ import '../../features/auth/signUp/domain/use_cases/signup_use_case.dart'
     as _i211;
 import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
     as _i959;
+import '../../features/edit_profile/data/data_sources/remote_profile_datasorce_contract.dart'
+    as _i317;
+import '../../features/edit_profile/data/data_sources/remote_profile_datasource_impl.dart'
+    as _i520;
+import '../../features/edit_profile/data/repositories/profile_repo_impl.dart'
+    as _i158;
+import '../../features/edit_profile/domain/repositories/profile_repo_contract.dart'
+    as _i725;
+import '../../features/edit_profile/domain/use_cases/update_profile_usecase.dart'
+    as _i66;
 import '../api_manager/api_manager.dart' as _i266;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -69,6 +79,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
+    gh.singleton<_i317.RemoteProfileDatasorceContract>(
+      () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i725.ProfileRepoContract>(
+      () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
+    );
+    gh.factory<_i66.UpdateProfileUsecase>(
+      () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
+    );
     gh.factory<_i992.RemoteOccasionDataSourceContract>(
       () => _i783.RemoteOccasionDataSourceImpl(
         apiManager: gh<_i266.ApiManager>(),

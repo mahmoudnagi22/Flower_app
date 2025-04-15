@@ -14,6 +14,8 @@ import 'package:flower_app/features/app_sections/home/categories/data/models/cat
     as _i13;
 import 'package:flower_app/features/app_sections/home/categories/domain/entities/product_filter.dart'
     as _i11;
+import 'package:flower_app/features/app_sections/home/data/model/HomeDataResponse.dart'
+    as _i14;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart'
     as _i9;
 import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart'
@@ -207,4 +209,17 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
                 ),
           )
           as _i4.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>);
+
+  @override
+  _i4.Future<_i5.ApiResult<_i14.HomeDataResponse>> homeTab() =>
+      (super.noSuchMethod(
+            Invocation.method(#homeTab, []),
+            returnValue: _i4.Future<_i5.ApiResult<_i14.HomeDataResponse>>.value(
+              _i8.dummyValue<_i5.ApiResult<_i14.HomeDataResponse>>(
+                this,
+                Invocation.method(#homeTab, []),
+              ),
+            ),
+          )
+          as _i4.Future<_i5.ApiResult<_i14.HomeDataResponse>>);
 }
