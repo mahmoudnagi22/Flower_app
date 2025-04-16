@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/color_manager.dart';
-import '../../../../../core/routes_manager/routes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class TitleOfGroup extends StatelessWidget {
   String nameOfGroup;
   String routesNamed;

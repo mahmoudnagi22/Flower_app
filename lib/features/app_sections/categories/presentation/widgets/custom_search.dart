@@ -1,7 +1,7 @@
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class CustomSearch extends StatelessWidget {
   const CustomSearch({super.key});

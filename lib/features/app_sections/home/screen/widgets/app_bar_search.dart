@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/resources/assets_manager.dart';
 import '../../../../../core/resources/color_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class AppBarSearch extends StatelessWidget {
   const AppBarSearch({super.key});

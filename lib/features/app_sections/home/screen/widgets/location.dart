@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/assets_manager.dart';
 
 class Location extends StatelessWidget {

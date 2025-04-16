@@ -7,13 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/di/di.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/utils/dialog_utils.dart';
 import '../../../../../core/utils/status.dart';
 import '../../../login/presentation/screens/login.dart';
 import '../cubit/signup_cubit.dart';
 import '../widgets/custom_form_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

@@ -11,7 +11,7 @@ import '../../../../../../core/utils/status.dart';
 import '../../domain/entities/product_filter.dart';
 import '../cubit/categories_cubit.dart';
 import '../widgets/custom_search.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});

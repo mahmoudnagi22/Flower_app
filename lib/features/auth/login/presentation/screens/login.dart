@@ -8,10 +8,10 @@ import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../data/model/login_user_response.dart';
 import '../cubit/login_status.dart';
 import '../widgets/text_field.dart';

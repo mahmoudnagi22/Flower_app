@@ -8,9 +8,9 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class OccasionScreen extends StatelessWidget {

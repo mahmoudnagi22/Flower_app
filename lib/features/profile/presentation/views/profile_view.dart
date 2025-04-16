@@ -1,10 +1,10 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/cubits/local_cubit/local_cubit.dart';
+import '../../../../core/l10n/app_localizations.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
