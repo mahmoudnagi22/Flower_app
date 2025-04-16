@@ -121,7 +121,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
-    gh.factory<_i303.EditProfileCubit>(
+    gh.singleton<_i303.EditProfileCubit>(
       () => _i303.EditProfileCubit(gh<_i66.UpdateProfileUsecase>()),
     );
     gh.factory<_i959.SignupCubit>(
