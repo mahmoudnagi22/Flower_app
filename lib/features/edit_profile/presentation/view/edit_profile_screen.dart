@@ -15,7 +15,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  EditProfileScreen({super.key});
+  late UserProfileEntity userProfile;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -33,6 +34,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool isObscureConfirmPassword = true;
   String selectedGender = 'Female';
   String token = 'token';
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController.text = widget.userProfile.firstName;
+    lastNameController.text = widget.userProfile.lastName;
+    emailController.text = widget.userProfile.email;
+    phoneController.text = widget.userProfile.phone;
+    selectedGender = widget.userProfile.gender;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +125,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 backgroundImage:
                                     viewModel.imageFile != null
                                         ? FileImage(viewModel.imageFile!)
-                                        : const AssetImage(
-                                          'assets/images/test.jpg',
-                                        ),
+                                        : (widget.userProfile.imagePath != null
+                                                ? NetworkImage(
+                                                  widget.userProfile.imagePath,
+                                                ) // or FileImage if local path
+                                                : const AssetImage(
+                                                  'assets/avatar.png',
+                                                ))
+                                            as ImageProvider,
                               ),
                               InkWell(
                                 onTap: () async {

@@ -27,9 +27,7 @@ class RouteGenerator {
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.editProfileRoute:
-        return MaterialPageRoute(
-          builder: (context) => const EditProfileScreen(),
-        );
+        return MaterialPageRoute(builder: (context) => EditProfileScreen());
       default:
         return unDefinedRoute();
     }
