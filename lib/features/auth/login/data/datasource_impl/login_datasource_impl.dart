@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/error/app_exceptions.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../../core/models/user_model.dart';
 import '../../../../../core/resources/constants_manager.dart';
 import '../datasource_contract/login_datasource.dart';
 import '../model/LoginResponse.dart';
@@ -19,6 +21,12 @@ class LoginDataSourceImpl implements LoginDataSource{
   Future<LoginResponse> login(LoginUserResponse parameters)async {
   try{
     var response =  await apiManager.postRequest(AppConstants.loginEndPoint , parameters.toJson());
+    UserModel.instance.setFromJson(response?.data);
+    if (parameters.rememberMe) {
+      const storage = FlutterSecureStorage();
+      await storage.write(
+          key: 'user_token', value: UserModel.instance.token);
+    }
     return LoginResponse.fromJson(response?.data);
   }catch (ex){
     String massage = ex.toString();

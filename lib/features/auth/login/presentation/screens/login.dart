@@ -83,6 +83,8 @@ class _LoginState extends State<Login> {
                       Row(
                         children: [
                           Checkbox(
+                            checkColor:Colors.white,
+                            activeColor: ColorManager.appColor ,
                             value: checkboxState,
                             onChanged: (value) {
                               setState(() {
@@ -162,6 +164,7 @@ class _LoginState extends State<Login> {
                             LoginUserResponse(
                               email: email.text,
                               password: password.text,
+                              rememberMe: checkboxState,
                             ),
                           );
                         }
