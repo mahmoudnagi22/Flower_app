@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/app_sections/categories/presentation/pages/categories_screen.dart';
 import '../../features/app_sections/occasions/presentation/pages/occasion_screen.dart';
+import '../../features/auth/login/presentation/cubit/login_cubit.dart';
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
 import '../../features/splash/domain/use_cases/get_user_data.dart';
 import '../../features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
@@ -17,7 +18,11 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) => const Login());
+        return MaterialPageRoute(builder: (_) =>
+            BlocProvider(
+              create: (context) => LoginCubit(),
+              child: const Login(),
+            ));
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
       case Routes.bottomNav:
@@ -33,7 +38,8 @@ class RouteGenerator {
       case Routes.splash:
         return MaterialPageRoute(
           builder:
-              (context) => BlocProvider(
+              (context) =>
+              BlocProvider(
                 create:
                     (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
                 child: const SplashView(),
@@ -48,7 +54,8 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
       builder:
-          (_) => Scaffold(
+          (_) =>
+          Scaffold(
             appBar: AppBar(title: const Text('No Route Found')),
             body: const Center(child: Text('No Route Found')),
           ),
