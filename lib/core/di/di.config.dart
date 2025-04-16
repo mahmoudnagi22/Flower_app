@@ -67,6 +67,8 @@ import '../../features/edit_profile/domain/repositories/profile_repo_contract.da
     as _i725;
 import '../../features/edit_profile/domain/use_cases/update_profile_usecase.dart'
     as _i66;
+import '../../features/edit_profile/presentation/view_model/edit_profile_cubit.dart'
+    as _i303;
 import '../api_manager/api_manager.dart' as _i266;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -118,6 +120,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
+    );
+    gh.factory<_i303.EditProfileCubit>(
+      () => _i303.EditProfileCubit(gh<_i66.UpdateProfileUsecase>()),
     );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
