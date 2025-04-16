@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/widget/validators.dart';
@@ -10,6 +12,7 @@ import 'package:flower_app/features/edit_profile/presentation/view_model/edit_pr
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -29,6 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool isObscurePassword = true;
   bool isObscureConfirmPassword = true;
   String selectedGender = 'Female';
+  String token = 'token';
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +111,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             children: [
                               CircleAvatar(
                                 radius: 40.r,
-                                backgroundImage: const NetworkImage(
-                                  'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
-                                ),
+                                backgroundImage:
+                                    viewModel.imageFile != null
+                                        ? FileImage(viewModel.imageFile!)
+                                        : const AssetImage(
+                                          'assets/images/test.jpg',
+                                        ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () async {
+                                  final pickedFile = await ImagePicker()
+                                      .pickImage(source: ImageSource.gallery);
+                                  if (pickedFile != null) {
+                                    viewModel.pickImage(File(pickedFile.path));
+                                  }
+                                },
                                 child: Image.asset('assets/images/Camera.png'),
                               ),
                             ],
@@ -227,8 +240,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   email: emailController.text,
                                   phone: phoneController.text,
                                   gender: selectedGender,
-                                  imagePath: 'imagePath',
+                                  imagePath: viewModel.imageFile!.path,
                                 );
+                                viewModel.updateProfile(user, token);
                               }
                             },
                             text: 'Update',
