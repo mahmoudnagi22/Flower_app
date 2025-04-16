@@ -27,13 +27,13 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
 
-
-        builder: (context, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: child,
-          onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.bottomNav,
-        ),
+        builder:
+            (context, child) => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: child,
+              onGenerateRoute: RouteGenerator.getRoute,
+              initialRoute: Routes.loginRoute,
+            ),
       ),
     );
   }

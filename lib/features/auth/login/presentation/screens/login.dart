@@ -233,7 +233,7 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                             context,
-                            Routes.bottomNav,
+                            Routes.registerRoute,
                           );
                           // push(
                           //   context,
