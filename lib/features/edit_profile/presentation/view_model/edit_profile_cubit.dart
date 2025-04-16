@@ -6,7 +6,7 @@ import 'package:flower_app/features/edit_profile/presentation/view_model/edit_pr
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class EditProfileCubit extends Cubit<EditProfileState> {
   final UpdateProfileUsecase updateProfileUsecase;
   EditProfileCubit(this.updateProfileUsecase) : super(EditProfileInitial());

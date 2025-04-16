@@ -171,6 +171,12 @@ class _LoginState extends State<Login> {
                               password: password.text,
                             ),
                           );
+                          Navigator.push(
+                            context,
+                            RouteGenerator.getRoute(
+                              RouteSettings(name: Routes.editProfileRoute),
+                            ),
+                          );
                         }
                       },
                       child: Text(

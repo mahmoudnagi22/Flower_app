@@ -3,6 +3,7 @@ import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/app_sections/home/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
+import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
 import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,12 @@ class RouteGenerator {
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.editProfileRoute:
-        return MaterialPageRoute(builder: (context) => EditProfileScreen());
+        final UserProfileEntity userProfileEntity =
+            settings.arguments as UserProfileEntity;
+        return MaterialPageRoute(
+          builder:
+              (context) => EditProfileScreen(userProfile: userProfileEntity),
+        );
       default:
         return unDefinedRoute();
     }

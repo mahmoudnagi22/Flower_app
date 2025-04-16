@@ -15,8 +15,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key});
-  late UserProfileEntity userProfile;
+  const EditProfileScreen({super.key, required this.userProfile});
+  final UserProfileEntity userProfile;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();

@@ -21,7 +21,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     BlocProvider(create: (context) => HomeTabCubit(), child: HomeScreen()),
     CategoriesScreen(),
     Cart(),
-    EditProfileScreen(),
+    Profile(),
   ];
   void _onItemTapped(int index) {
     setState(() {

@@ -1,3 +1,5 @@
+import 'package:flower_app/core/routes_manager/route_generator.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
@@ -42,13 +44,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     DialogUtils.showError(context, state.signupError ?? '');
                   } else if (state.signupState == Status.success) {
                     DialogUtils.showSuccess(
-                        context, "Operation completed successfully");
+                      context,
+                      "Operation completed successfully",
+                    );
                     Navigator.pop(context);
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BottomNavigationScreen(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BottomNavigationScreen(),
+                      ),
+                    );
                   }
                 }
               },
@@ -64,62 +69,69 @@ class _SignupScreenState extends State<SignupScreen> {
                           children: [
                             Expanded(
                               child: CustomTextFormField(
-                                  readOnly: false,
-                                  controller: viewModel.firstNameController,
-                                  labelText: "First Name",
-                                  hintText: "Enter first name",
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) =>
-                                      AppValidators.validateFullName(value)),
+                                readOnly: false,
+                                controller: viewModel.firstNameController,
+                                labelText: "First Name",
+                                hintText: "Enter first name",
+                                keyboardType: TextInputType.text,
+                                validator:
+                                    (value) =>
+                                        AppValidators.validateFullName(value),
+                              ),
                             ),
                             10.horizontalSpace,
                             Expanded(
                               child: CustomTextFormField(
-                                  readOnly: false,
-                                  controller: viewModel.lastNameController,
-                                  labelText: "Last Name",
-                                  hintText: "Enter last name",
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) =>
-                                      AppValidators.validateFullName(value)),
+                                readOnly: false,
+                                controller: viewModel.lastNameController,
+                                labelText: "Last Name",
+                                hintText: "Enter last name",
+                                keyboardType: TextInputType.text,
+                                validator:
+                                    (value) =>
+                                        AppValidators.validateFullName(value),
+                              ),
                             ),
                           ],
                         ),
                         15.verticalSpace,
                         CustomTextFormField(
-                            readOnly: false,
-                            controller: viewModel.emailController,
-                            labelText: "Email",
-                            hintText: "Enter your Email",
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) =>
-                                AppValidators.validateEmail(value)),
+                          readOnly: false,
+                          controller: viewModel.emailController,
+                          labelText: "Email",
+                          hintText: "Enter your Email",
+                          keyboardType: TextInputType.emailAddress,
+                          validator:
+                              (value) => AppValidators.validateEmail(value),
+                        ),
                         15.verticalSpace,
                         Row(
                           children: [
                             Expanded(
                               child: CustomTextFormField(
-                                  readOnly: false,
-                                  controller: viewModel.passwordController,
-                                  labelText: "Password",
-                                  hintText: "Enter Password",
-                                  isObscure: viewModel.isObscurePassword,
-                                  keyboardType: TextInputType.visiblePassword,
-                                  icon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        viewModel.isObscurePassword =
-                                            !viewModel.isObscurePassword;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      viewModel.isObscurePassword
-                                          ? Icons.visibility_off_rounded
-                                          : Icons.visibility_rounded,
-                                    ),
+                                readOnly: false,
+                                controller: viewModel.passwordController,
+                                labelText: "Password",
+                                hintText: "Enter Password",
+                                isObscure: viewModel.isObscurePassword,
+                                keyboardType: TextInputType.visiblePassword,
+                                icon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      viewModel.isObscurePassword =
+                                          !viewModel.isObscurePassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    viewModel.isObscurePassword
+                                        ? Icons.visibility_off_rounded
+                                        : Icons.visibility_rounded,
                                   ),
-                                  validator: (value) =>
-                                      AppValidators.validatePassword(value)),
+                                ),
+                                validator:
+                                    (value) =>
+                                        AppValidators.validatePassword(value),
+                              ),
                             ),
                             10.horizontalSpace,
                             Expanded(
@@ -131,7 +143,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: (value) {
                                   AppValidators.validateConfirmPassword(
-                                      value, viewModel.passwordController.text);
+                                    value,
+                                    viewModel.passwordController.text,
+                                  );
                                 },
                                 isObscure: viewModel.isObscureConfirmPassword,
                                 icon: IconButton(
@@ -153,13 +167,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         15.verticalSpace,
                         CustomTextFormField(
-                            readOnly: false,
-                            controller: viewModel.phoneController,
-                            labelText: "Phone number",
-                            hintText: "Enter your Phone number",
-                            keyboardType: TextInputType.phone,
-                            validator: (value) =>
-                                AppValidators.validatePhoneNumber(value)),
+                          readOnly: false,
+                          controller: viewModel.phoneController,
+                          labelText: "Phone number",
+                          hintText: "Enter your Phone number",
+                          keyboardType: TextInputType.phone,
+                          validator:
+                              (value) =>
+                                  AppValidators.validatePhoneNumber(value),
+                        ),
                         20.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -187,8 +203,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                     },
                                   ),
-                                  const Text("Male",
-                                      style: TextStyle(fontSize: 16)),
+                                  const Text(
+                                    "Male",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                   SizedBox(width: 20.w),
                                   Radio<String>(
                                     activeColor: ColorManager.appColor,
@@ -201,8 +219,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                     },
                                   ),
-                                  const Text("Female",
-                                      style: TextStyle(fontSize: 16)),
+                                  const Text(
+                                    "Female",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ],
                               ),
                             ),
@@ -214,28 +234,40 @@ class _SignupScreenState extends State<SignupScreen> {
                             Text(
                               'Creating an account, you agree to our ',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w400),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                             Text(
                               'Terms&Conditions',
                               style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.black,
-                                  decorationThickness: 3,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            )
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.black,
+                                decorationThickness: 3,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                         30.verticalSpace,
                         CustomButton(
-                            onPressed: () {
-                              if (viewModel.formKey.currentState!.validate()) {
-                                viewModel.signup();
-                                //TODO: Navigator to home page
-                              }
-                            },
-                            text: 'Sign Up'),
+                          onPressed: () {
+                            if (viewModel.formKey.currentState!.validate()) {
+                              viewModel.signup();
+                              //TODO: Navigator to home page
+                              Navigator.push(
+                                context,
+                                RouteGenerator.getRoute(
+                                  const RouteSettings(
+                                    name: Routes.editProfileRoute,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          text: 'Sign Up',
+                        ),
                         15.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -247,24 +279,26 @@ class _SignupScreenState extends State<SignupScreen> {
                             CustomText(
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Login(),
-                                    ));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Login(),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 'Login',
                                 style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 2,
-                                    decorationColor: ColorManager.appColor,
-                                    color: ColorManager.appColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400),
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                  decorationColor: ColorManager.appColor,
+                                  color: ColorManager.appColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
