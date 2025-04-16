@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
@@ -89,9 +88,7 @@ class _LoginState extends State<Login> {
                               setState(() {
                                 checkboxState = value!;
                               });
-                              BlocProvider.of<LoginCubit>(
-                                context,
-                              ).getToken(checkboxState);
+
                             },
                           ),
                           Text(

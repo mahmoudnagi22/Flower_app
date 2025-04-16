@@ -12,14 +12,14 @@ import '../model/login_user_response.dart';
 @Singleton(as:LoginDataSource )
 
 class LoginDataSourceImpl implements LoginDataSource{
-  ApiManager apiManager = ApiManager();
+  ApiManager apiManager = ApiManager(Dio());
 
 
   @override
   Future<LoginResponse> login(LoginUserResponse parameters)async {
   try{
-    var response =  await apiManager.dio.post(AppConstants.loginEndPoint ,data: parameters.toJson());
-    return LoginResponse.fromJson(response.data);
+    var response =  await apiManager.postRequest(AppConstants.loginEndPoint , parameters.toJson());
+    return LoginResponse.fromJson(response?.data);
   }catch (ex){
     String massage = ex.toString();
     if(ex is DioException){

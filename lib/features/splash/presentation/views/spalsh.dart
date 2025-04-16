@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flowers_app/core/resources/AppColors.dart';
-import 'package:flowers_app/core/resources/constants_manger.dart';
-import 'package:flowers_app/core/routes_manager/routes_names.dart';
 
+
+import '../../../../core/resources/color_manager.dart';
+import '../../../../core/routes_manager/routes.dart';
 import '../cubits/auto_login_cubit/auto_login_cubit.dart';
 
 class SplashView extends StatefulWidget {
@@ -51,11 +51,11 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
 
       if (state is AutoLoginSuccess) {
         if (mounted) {
-          Navigator.pushReplacementNamed(context, RoutesNames.layout);
+          Navigator.pushReplacementNamed(context, Routes.bottomNav);
         }
       } else if (state is AutoLoginFailure) {
         if (mounted) {
-          Navigator.pushReplacementNamed(context, RoutesNames.login);
+          Navigator.pushReplacementNamed(context, Routes.loginRoute);
         }
       }
     });
@@ -81,8 +81,8 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primaryColor,
-                fontFamily: Constants.fontFamily),
+                color: ColorManager.appColor,
+               ),
           ),
         ),
       ),

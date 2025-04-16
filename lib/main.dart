@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   home: child,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: Routes.loginRoute,
+
+
                 );
               },
             ),

@@ -1,5 +1,6 @@
-import 'package:flowers_app/core/models/result.dart';
+
+import '../../../../core/api_manager/api_result.dart';
 
 abstract class AutoLoginRepo {
-  Future<Result> autoLogin();
+  Future<ApiResult> autoLogin();
 }

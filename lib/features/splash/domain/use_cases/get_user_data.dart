@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/models/result.dart';
+import '../../../../core/api_manager/api_result.dart';
 import '../auto_login_repo/auto_login_repo.dart';
 @injectable
 class GetUserDataUseCase {
@@ -8,7 +8,7 @@ class GetUserDataUseCase {
 
   GetUserDataUseCase(this._autoLoginRepo);
 
-  Future<Result> call() async {
+  Future<ApiResult> call() async {
     return await _autoLoginRepo.autoLogin();
   }
 }

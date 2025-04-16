@@ -1,5 +1,5 @@
-import '../../../../core/models/result.dart';
+import '../../../../core/api_manager/api_result.dart';
 
 abstract class AutoLoginDataSource {
-  Future<Result> autoLogin();
+  Future<ApiResult> autoLogin();
 }

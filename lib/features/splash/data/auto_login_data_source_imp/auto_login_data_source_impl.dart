@@ -1,12 +1,13 @@
-import 'package:flowers_app/core/api_manager/api_constants.dart';
-import 'package:flowers_app/core/api_manager/api_execute.dart';
-import 'package:flowers_app/core/models/result.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api_manager/api_manger.dart';
-import '../../../../core/exceptions/exceptions_impl.dart';
+import '../../../../core/api_manager/api_manager.dart';
+
+import '../../../../core/api_manager/api_result.dart';
 import '../../../../core/models/user_model.dart';
+import '../../../../core/resources/constants_manager.dart';
+import '../../../../core/utils/failures.dart';
 import '../auto_login_data_source/auto_login_data_source.dart';
 
 @Injectable(as : AutoLoginDataSource)
@@ -16,29 +17,27 @@ class AutoLoginDataSourceImp implements AutoLoginDataSource {
   final ApiManager _apiManager;
 
   @override
-  Future<Result> autoLogin() async {
+  Future<ApiResult> autoLogin() async {
     try {
       const storage = FlutterSecureStorage();
       final String? token = await storage.read(key: 'user_token');
 
       if (token == null) {
-        return Error(CustomException("Auto login failed"));
+        return ApiErrorResult(
+          failures: CustomError(errorMessage: "Auto login failed",),);
       }
 
-      await ApiExecute.executeApi(
-        () async {
-          final response = await _apiManager.get(ApiConstants.getUserData,
-              headers: {'Authorization': 'Bearer $token '});
+      final response = await _apiManager.getRequest(AppConstants.getUserData,
+          headers: {'Authorization': 'Bearer $token '});
 
-          UserModel.instance.setFromJson(response.data);
-          UserModel.instance.token = token;
-        },
-      );
+      UserModel.instance.setFromJson(response?.data);
+      UserModel.instance.token = token;
 
-      return Success(token);
+
+      return ApiSuccessResult( data: token,);
     } catch (e) {
-      return Error(
-        CustomException("Auto login failed"),
+      return ApiErrorResult(
+        failures: CustomError(errorMessage: "Auto login failed",),
       );
     }
   }
