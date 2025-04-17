@@ -1,8 +1,5 @@
-import 'package:flower_app/features/edit_profile/data/models/user_profile_model.dart';
+import 'package:flower_app/core/models/user_model.dart';
 
 abstract class RemoteProfileDatasorceContract {
-  Future<UserProfileModel> updateProfile(
-    UserProfileModel userProfile,
-    String token,
-  );
+  Future<UserModel> updateProfile(UserModel userProfile, String token);
 }

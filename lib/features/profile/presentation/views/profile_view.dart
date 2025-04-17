@@ -63,6 +63,7 @@ class Profile extends StatelessWidget {
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
             ),
+            Image.asset('assets/images/noto-v1_pen.png', height: 30.h),
           ],
         ),
       ),

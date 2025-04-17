@@ -2,7 +2,6 @@ import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
-import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
 import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
@@ -40,12 +39,7 @@ class RouteGenerator {
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.editProfileRoute:
-        final UserProfileEntity userProfileEntity =
-            settings.arguments as UserProfileEntity;
-        return MaterialPageRoute(
-          builder:
-              (context) => EditProfileScreen(userProfile: userProfileEntity),
-        );
+        return MaterialPageRoute(builder: (context) => EditProfileScreen(userProfile: ,));
       case Routes.splash:
         return MaterialPageRoute(
           builder:

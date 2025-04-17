@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/features/edit_profile/domain/use_cases/update_profile_usecase.dart';
 import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     emit(EditProfileInitial());
   }
 
-  void updateProfile(UserProfileEntity userProfile, String token) async {
+  void updateProfile(UserModel userProfile, String token) async {
     emit(EditProfileLoading());
     try {
       final editUserProfile = await updateProfileUsecase(userProfile, token);

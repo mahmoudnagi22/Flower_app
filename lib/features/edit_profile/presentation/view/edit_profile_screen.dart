@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
-import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
 import 'package:flower_app/features/edit_profile/presentation/view/widgets/custom_radio.dart';
 import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_cubit.dart';
 import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_state.dart';
@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.userProfile});
-  final UserProfileEntity userProfile;
+  final UserModel userProfile;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -35,15 +35,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String selectedGender = 'Female';
   String token = 'token';
 
-  @override
-  void initState() {
-    super.initState();
-    firstNameController.text = widget.userProfile.firstName;
-    lastNameController.text = widget.userProfile.lastName;
-    emailController.text = widget.userProfile.email;
-    phoneController.text = widget.userProfile.phone;
-    selectedGender = widget.userProfile.gender;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   firstNameController.text = widget.userProfile.firstName;
+  //   lastNameController.text = widget.userProfile.lastName;
+  //   emailController.text = widget.userProfile.email;
+  //   phoneController.text = widget.userProfile.phoneNumber;
+  //   selectedGender = widget.userProfile.gender;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +125,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 backgroundImage:
                                     viewModel.imageFile != null
                                         ? FileImage(viewModel.imageFile!)
-                                        : (widget.userProfile.imagePath != null
+                                        : (widget.userProfile.profileImage !=
+                                                    null
                                                 ? NetworkImage(
-                                                  widget.userProfile.imagePath,
+                                                  widget
+                                                          .userProfile
+                                                          .profileImage ??
+                                                      '',
                                                 ) // or FileImage if local path
                                                 : const AssetImage(
                                                   'assets/avatar.png',
@@ -250,7 +254,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                final user = UserProfileEntity(
+                                final user = UserModel(
                                   firstName: firstNameController.text,
                                   lastName: lastNameController.text,
                                   email: emailController.text,
