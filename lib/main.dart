@@ -1,12 +1,12 @@
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/cubits/local_cubit/local_cubit.dart';
 import 'core/di/di.dart';
 import 'core/l10n/app_localizations.dart';
-import 'features/auth/login/presentation/cubit/login_cubit.dart';
 
 
 import 'features/localization/domain/use_cases/get_language.dart';
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   home: child,
                   onGenerateRoute: RouteGenerator.getRoute,
-
+                  initialRoute: Routes.bottomNav,
 
                 );
               },

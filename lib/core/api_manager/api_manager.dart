@@ -7,6 +7,7 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.d
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/cart/data/models/carts_response_dto.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
 import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/categories/domain/entities/product_filter.dart';
@@ -29,16 +30,15 @@ class ApiManager {
   }
 
   // TODO : =================== GetRequest ==============
-  Future<Response?> getRequest(
-    String endpoint, {
+  Future<Response?> getRequest(String endpoint, {
     Map<String, dynamic>? queryParameters,
-    dynamic headers,
+    Options? options,  Map<String, String>? headers,
   }) async {
     try {
       Response response = await _dio.get(
         endpoint,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: options,
       );
       return response;
     } on DioException catch (error) {
@@ -265,6 +265,7 @@ class ApiManager {
     }
   }
 
+
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {
     if (!await _isConnected()) {
@@ -304,8 +305,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Categories By Id=======
   Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
-    String categoryId,
-  ) async {
+      String categoryId,) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -353,6 +353,138 @@ class ApiManager {
           return ApiSuccessResult(
             data: HomeDataResponse.fromJson(response.data),
           );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+//TODO:====================== Function IS update quantity =======
+  Future<ApiResult<List<Product>>> updateQuantity(String cartId,int quantity) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+
+    try {
+      final response = await putRequest(
+        '${AppConstants.baseUrl}${AppConstants.cart}/$cartId',
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+        },
+        {
+          'quantity': quantity,
+        },
+      );
+      // print('Response Update is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+//TODO:====================== Function IS Get Carts Products =======
+  Future<ApiResult<List<CartItemsDto>>> getCartsItem() async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await getRequest(
+        AppConstants.baseUrl + AppConstants.cart,
+          options: Options(
+              headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+              }
+          )
+
+      );
+      print('get response is: $response');
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final cartItemsJson = response.data['cart']['cartItems'] as List;
+          final items = cartItemsJson.map((e) => CartItemsDto.fromJson(e)).toList();
+          return ApiSuccessResult(data: items);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+
+//TODO:====================== Function IS Delete Carts Products =======
+  Future<ApiResult<List<Product>>> deleteCart(String cartId) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+
+    try {
+      final response = await deleteRequest(
+        '${AppConstants.baseUrl}${AppConstants.cart}/$cartId',
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+        }
+      );
+      print('Response Delete is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),
