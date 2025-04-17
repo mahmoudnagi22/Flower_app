@@ -14,6 +14,7 @@ import '../../features/app_sections/categories/domain/entities/product_filter.da
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
 import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
 import '../../features/app_sections/occasions/data/models/products_dto.dart';
+import '../models/user_model.dart';
 
 @singleton
 class ApiManager {
@@ -31,10 +32,10 @@ class ApiManager {
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(String endpoint, {
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Options? options,  Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.get(
+      Response response = await _dio.get(
         endpoint,
         queryParameters: queryParameters,
         options: options,
@@ -57,7 +58,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.post(
+      Response response = await _dio.post(
         endpoint,
         data: data,
         options: Options(headers: headers),

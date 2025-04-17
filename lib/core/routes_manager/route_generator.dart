@@ -7,10 +7,15 @@ import 'package:flower_app/features/app_sections/cart/presentation/pages/cart_sc
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/app_sections/categories/presentation/pages/categories_screen.dart';
 import '../../features/app_sections/occasions/presentation/pages/occasion_screen.dart';
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
+import '../../features/splash/domain/use_cases/get_user_data.dart';
+import '../../features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
+import '../../features/splash/presentation/views/spalsh.dart';
+import '../di/di.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
