@@ -13,3 +13,9 @@ class NetworkError extends Failures {
 class ServerError extends Failures {
   ServerError({required super.errorMessage});
 }
+
+class AuthError extends Failures {
+  AuthError({required super.errorMessage});
+}
+
+

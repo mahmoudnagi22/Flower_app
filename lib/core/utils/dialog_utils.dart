@@ -117,7 +117,7 @@ class DialogUtils {
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium
-                    ?.copyWith(color: Colors.white),
+                    ?.copyWith(color: Colors.black),
               ),
             ],
           ),

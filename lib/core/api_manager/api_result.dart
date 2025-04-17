@@ -11,3 +11,5 @@ class ApiErrorResult<T> extends ApiResult<T> {
   Failures failures;
   ApiErrorResult({required this.failures});
 }
+
+

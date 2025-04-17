@@ -7,6 +7,8 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.d
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart';
+import '../../features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
 import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/categories/domain/entities/product_filter.dart';
@@ -16,7 +18,7 @@ import '../../features/app_sections/occasions/data/models/products_dto.dart';
 
 @singleton
 class ApiManager {
-  final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
+  final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl ));
 
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(
@@ -357,4 +359,44 @@ class ApiManager {
       );
     }
   }
+
+
+
+  //TODO:====================== Function IS Add to cart =======
+  Future<ApiResult<AddToCartResponse>> addToCart(AddToCartParameters parameters) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await postRequest(
+        AppConstants.baseUrl + AppConstants.addToCart, AddToCartParameters(product: parameters.product),
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(
+            data: AddToCartResponse.fromJson(response.data),
+          );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+
 }
