@@ -8,7 +8,7 @@ import 'dart:async' as _i4;
 import 'package:dio/dio.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i3;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
-import 'package:flower_app/features/app_sections/cart/data/models/update_quantity_response_dto.dart'
+import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart'
     as _i15;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
@@ -68,12 +68,13 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
   _i4.Future<_i2.Response<dynamic>?> getRequest(
     String? endpoint, {
     Map<String, dynamic>? queryParameters,
+    _i2.Options? options,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
               #getRequest,
               [endpoint],
-              {#queryParameters: queryParameters},
+              {#queryParameters: queryParameters, #options: options},
             ),
             returnValue: _i4.Future<_i2.Response<dynamic>?>.value(),
           )
@@ -251,6 +252,22 @@ class MockApiManager extends _i1.Mock implements _i3.ApiManager {
                   _i8.dummyValue<_i5.ApiResult<List<_i15.CartItemsDto>>>(
                     this,
                     Invocation.method(#getCartsItem, []),
+                  ),
+                ),
+          )
+          as _i4.Future<_i5.ApiResult<List<_i15.CartItemsDto>>>);
+
+  @override
+  _i4.Future<_i5.ApiResult<List<_i15.CartItemsDto>>> deleteCart(
+    String? cartId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteCart, [cartId]),
+            returnValue:
+                _i4.Future<_i5.ApiResult<List<_i15.CartItemsDto>>>.value(
+                  _i8.dummyValue<_i5.ApiResult<List<_i15.CartItemsDto>>>(
+                    this,
+                    Invocation.method(#deleteCart, [cartId]),
                   ),
                 ),
           )

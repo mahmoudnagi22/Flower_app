@@ -1,9 +1,9 @@
 import '../../domain/entities/cart_response_entity.dart';
 
-class UpdateQuantityResponseDto extends CartResponseEntity {
-  UpdateQuantityResponseDto({super.message, super.numOfCartItems, super.cart});
+class CartsResponseDto extends CartResponseEntity {
+  CartsResponseDto({super.message, super.numOfCartItems, super.cart});
 
-  UpdateQuantityResponseDto.fromJson(dynamic json) {
+  CartsResponseDto.fromJson(dynamic json) {
     message = json['message'];
     numOfCartItems = json['numOfCartItems'];
     cart = json['cart'] != null ? CartDto.fromJson(json['cart']) : null;
@@ -90,6 +90,7 @@ class CartItemsDto extends CartItemsEntity {
   }
 }
 
+
 class Product extends ProductEntity {
   Product({
     super.rateAvg,
@@ -113,6 +114,7 @@ class Product extends ProductEntity {
   });
 
   Product.fromJson(dynamic json) {
+
     rateAvg = json['rateAvg'];
     rateCount = json['rateCount'];
     id = json['_id'];
@@ -131,7 +133,6 @@ class Product extends ProductEntity {
     v = json['__v'];
     sold = json['sold'];
     discount = json['discount'];
-    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -154,7 +155,7 @@ class Product extends ProductEntity {
     map['__v'] = v;
     map['sold'] = sold;
     map['discount'] = discount;
-    map['id'] = id;
+
     return map;
   }
 }

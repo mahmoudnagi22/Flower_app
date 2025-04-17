@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
-import 'package:flower_app/features/app_sections/cart/data/models/update_quantity_response_dto.dart';
+import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -357,7 +357,7 @@ class ApiManager {
   }
 
 //TODO:====================== Function IS update quantity =======
-  Future<ApiResult<List<CartItemsDto>>> updateQuantity(String cartId,int quantity) async {
+  Future<ApiResult<List<Product>>> updateQuantity(String cartId,int quantity) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -377,8 +377,8 @@ class ApiManager {
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final List<dynamic> result = response.data['product'] ?? [];
-          final List<CartItemsDto> productJson = result.map((json) =>
-              CartItemsDto.fromJson(json)).toList();
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
           return ApiSuccessResult(data: productJson);
         } else {
           return ApiErrorResult(
@@ -411,17 +411,61 @@ class ApiManager {
         AppConstants.baseUrl + AppConstants.cart,
           options: Options(
               headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjc4YTc4M2QzYzM3OTc0OTI3NDdjOGU2Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MzcxMjc5OTd9.ey-sIWm8Z9QpiUNEfK5U-Ma5lzB2NxI7-DbKZfH1wfM',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
               }
           )
 
       );
-      print('response:$response');
+      print('get response is: $response');
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final cartItemsJson = response.data['cart']['cartItems'] as List;
           final items = cartItemsJson.map((e) => CartItemsDto.fromJson(e)).toList();
           return ApiSuccessResult(data: items);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+
+//TODO:====================== Function IS Delete Carts Products =======
+  Future<ApiResult<List<Product>>> deleteCart(String cartId) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+
+    try {
+      final response = await deleteRequest(
+        '${AppConstants.baseUrl}${AppConstants.cart}/$cartId',
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+        }
+      );
+      print('Response Delete is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),

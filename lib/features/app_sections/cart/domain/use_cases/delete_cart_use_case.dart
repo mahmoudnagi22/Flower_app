@@ -1,3 +1,4 @@
+
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/api_manager/api_result.dart';
@@ -5,11 +6,11 @@ import '../entities/cart_response_entity.dart';
 import '../repositories/cart_repo.dart';
 
 @injectable
-class GetCartsUseCase {
+class DeleteCartUseCase {
   CartsRepo repo;
-  GetCartsUseCase({required this.repo});
+  DeleteCartUseCase({required this.repo});
 
-  Future<ApiResult<List<CartItemsEntity>>> call()async{
-    return await repo.getCarts();
+  Future<ApiResult<List<ProductEntity>>> call(String cartId){
+    return repo.deleteCart(cartId);
   }
 }

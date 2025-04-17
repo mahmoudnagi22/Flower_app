@@ -14,7 +14,7 @@ class CartsImpl implements CartsContract {
   CartsImpl({required this.apiManager});
 
   @override
-  Future<ApiResult<List<CartItemsEntity>>> updateQuantity(
+  Future<ApiResult<List<ProductEntity>>> updateQuantity(
     String cartId,
     int quantity,
   ) async {
@@ -34,6 +34,17 @@ class CartsImpl implements CartsContract {
   Future<ApiResult<List<CartItemsEntity>>> getCarts() async {
     try {
       var response = await apiManager.getCartsItem();
+      return response;
+    } on DioException catch (e) {
+      return ApiErrorResult(failures: NetworkError(
+          errorMessage: e.message ?? 'An unexpected error occurred'));
+    }
+  }
+
+  @override
+  Future<ApiResult<List<ProductEntity>>> deleteCart(String cartId) async{
+    try {
+      var response = await apiManager.deleteCart(cartId);
       return response;
     } on DioException catch (e) {
       return ApiErrorResult(failures: NetworkError(
