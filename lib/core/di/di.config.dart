@@ -151,11 +151,23 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i565.SetLanguageUseCase>(),
       ),
     );
+    gh.factory<_i112.CartsRepo>(
+      () => _i938.CartRepoImpl(dataSource: gh<_i1027.CartsContract>()),
+    );
     gh.factory<_i537.AutoLoginDataSource>(
       () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
     );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
+    );
+    gh.factory<_i886.DeleteCartUseCase>(
+      () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i318.GetCartsUseCase>(
+      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(

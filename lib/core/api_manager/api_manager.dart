@@ -384,11 +384,14 @@ class ApiManager {
     try {
       final response = await putRequest(
         '${AppConstants.baseUrl}${AppConstants.cart}/$cartId',
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+        },
         {
           'quantity': quantity,
         },
       );
-      print('Response is: $response');
+      // print('Response Update is: $response');
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

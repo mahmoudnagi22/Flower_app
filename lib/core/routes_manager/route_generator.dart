@@ -32,6 +32,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>   const CategoriesScreen());
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
+      case Routes.cart:
+        return MaterialPageRoute(builder: (_) => const CartScreen());
       case Routes.splash:
         return MaterialPageRoute(
           builder:

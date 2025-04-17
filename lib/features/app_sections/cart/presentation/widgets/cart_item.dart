@@ -1,3 +1,4 @@
+import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +12,9 @@ import '../../../../auth/signUp/presentation/widgets/custom_button.dart';
 import 'location.dart';
 
 class CartItem extends StatefulWidget {
-  const CartItem({super.key});
+   CartItem({super.key});
 
-  // final CartCubit viewModel;
+   CartCubit viewModel = getIt.get<CartCubit>();
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -143,12 +144,13 @@ class _CartItemState extends State<CartItem> {
                                                 const Spacer(),
                                                 InkWell(
                                                   onTap: () {
-                                                    if (localQuantities[index]! >
-                                                        1) {
+                                                    if (localQuantities[index]! > 1) {
+
                                                       setState(() {
                                                         localQuantities[index] =
                                                             localQuantities[index]! -
                                                                 1;
+                                                        widget.viewModel.updateQuantity(cartItem?.id??'', localQuantities[index]!);
                                                       });
                                                     }
                                                   },
@@ -169,10 +171,12 @@ class _CartItemState extends State<CartItem> {
                                                 10.horizontalSpace,
                                                 InkWell(
                                                   onTap: () {
+
                                                     setState(() {
                                                       localQuantities[index] =
                                                           localQuantities[index]! +
                                                               1;
+                                                      widget.viewModel.updateQuantity(cartItem?.id??'', localQuantities[index]!);
                                                     });
                                                   },
                                                   child: SvgPicture.asset(
