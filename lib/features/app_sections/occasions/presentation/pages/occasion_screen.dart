@@ -11,6 +11,7 @@ import '../../../../../../core/utils/status.dart';
 import '../../../add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../../add_to_cart/presentation/cubit/add_to_cart_cubit.dart';
 import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
 
@@ -21,13 +22,14 @@ class OccasionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.verticalSpace,
-            const Text('Occasion'),
+             Text(lang!.occasions),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
@@ -144,7 +146,7 @@ class OccasionScreen extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "EGP ${state.products![index].priceAfterDiscount}",
+                                                  "${lang.currency} ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
                                                     fontSize: 12.sp,

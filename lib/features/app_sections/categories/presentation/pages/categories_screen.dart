@@ -14,12 +14,14 @@ import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import '../../domain/entities/product_filter.dart';
 import '../cubit/categories_cubit.dart';
 import '../widgets/custom_search.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -158,7 +160,7 @@ class CategoriesScreen extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "EGP ${state.products![index].priceAfterDiscount}",
+                                                  "${lang!.currency} ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
                                                     fontSize: 12.sp,

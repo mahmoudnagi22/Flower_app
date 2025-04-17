@@ -1,5 +1,6 @@
 class Failures {
   final String errorMessage;
+
   Failures({required this.errorMessage});
 
   @override
@@ -19,3 +20,7 @@ class AuthError extends Failures {
 }
 
 
+
+class CustomError extends Failures {
+  CustomError({required super.errorMessage});
+}
