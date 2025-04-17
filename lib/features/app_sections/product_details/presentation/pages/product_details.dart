@@ -159,58 +159,58 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.all(16),
-                          backgroundColor: ColorManager.appColor,
-                        ),
-                        onPressed: () {
-                          UserModel userModel = UserModel.instance;
-                          if (userModel.token == null) {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return AlertDialog(
-                                  content: Text('${lang.haveAccount}'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("${lang.cancel}"),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          Routes.loginRoute,
-                                        );
-                                      },
-                                      child: Text("${lang.login}"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            print('added to cart');
-                          }
-                        },
-                        child: Text(
-                          '${lang.addToCart}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SizedBox(
+          width: double.infinity,
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.all(16),
+              backgroundColor: ColorManager.appColor,
+            ),
+            onPressed: () {
+              UserModel userModel = UserModel.instance;
+              if (userModel.token == null) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext ctx) {
+                    return AlertDialog(
+                      content: Text('${lang.haveAccount}'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("${lang.cancel}"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Routes.loginRoute,
+                            );
+                          },
+                          child: Text("${lang.login}"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                print('added to cart');
+              }
+            },
+            child: Text(
+              '${lang.addToCart}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ),
         ),
       ),
