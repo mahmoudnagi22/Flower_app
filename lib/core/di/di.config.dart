@@ -9,35 +9,40 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../features/app_sections/home/categories/data/data_sources/categories_data_source_contract.dart'
-    as _i190;
-import '../../features/app_sections/home/categories/data/data_sources/categories_data_source_impl.dart'
-    as _i69;
-import '../../features/app_sections/home/categories/data/repositories/categories_repo_impl.dart'
-    as _i98;
-import '../../features/app_sections/home/categories/domain/repositories/categories_repo.dart'
-    as _i1000;
-import '../../features/app_sections/home/categories/domain/use_cases/get_categories_use_case.dart'
-    as _i158;
-import '../../features/app_sections/home/categories/presentation/cubit/categories_cubit.dart'
-    as _i679;
-import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
-    as _i992;
-import '../../features/app_sections/home/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
-    as _i783;
-import '../../features/app_sections/home/occasions/data/repositories/occasion_repo_impl.dart'
-    as _i419;
-import '../../features/app_sections/home/occasions/domain/repositories/occasion_repo.dart'
-    as _i424;
-import '../../features/app_sections/home/occasions/domain/use_cases/occasion_use_case.dart'
-    as _i1018;
-import '../../features/app_sections/home/occasions/domain/use_cases/product_use_case.dart'
-    as _i757;
-import '../../features/app_sections/home/occasions/presentation/cubit/occasion_cubit.dart'
-    as _i157;
+import '../../features/app_sections/categories/data/data_sources/categories_data_source_contract.dart'
+    as _i510;
+import '../../features/app_sections/categories/data/data_sources/categories_data_source_impl.dart'
+    as _i337;
+import '../../features/app_sections/categories/data/repositories/categories_repo_impl.dart'
+    as _i109;
+import '../../features/app_sections/categories/domain/repositories/categories_repo.dart'
+    as _i509;
+import '../../features/app_sections/categories/domain/use_cases/get_categories_use_case.dart'
+    as _i66;
+import '../../features/app_sections/categories/presentation/cubit/categories_cubit.dart'
+    as _i776;
+import '../../features/app_sections/home/data/data_sources_contract/home_datasource.dart'
+    as _i593;
+import '../../features/app_sections/home/data/data_sources_impl/home_datasource_impl.dart'
+    as _i409;
+import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
+    as _i449;
+import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
+    as _i683;
+import '../../features/app_sections/occasions/data/repositories/occasion_repo_impl.dart'
+    as _i129;
+import '../../features/app_sections/occasions/domain/repositories/occasion_repo.dart'
+    as _i942;
+import '../../features/app_sections/occasions/domain/use_cases/occasion_use_case.dart'
+    as _i85;
+import '../../features/app_sections/occasions/domain/use_cases/product_use_case.dart'
+    as _i824;
+import '../../features/app_sections/occasions/presentation/cubit/occasion_cubit.dart'
+    as _i618;
 import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
     as _i1040;
 import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
@@ -69,7 +74,24 @@ import '../../features/edit_profile/domain/use_cases/update_profile_usecase.dart
     as _i66;
 import '../../features/edit_profile/presentation/view_model/edit_profile_cubit.dart'
     as _i303;
+import '../../features/localization/data/data_source/data_source.dart' as _i254;
+import '../../features/localization/data/data_source_impl/data_source_impl.dart'
+    as _i178;
+import '../../features/localization/domain/use_cases/get_language.dart'
+    as _i702;
+import '../../features/localization/domain/use_cases/set_language.dart'
+    as _i565;
+import '../../features/splash/data/auto_login_data_source/auto_login_data_source.dart'
+    as _i537;
+import '../../features/splash/data/auto_login_data_source_imp/auto_login_data_source_impl.dart'
+    as _i975;
+import '../../features/splash/data/auto_login_repo_imp/auto_login_repo_imp.dart'
+    as _i146;
+import '../../features/splash/domain/auto_login_repo/auto_login_repo.dart'
+    as _i372;
+import '../../features/splash/domain/use_cases/get_user_data.dart' as _i595;
 import '../api_manager/api_manager.dart' as _i266;
+import '../cubits/local_cubit/local_cubit.dart' as _i691;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -78,22 +100,23 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
+    final registerModule = _$RegisterModule();
+    gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
-    gh.singleton<_i317.RemoteProfileDatasorceContract>(
-      () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
+    gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
+    gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
+    gh.factory<_i702.GetLanguageUseCase>(
+      () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
     );
-    gh.singleton<_i725.ProfileRepoContract>(
-      () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
+    gh.factory<_i565.SetLanguageUseCase>(
+      () => _i565.SetLanguageUseCase(gh<_i254.LocalDataSource>()),
     );
-    gh.factory<_i66.UpdateProfileUsecase>(
-      () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
+    gh.factory<_i510.CategoriesDataSourceContract>(
+      () => _i337.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
-    gh.factory<_i992.RemoteOccasionDataSourceContract>(
-      () => _i783.RemoteOccasionDataSourceImpl(
-        apiManager: gh<_i266.ApiManager>(),
-      ),
+    gh.factory<_i593.HomeDataSources>(
+      () => _i409.HomeDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
@@ -104,12 +127,9 @@ extension GetItInjectableX on _i174.GetIt {
         loginDataSource: gh<_i1040.LoginDataSource>(),
       ),
     );
-    gh.factory<_i190.CategoriesDataSourceContract>(
-      () => _i69.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
-    );
-    gh.factory<_i1000.CategoriesRepo>(
-      () => _i98.CategoriesRepoImpl(
-        categoriesDataSourceContract: gh<_i190.CategoriesDataSourceContract>(),
+    gh.factory<_i449.RemoteOccasionDataSourceContract>(
+      () => _i683.RemoteOccasionDataSourceImpl(
+        apiManager: gh<_i266.ApiManager>(),
       ),
     );
     gh.factory<_i729.SignupRepo>(
@@ -118,42 +138,73 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
     );
+    gh.factory<_i691.LocalizationCubit>(
+      () => _i691.LocalizationCubit(
+        gh<_i702.GetLanguageUseCase>(),
+        gh<_i565.SetLanguageUseCase>(),
+      ),
+    );
+    gh.factory<_i537.AutoLoginDataSource>(
+      () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
-    gh.singleton<_i303.EditProfileCubit>(
-      () => _i303.EditProfileCubit(gh<_i66.UpdateProfileUsecase>()),
+    gh.singleton<_i317.RemoteProfileDatasorceContract>(
+      () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i725.ProfileRepoContract>(
+      () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
+    );
+    gh.factory<_i66.UpdateProfileUsecase>(
+      () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
+    );
+    gh.factory<_i509.CategoriesRepo>(
+      () => _i109.CategoriesRepoImpl(
+        categoriesDataSourceContract: gh<_i510.CategoriesDataSourceContract>(),
+      ),
     );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
     );
-    gh.factory<_i424.OccasionRepo>(
-      () => _i419.OccasionRepoImpl(
+    gh.factory<_i942.OccasionRepo>(
+      () => _i129.OccasionRepoImpl(
         remoteOccasionDataSourceContract:
-            gh<_i992.RemoteOccasionDataSourceContract>(),
+            gh<_i449.RemoteOccasionDataSourceContract>(),
       ),
     );
-    gh.factory<_i158.GetCategoriesUseCase>(
-      () => _i158.GetCategoriesUseCase(repo: gh<_i1000.CategoriesRepo>()),
+    gh.factory<_i372.AutoLoginRepo>(
+      () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),
     );
-    gh.factory<_i1018.OccasionUseCase>(
-      () => _i1018.OccasionUseCase(occasionRepo: gh<_i424.OccasionRepo>()),
+    gh.factory<_i85.OccasionUseCase>(
+      () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
     );
-    gh.factory<_i757.ProductsUseCase>(
-      () => _i757.ProductsUseCase(gh<_i424.OccasionRepo>()),
+    gh.singleton<_i303.EditProfileCubit>(
+      () => _i303.EditProfileCubit(gh<_i66.UpdateProfileUsecase>()),
     );
-    gh.factory<_i679.CategoriesCubit>(
-      () => _i679.CategoriesCubit(
-        useCase: gh<_i158.GetCategoriesUseCase>(),
-        productsUseCase: gh<_i757.ProductsUseCase>(),
+    gh.factory<_i66.GetCategoriesUseCase>(
+      () => _i66.GetCategoriesUseCase(repo: gh<_i509.CategoriesRepo>()),
+    );
+    gh.factory<_i824.ProductsUseCase>(
+      () => _i824.ProductsUseCase(gh<_i942.OccasionRepo>()),
+    );
+    gh.factory<_i776.CategoriesCubit>(
+      () => _i776.CategoriesCubit(
+        useCase: gh<_i66.GetCategoriesUseCase>(),
+        productsUseCase: gh<_i824.ProductsUseCase>(),
       ),
     );
-    gh.factory<_i157.OccasionCubit>(
-      () => _i157.OccasionCubit(
-        occasionUseCase: gh<_i1018.OccasionUseCase>(),
-        productsUseCase: gh<_i757.ProductsUseCase>(),
+    gh.factory<_i618.OccasionCubit>(
+      () => _i618.OccasionCubit(
+        occasionUseCase: gh<_i85.OccasionUseCase>(),
+        productsUseCase: gh<_i824.ProductsUseCase>(),
       ),
+    );
+    gh.factory<_i595.GetUserDataUseCase>(
+      () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
     );
     return this;
   }
 }
+
+class _$RegisterModule extends _i266.RegisterModule {}

@@ -16,6 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/l10n/app_localizations.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -33,10 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return BlocBuilder<HomeTabCubit, HomeStates>(
       builder: (context, state) {
         if(state is HomeLoadingStates){
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: ColorManager.appColor,));
         }
         if (state is HomeSuccessStates) {
           return Padding(
@@ -47,23 +50,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Column(
                     children: [
-                      AppBarSearch(),
-                      Location(),
-                      TitleOfGroup(nameOfGroup: "Categories" , routesNamed:  Routes.categories,),
+                      const AppBarSearch(),
+                      const Location(),
+                      TitleOfGroup(nameOfGroup: lang!.categories , routesNamed:  Routes.categories,),
                       SizedBox(
                         height: 100.h,
                         child: ListView.builder(itemBuilder: (context, index) {
                           return CategoriesItem(category: state.categories[index],);
                         },itemCount: state.categories.length,scrollDirection: Axis.horizontal,),
                       ),
-                      TitleOfGroup(nameOfGroup: "Best seller" , routesNamed: "",),
+                      TitleOfGroup(nameOfGroup: lang.bestSeller , routesNamed: "",),
                       SizedBox(
                         height: 195.h,
                         child: ListView.builder(itemBuilder: (context, index) {
                           return BestSellerItem(bestSeller: state.bestSeller[index],);
                         },itemCount: state.bestSeller.length,scrollDirection: Axis.horizontal,),
                       ),
-                      TitleOfGroup(nameOfGroup: "Occasion" , routesNamed: Routes.occasions,),
+                      TitleOfGroup(nameOfGroup: lang.occasions , routesNamed: Routes.occasions,),
                       SizedBox(
                         height: 195.h,
                         child: ListView.builder(itemBuilder: (context, index) {

@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/di/di.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/utils/dialog_utils.dart';
 import '../../../../../core/utils/status.dart';
@@ -26,6 +27,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => getIt<SignupCubit>(),
       child: Builder(
@@ -33,7 +35,10 @@ class _SignupScreenState extends State<SignupScreen> {
           final viewModel = context.read<SignupCubit>();
 
           return Scaffold(
-            appBar: AppBar(title: const Text("Register")),
+            appBar: AppBar(
+              title: Text(lang!.register),
+              leading: const SizedBox(),
+            ),
             body: BlocListener<SignupCubit, SignupState>(
               listener: (context, state) {
                 if (state.signupState == Status.loading) {
@@ -71,8 +76,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: CustomTextFormField(
                                 readOnly: false,
                                 controller: viewModel.firstNameController,
-                                labelText: "First Name",
-                                hintText: "Enter first name",
+                                labelText: lang.firstName,
+                                hintText: lang.enterFirstName,
                                 keyboardType: TextInputType.text,
                                 validator:
                                     (value) =>
@@ -84,8 +89,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: CustomTextFormField(
                                 readOnly: false,
                                 controller: viewModel.lastNameController,
-                                labelText: "Last Name",
-                                hintText: "Enter last name",
+                                labelText: lang.lastName,
+                                hintText: lang.enterLastName,
                                 keyboardType: TextInputType.text,
                                 validator:
                                     (value) =>
@@ -98,8 +103,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         CustomTextFormField(
                           readOnly: false,
                           controller: viewModel.emailController,
-                          labelText: "Email",
-                          hintText: "Enter your Email",
+                          labelText: lang.email,
+                          hintText: lang.enterEmail,
                           keyboardType: TextInputType.emailAddress,
                           validator:
                               (value) => AppValidators.validateEmail(value),
@@ -111,8 +116,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: CustomTextFormField(
                                 readOnly: false,
                                 controller: viewModel.passwordController,
-                                labelText: "Password",
-                                hintText: "Enter Password",
+                                labelText: lang.password,
+                                hintText: lang.enterPassword,
                                 isObscure: viewModel.isObscurePassword,
                                 keyboardType: TextInputType.visiblePassword,
                                 icon: IconButton(
@@ -138,8 +143,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: CustomTextFormField(
                                 readOnly: false,
                                 controller: viewModel.rePasswordController,
-                                labelText: "Confirm password",
-                                hintText: "Confirm password",
+                                labelText: lang.confirmPassword,
+                                hintText: lang.enterConfirmPassword,
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: (value) {
                                   AppValidators.validateConfirmPassword(
@@ -169,8 +174,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         CustomTextFormField(
                           readOnly: false,
                           controller: viewModel.phoneController,
-                          labelText: "Phone number",
-                          hintText: "Enter your Phone number",
+                          labelText: lang.phoneNumber,
+                          hintText: lang.enterPhoneNumber,
                           keyboardType: TextInputType.phone,
                           validator:
                               (value) =>
@@ -180,9 +185,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Gender:',
-                              style: TextStyle(
+                            Text(
+                              lang.gender,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
                                 color: Color(0xff535353),
@@ -203,9 +208,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                     },
                                   ),
-                                  const Text(
-                                    "Male",
-                                    style: TextStyle(fontSize: 16),
+                                  Text(
+                                    lang.male,
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                   SizedBox(width: 20.w),
                                   Radio<String>(
@@ -219,8 +224,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                     },
                                   ),
-                                  const Text(
-                                    "Female",
+                                  Text(
+                                    lang.female,
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ],
@@ -229,18 +234,18 @@ class _SignupScreenState extends State<SignupScreen> {
                           ],
                         ),
                         20.verticalSpace,
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              'Creating an account, you agree to our ',
-                              style: TextStyle(
+                              lang.termsAndConditionsNotice,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                             Text(
-                              'Terms&Conditions',
-                              style: TextStyle(
+                              lang.termsAndConditions,
+                              style: const TextStyle(
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.black,
                                 decorationThickness: 3,
@@ -256,25 +261,17 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (viewModel.formKey.currentState!.validate()) {
                               viewModel.signup();
                               //TODO: Navigator to home page
-                              Navigator.push(
-                                context,
-                                RouteGenerator.getRoute(
-                                  const RouteSettings(
-                                    name: Routes.editProfileRoute,
-                                  ),
-                                ),
-                              );
                             }
                           },
-                          text: 'Sign Up',
+                          text: lang.signUp,
                         ),
                         15.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Already have an account?',
-                              style: TextStyle(fontSize: 16),
+                            Text(
+                              lang.alreadyHaveAccount,
+                              style: const TextStyle(fontSize: 16),
                             ),
                             CustomText(
                               onPressed: () {
@@ -285,9 +282,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                   ),
                                 );
                               },
-                              child: const Text(
-                                'Login',
-                                style: TextStyle(
+                              child: Text(
+                                lang.login,
+                                style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   decorationThickness: 2,
                                   decorationColor: ColorManager.appColor,

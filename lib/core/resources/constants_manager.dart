@@ -8,4 +8,6 @@ class AppConstants {
   static const String products = 'products';
   static const String homeTab = 'home';
   static const String editProfile = 'auth/editProfile';
+  static const String localKey = 'lang';
+  static const String getUserData = 'auth/profile-data';
 }

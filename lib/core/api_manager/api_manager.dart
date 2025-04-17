@@ -3,31 +3,42 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
-import 'package:flower_app/features/app_sections/home/categories/data/models/categories_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/occasions_dto.dart';
-import 'package:flower_app/features/app_sections/home/occasions/data/models/products_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/app_sections/home/categories/data/models/category_by_id_dto.dart';
-import '../../features/app_sections/home/categories/domain/entities/product_filter.dart';
-
+import '../../features/app_sections/categories/data/models/categories_dto.dart';
+import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
+import '../../features/app_sections/categories/domain/entities/product_filter.dart';
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
+import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
+import '../../features/app_sections/occasions/data/models/products_dto.dart';
+import '../models/user_model.dart';
 
 @singleton
 class ApiManager {
-  final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
+  final Dio _dio;
+
+  ApiManager(this._dio) {
+    _dio.options.baseUrl = AppConstants.baseUrl;
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
+    _dio.options.sendTimeout = const Duration(seconds: 10);
+    _dio.options.followRedirects = false;
+    _dio.options.headers = {"token": UserModel.instance.token};
+  }
 
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
+    dynamic headers,
   }) async {
     try {
-      Response response = await dio.get(
+      Response response = await _dio.get(
         endpoint,
         queryParameters: queryParameters,
+        options: Options(headers: headers),
       );
       return response;
     } on DioException catch (error) {
@@ -47,7 +58,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.post(
+      Response response = await _dio.post(
         endpoint,
         data: data,
         options: Options(headers: headers),
@@ -69,7 +80,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.put(
+      Response response = await _dio.put(
         endpoint,
         data: data,
         options: Options(headers: headers),
@@ -91,7 +102,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.patch(
+      Response response = await _dio.patch(
         endpoint,
         data: data,
         options: Options(headers: headers),
@@ -112,7 +123,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.delete(
+      Response response = await _dio.delete(
         endpoint,
         options: Options(headers: headers),
       );
@@ -360,4 +371,9 @@ class ApiManager {
       );
     }
   }
+}
+@module
+abstract class RegisterModule {
+  @singleton
+  Dio dio() => Dio();
 }

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'home/categories/presentation/pages/categories_screen.dart';
+import '../../core/l10n/app_localizations.dart';
+import '../profile/presentation/views/profile_view.dart';
+import 'categories/presentation/pages/categories_screen.dart';
 import 'home/screen/home_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     Cart(),
     Profile(),
   ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
@@ -31,6 +34,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       body: _pages[_selectedItem],
       bottomNavigationBar: BottomNavigationBar(
@@ -39,22 +43,22 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         selectedItemColor: Colors.pink,
         currentIndex: _selectedItem,
         onTap: _onItemTapped,
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            label: lang!.home,
           ),
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.shapes),
-            label: 'Category',
+            label: lang.categories,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Cart',
+            label: lang.cart,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
+            label: lang.profile,
           ),
         ],
       ),
@@ -65,6 +69,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 //for testing
 class Home extends StatelessWidget {
   const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -78,6 +83,7 @@ class Home extends StatelessWidget {
 
 class Category extends StatelessWidget {
   const Category({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -91,24 +97,12 @@ class Category extends StatelessWidget {
 
 class Cart extends StatelessWidget {
   const Cart({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
         "Cart Screen",
-        style: TextStyle(fontSize: 24, color: Colors.black),
-      ),
-    );
-  }
-}
-
-class Profile extends StatelessWidget {
-  const Profile({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Profile Screen",
         style: TextStyle(fontSize: 24, color: Colors.black),
       ),
     );

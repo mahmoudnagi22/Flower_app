@@ -1,20 +1,32 @@
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
-import 'package:flower_app/features/app_sections/home/occasions/presentation/pages/occasion_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
 import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
 import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
+import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/app_sections/home/categories/presentation/pages/categories_screen.dart';
+import '../../features/app_sections/categories/presentation/pages/categories_screen.dart';
+import '../../features/app_sections/occasions/presentation/pages/occasion_screen.dart';
+import '../../features/auth/login/presentation/cubit/login_cubit.dart';
 import '../../features/auth/signUp/presentation/pages/signup_screen.dart';
+import '../../features/splash/domain/use_cases/get_user_data.dart';
+import '../../features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
+import '../di/di.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) => const Login());
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => LoginCubit(),
+                child: const Login(),
+              ),
+        );
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
       case Routes.bottomNav:
@@ -33,6 +45,16 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder:
               (context) => EditProfileScreen(userProfile: userProfileEntity),
+        );
+      case Routes.splash:
+        return MaterialPageRoute(
+          builder:
+              (context) => BlocProvider(
+                create:
+                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
+                child: const SplashView(),
+              ),
+          settings: settings,
         );
       default:
         return unDefinedRoute();
