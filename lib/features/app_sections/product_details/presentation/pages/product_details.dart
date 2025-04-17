@@ -1,6 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flower_app/core/l10n/app_localizations.dart';
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/assets_manager.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/occasions/domain/entities/products_entity.dart';
 import 'package:flower_app/features/app_sections/product_details/presentation/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +29,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -54,8 +58,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Positioned(
-                    left: 16,
                     top: 16,
+                    left:
+                        Directionality.of(context) == TextDirection.ltr
+                            ? 16
+                            : null,
+                    right:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 16
+                            : null,
+
                     child: IconButton(
                       iconSize: 30,
                       onPressed: () {
@@ -77,7 +89,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Row(
                       children: [
                         Text(
-                          'EGP ${widget.product.price}',
+                          '${lang!.currency} ${widget.product.price}',
                           style: Theme.of(
                             context,
                           ).textTheme.titleMedium?.copyWith(
@@ -88,9 +100,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                         const Spacer(),
-                        const Text(
-                          'Status:',
-                          style: TextStyle(
+                        Text(
+                          '${lang.status}:',
+                          style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                             height: 1.0,
@@ -100,8 +112,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                         Text(
                           widget.product.quantity != 0
-                              ? ' In stock'
-                              : 'Out of Stock',
+                              ? '${lang.inStock}'
+                              : '${lang.outStock}',
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
@@ -113,7 +125,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'All prices include tax',
+                      '${lang.tax}',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 13,
@@ -131,9 +143,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
-                      'Description',
-                      style: TextStyle(
+                    Text(
+                      '${lang.description}',
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
@@ -150,15 +162,45 @@ class _ProductDetailsState extends State<ProductDetails> {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
-                        
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.all(16),
                           backgroundColor: ColorManager.appColor,
                         ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Add to Cart',
-                          style: TextStyle(
+                        onPressed: () {
+                          UserModel userModel = UserModel.instance;
+                          if (userModel.token == null) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return AlertDialog(
+                                  content: Text('${lang.haveAccount}'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("${lang.cancel}"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pushReplacementNamed(
+                                          context,
+                                          Routes.loginRoute,
+                                        );
+                                      },
+                                      child: Text("${lang.login}"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            print('added to cart');
+                          }
+                        },
+                        child: Text(
+                          '${lang.addToCart}',
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
