@@ -41,6 +41,7 @@ class OccasionScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
+
         create: (context) => getIt<OccasionCubit>()..getOccasions(),
         child: BlocBuilder<OccasionCubit, OccasionState>(
           builder: (context, state) {

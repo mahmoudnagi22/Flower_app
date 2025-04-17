@@ -413,8 +413,6 @@ class ApiManager {
       );
     }
   }
-
-
 }
 @module
 abstract class RegisterModule {
