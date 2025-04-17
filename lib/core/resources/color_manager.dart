@@ -11,5 +11,6 @@ static Color bank = const Color(0xffD21E6A);
 static Color bGCategories = const Color(0xffF9ECF0);
 static Color error = const Color(0xffB3261E);
 static Color green = const Color(0xff0CB359);
+static Color white70=const Color(0xffA6A6A6);
 
 }

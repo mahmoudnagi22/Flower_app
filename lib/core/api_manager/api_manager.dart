@@ -3,11 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
-import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/cart/data/models/carts_response_dto.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
 import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/categories/domain/entities/product_filter.dart';
@@ -17,7 +17,16 @@ import '../../features/app_sections/occasions/data/models/products_dto.dart';
 
 @singleton
 class ApiManager {
-  final Dio dio = Dio(BaseOptions(baseUrl: AppConstants.baseUrl));
+  final Dio _dio;
+
+  ApiManager(this._dio) {
+    _dio.options.baseUrl = AppConstants.baseUrl;
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
+    _dio.options.sendTimeout = const Duration(seconds: 10);
+    _dio.options.followRedirects = false;
+    _dio.options.headers = {"token": UserModel.instance.token};
+  }
 
   // TODO : =================== GetRequest ==============
   Future<Response?> getRequest(String endpoint, {
@@ -32,7 +41,10 @@ class ApiManager {
       );
       return response;
     } on DioException catch (error) {
-      print("Get Error: ${error.message}");
+      print(
+        "Get Error: "
+        '${error.message}',
+      );
       return error.response;
     }
   }
@@ -64,10 +76,10 @@ class ApiManager {
   Future<Response?> putRequest(
     String endpoint,
     dynamic data, {
-        Map<String, dynamic>? headers,
+    Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.put(
+      Response response = await _dio.put(
         endpoint,
         data: data,
         options: Options(headers: headers),
@@ -89,7 +101,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.patch(
+      Response response = await _dio.patch(
         endpoint,
         data: data,
         options: Options(headers: headers),
@@ -110,7 +122,7 @@ class ApiManager {
     Map<String, String>? headers,
   }) async {
     try {
-      Response response = await dio.delete(
+      Response response = await _dio.delete(
         endpoint,
         options: Options(headers: headers),
       );
@@ -236,7 +248,7 @@ class ApiManager {
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final List<dynamic> productsJson = response.data['products'] ?? [];
         final List<ProductDto> productsList =
-        productsJson.map((json) => ProductDto.fromJson(json)).toList();
+            productsJson.map((json) => ProductDto.fromJson(json)).toList();
         return ApiSuccessResult(data: productsList);
       } else {
         return ApiErrorResult(
@@ -323,21 +335,23 @@ class ApiManager {
     }
   }
 
-
-
-//TODO:====================== Function IS home tab =======
+  //TODO:====================== Function IS home tab =======
   Future<ApiResult<HomeDataResponse>> homeTab() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
-          failures: NetworkError(errorMessage: 'Please Check your internet'));
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
     }
     try {
-      final response = await getRequest(AppConstants.baseUrl + AppConstants.homeTab);
+      final response = await getRequest(
+        AppConstants.baseUrl + AppConstants.homeTab,
+      );
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return ApiSuccessResult(
-              data: HomeDataResponse.fromJson(response.data));
+            data: HomeDataResponse.fromJson(response.data),
+          );
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),
@@ -351,7 +365,8 @@ class ApiManager {
     } on DioException catch (e) {
       return ApiErrorResult(
         failures: ServerError(
-            errorMessage: e.message ?? 'An unexpected error occurred'),
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
       );
     }
   }
@@ -484,4 +499,9 @@ class ApiManager {
       );
     }
   }
+}
+@module
+abstract class RegisterModule {
+  @singleton
+  Dio dio() => Dio();
 }

@@ -9,5 +9,8 @@ class AppConstants {
   static const String categories = 'categories';
   static const String products = 'products';
   static const String homeTab = 'home';
+  static const String localKey = 'lang';
+  static const String getUserData = 'auth/profile-data';
+
   static const String cart = 'cart';
 }
