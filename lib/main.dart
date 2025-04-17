@@ -3,9 +3,14 @@ import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'core/cubits/local_cubit/local_cubit.dart';
 import 'core/di/di.dart';
+import 'core/l10n/app_localizations.dart';
 import 'features/auth/login/presentation/cubit/login_cubit.dart';
+
+
+import 'features/localization/domain/use_cases/get_language.dart';
+import 'features/localization/domain/use_cases/set_language.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,20 +25,32 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
+    return MultiBlocProvider(
+      providers: [
+
+        BlocProvider(create: (context) => LocalizationCubit(getIt<GetLanguageUseCase>(), getIt<SetLanguageUseCase>())),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
 
+        builder:
+            (context, child) => BlocBuilder<LocalizationCubit, Localization>(
+              builder: (context, state) {
+                return MaterialApp(
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  locale: Locale(state.language),
+                  debugShowCheckedModeBanner: false,
+                  home: child,
+                  onGenerateRoute: RouteGenerator.getRoute,
 
-        builder: (context, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: child,
-          onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.loginRoute,
-        ),
+
+                );
+              },
+            ),
       ),
     );
   }

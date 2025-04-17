@@ -9,8 +9,10 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
+
 
 class OccasionScreen extends StatelessWidget {
   OccasionScreen({super.key});
@@ -19,13 +21,14 @@ class OccasionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.verticalSpace,
-            const Text('Occasion'),
+             Text(lang!.occasions),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
@@ -94,7 +97,7 @@ class OccasionScreen extends StatelessWidget {
                                   index,
                                 ) {
                                   return GestureDetector(
-                                    onTap: () {
+                                    onTap: (){
                                       Navigator.pushNamed(
                                         context,
                                         Routes.productDetails,
@@ -128,10 +131,9 @@ class OccasionScreen extends StatelessWidget {
                                             ),
                                             const SizedBox(height: 8),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8.0,
-                                                  ),
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                              ),
                                               child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
@@ -146,19 +148,17 @@ class OccasionScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8.0,
-                                                  ),
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                              ),
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    "EGP ${state.products![index].priceAfterDiscount}",
+                                                    "${lang.currency} ${state.products![index].priceAfterDiscount}",
                                                     style: TextStyle(
                                                       color: ColorManager.black,
                                                       fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(width: 5.w),
@@ -166,8 +166,7 @@ class OccasionScreen extends StatelessWidget {
                                                     "${state.products![index].price}",
                                                     style: TextStyle(
                                                       color: ColorManager.gray,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                      fontWeight: FontWeight.w400,
                                                       fontSize: 12.sp,
                                                       decoration:
                                                           TextDecoration
@@ -182,8 +181,7 @@ class OccasionScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       color: ColorManager.green,
                                                       fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                      fontWeight: FontWeight.w400,
                                                     ),
                                                   ),
                                                 ],
@@ -198,9 +196,7 @@ class OccasionScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: ColorManager.appColor,
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                        25.r,
-                                                      ),
+                                                      BorderRadius.circular(25.r),
                                                 ),
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -213,10 +209,9 @@ class OccasionScreen extends StatelessWidget {
                                                     ),
                                                     SizedBox(width: 8.w),
                                                     Text(
-                                                      "Add to cart",
+                                                      lang.addToCart,
                                                       style: TextStyle(
-                                                        color:
-                                                            ColorManager.white,
+                                                        color: ColorManager.white,
                                                         fontSize: 13.sp,
                                                         fontWeight:
                                                             FontWeight.w500,

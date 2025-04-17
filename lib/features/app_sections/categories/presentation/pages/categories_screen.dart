@@ -12,12 +12,14 @@ import '../../../../../../core/utils/status.dart';
 import '../../domain/entities/product_filter.dart';
 import '../cubit/categories_cubit.dart';
 import '../widgets/custom_search.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -40,10 +42,8 @@ class CategoriesScreen extends StatelessWidget {
                     width: 18.w,
                     height: 12.h,
                     fit: BoxFit.contain,
-
                   ),
                 ),
-
               ),
             ),
           ],
@@ -107,8 +107,12 @@ class CategoriesScreen extends StatelessWidget {
                                   index,
                                 ) {
                                   return GestureDetector(
-                                    onTap: (){
-                                      Navigator.pushNamed(context,Routes.productDetails,arguments: state.products![index],);
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        Routes.productDetails,
+                                        arguments: state.products![index],
+                                      );
                                     },
                                     child: Card(
                                       color: ColorManager.white,
@@ -137,9 +141,10 @@ class CategoriesScreen extends StatelessWidget {
                                             ),
                                             const SizedBox(height: 8),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 8.0,
+                                                  ),
                                               child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
@@ -154,17 +159,19 @@ class CategoriesScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 8.0,
+                                                  ),
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    "EGP ${state.products![index].priceAfterDiscount}",
+                                                    "${lang!.currency} ${state.products![index].priceAfterDiscount}",
                                                     style: TextStyle(
                                                       color: ColorManager.black,
                                                       fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(width: 5.w),
@@ -172,7 +179,8 @@ class CategoriesScreen extends StatelessWidget {
                                                     "${state.products![index].price}",
                                                     style: TextStyle(
                                                       color: ColorManager.gray,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 12.sp,
                                                       decoration:
                                                           TextDecoration
@@ -187,7 +195,8 @@ class CategoriesScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       color: ColorManager.green,
                                                       fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   ),
                                                 ],
@@ -202,7 +211,9 @@ class CategoriesScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: ColorManager.appColor,
                                                   borderRadius:
-                                                      BorderRadius.circular(25.r),
+                                                      BorderRadius.circular(
+                                                        25.r,
+                                                      ),
                                                 ),
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -215,9 +226,10 @@ class CategoriesScreen extends StatelessWidget {
                                                     ),
                                                     SizedBox(width: 8.w),
                                                     Text(
-                                                      "Add to cart",
+                                                      lang!.addToCart,
                                                       style: TextStyle(
-                                                        color: ColorManager.white,
+                                                        color:
+                                                            ColorManager.white,
                                                         fontSize: 13.sp,
                                                         fontWeight:
                                                             FontWeight.w500,

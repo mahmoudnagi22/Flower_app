@@ -1,7 +1,8 @@
 class LoginUserResponse {
 final String email;
 final String password;
-LoginUserResponse({required this.email , required this.password});
+final bool rememberMe;
+LoginUserResponse({required this.rememberMe, required this.email , required this.password});
 
 Map<String,dynamic> toJson(){
   return {

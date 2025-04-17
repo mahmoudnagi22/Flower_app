@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -24,6 +25,10 @@ import '../../features/app_sections/categories/domain/use_cases/get_categories_u
     as _i66;
 import '../../features/app_sections/categories/presentation/cubit/categories_cubit.dart'
     as _i776;
+import '../../features/app_sections/home/data/data_sources_contract/home_datasource.dart'
+    as _i593;
+import '../../features/app_sections/home/data/data_sources_impl/home_datasource_impl.dart'
+    as _i409;
 import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_souce_contract.dart'
     as _i449;
 import '../../features/app_sections/occasions/data/data_sources/remote_occasion_data_source_impl.dart'
@@ -57,7 +62,24 @@ import '../../features/auth/signUp/domain/use_cases/signup_use_case.dart'
     as _i211;
 import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
     as _i959;
+import '../../features/localization/data/data_source/data_source.dart' as _i254;
+import '../../features/localization/data/data_source_impl/data_source_impl.dart'
+    as _i178;
+import '../../features/localization/domain/use_cases/get_language.dart'
+    as _i702;
+import '../../features/localization/domain/use_cases/set_language.dart'
+    as _i565;
+import '../../features/splash/data/auto_login_data_source/auto_login_data_source.dart'
+    as _i537;
+import '../../features/splash/data/auto_login_data_source_imp/auto_login_data_source_impl.dart'
+    as _i975;
+import '../../features/splash/data/auto_login_repo_imp/auto_login_repo_imp.dart'
+    as _i146;
+import '../../features/splash/domain/auto_login_repo/auto_login_repo.dart'
+    as _i372;
+import '../../features/splash/domain/use_cases/get_user_data.dart' as _i595;
 import '../api_manager/api_manager.dart' as _i266;
+import '../cubits/local_cubit/local_cubit.dart' as _i691;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -66,11 +88,23 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.singleton<_i266.ApiManager>(() => _i266.ApiManager());
+    final registerModule = _$RegisterModule();
+    gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
+    gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
+    gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
+    gh.factory<_i702.GetLanguageUseCase>(
+      () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
+    );
+    gh.factory<_i565.SetLanguageUseCase>(
+      () => _i565.SetLanguageUseCase(gh<_i254.LocalDataSource>()),
+    );
     gh.factory<_i510.CategoriesDataSourceContract>(
       () => _i337.CategoriesDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i593.HomeDataSources>(
+      () => _i409.HomeDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
@@ -92,6 +126,15 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
     );
+    gh.factory<_i691.LocalizationCubit>(
+      () => _i691.LocalizationCubit(
+        gh<_i702.GetLanguageUseCase>(),
+        gh<_i565.SetLanguageUseCase>(),
+      ),
+    );
+    gh.factory<_i537.AutoLoginDataSource>(
+      () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
@@ -108,6 +151,9 @@ extension GetItInjectableX on _i174.GetIt {
         remoteOccasionDataSourceContract:
             gh<_i449.RemoteOccasionDataSourceContract>(),
       ),
+    );
+    gh.factory<_i372.AutoLoginRepo>(
+      () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
@@ -130,6 +176,11 @@ extension GetItInjectableX on _i174.GetIt {
         productsUseCase: gh<_i824.ProductsUseCase>(),
       ),
     );
+    gh.factory<_i595.GetUserDataUseCase>(
+      () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
+    );
     return this;
   }
 }
+
+class _$RegisterModule extends _i266.RegisterModule {}
