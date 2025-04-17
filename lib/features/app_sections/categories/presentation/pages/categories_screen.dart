@@ -199,7 +199,7 @@ class CategoriesScreen extends StatelessWidget {
                                             child: BlocListener<AddToCartCubit, AddToCartState>(
                                               listener: (context, state) {
                                                 if(state is AddToCartLoadingState){
-                                                  DialogUtils.showLoading(context, "Loading...");
+                                                  DialogUtils.showLoading(context, "${lang.login}");
                                                 }
                                                 if (state is AddToCartSuccessState) {
                                                   DialogUtils.hideLoading(context);
@@ -235,7 +235,7 @@ class CategoriesScreen extends StatelessWidget {
                                                           ),
                                                           SizedBox(width: 8.w),
                                                           Text(
-                                                            "Add to cart",
+                                                            lang.addToCart,
                                                             style: TextStyle(
                                                               color: ColorManager.white,
                                                               fontSize: 13.sp,
