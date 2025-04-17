@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/features/app_sections/add_to_cart/data/add_to_cart_data_source_impl/add_to_cart_data_source_impl.dart';
 import 'package:flower_app/features/app_sections/add_to_cart/data/add_to_cart_repo_impl/add_to_cart_repo_impl.dart';
@@ -12,7 +13,7 @@ import '../../data/model/add_to_cart_parameters.dart';
 class AddToCartCubit extends Cubit<AddToCartState>{
   AddToCartCubit() : super(AddToCartInitState());
 
-  AddToCartUseCases addToCartUseCases =AddToCartUseCases(addToCartRepo: AddToCartRepoImpl(addToCartDataSource: AddToCartDataSourceImpl(apiManager: ApiManager())));
+  AddToCartUseCases addToCartUseCases =AddToCartUseCases(addToCartRepo: AddToCartRepoImpl(addToCartDataSource: AddToCartDataSourceImpl(apiManager: ApiManager(Dio()))));
 
 
   addToCart(AddToCartParameters parameters) async {
