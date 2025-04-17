@@ -3,14 +3,13 @@ import 'dart:developer';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
-import 'package:flower_app/core/util/ui_dialog.dart';
+import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/model/login_user_response.dart';
 import '../cubit/login_status.dart';
@@ -27,8 +26,7 @@ class _LoginState extends State<Login> {
   bool checkboxState = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  GlobalKey<FormState> formstate = GlobalKey();
-
+  GlobalKey<FormState> formState = GlobalKey();
 
   @override
   void dispose() {
@@ -38,14 +36,13 @@ class _LoginState extends State<Login> {
     password.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
-        leading:const  Icon( Icons.arrow_back_ios_new_outlined),
+        leading: const Icon(Icons.arrow_back_ios_new_outlined),
         title: Text(
           "Login",
           style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 20),
@@ -56,7 +53,7 @@ class _LoginState extends State<Login> {
           padding: REdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Form(
-              key: formstate,
+              key: formState,
               child: Column(
                 children: [
                   Padding(
@@ -94,7 +91,9 @@ class _LoginState extends State<Login> {
                                 //   sta =CheckGetTokenTrueState ;
                                 // }
                               });
-                              BlocProvider.of<LoginCubit>(context).getToken(checkboxState);
+                              BlocProvider.of<LoginCubit>(
+                                context,
+                              ).getToken(checkboxState);
                             },
                           ),
                           //SizedBox(width: 0.w),
@@ -129,18 +128,17 @@ class _LoginState extends State<Login> {
                         Navigator.push(
                           context,
                           RouteGenerator.getRoute(
-                            RouteSettings(name: Routes.bottomNav),
+                            const RouteSettings(name: Routes.bottomNav),
                           ),
                         );
-                      } else if (state is CheckGetTokenFalseState == false){
-                      }
+                      } else if (state is CheckGetTokenFalseState == false) {}
                       if (state is LoginLoadingState) {
-                        UIUtils.showLoadingDialog(context);
+                        DialogUtils.showLoading(context, 'Loading ...');
                       } else if (state is LoginErrorState) {
-                        UIUtils.hideDialog(context);
-                        UIUtils.showErrorDialog(context, state.massage);
+                        DialogUtils.hideLoading(context);
+                        DialogUtils.showError(context, state.massage);
                       } else if (state is LoginSuccessState) {
-                        UIUtils.hideDialog(context);
+                        DialogUtils.hideLoading(context);
                         Navigator.push(
                           context,
                           RouteGenerator.getRoute(
@@ -165,8 +163,8 @@ class _LoginState extends State<Login> {
                       textColor: ColorManager.white,
                       color: ColorManager.bank,
                       onPressed: () {
-                        if (formstate.currentState!.validate()) {
-                          log("SOFO");
+                        if (formState.currentState!.validate()) {
+                          // log("SOFO");
                           BlocProvider.of<LoginCubit>(context).login(
                             LoginUserResponse(
                               email: email.text,
@@ -263,7 +261,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
 }
-
-

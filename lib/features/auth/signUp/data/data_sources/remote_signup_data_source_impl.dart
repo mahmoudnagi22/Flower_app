@@ -7,7 +7,6 @@ import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/utils/failures.dart';
-import '../../domain/entities/signup_response_entity.dart';
 
 @Injectable(as: RemoteSignupDataSourceContract)
 class RemoteSignupDataSourceImpl implements RemoteSignupDataSourceContract {

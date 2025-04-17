@@ -12,7 +12,7 @@ import '../model/login_user_response.dart';
 @Singleton(as:LoginDataSource )
 
 class LoginDataSourceImpl implements LoginDataSource{
-  ApiManager apiManager =ApiManager();
+  ApiManager apiManager = ApiManager();
 
 
   @override
