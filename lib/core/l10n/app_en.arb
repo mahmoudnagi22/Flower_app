@@ -39,6 +39,13 @@
   "invalidEmail": "This Email is not valid",
   "invalidPassword": "Invalid password",
   "loading": "Loading...",
-  "forgetPassword": "Forgot Password?"
+  "forgetPassword": "Forgot Password?",
+  "status":"Status",
+  "inStock":"In Stock",
+  "outStock":"Out of Stock",
+  "tax":"All prices include tax",
+  "description":"Description",
+  "haveAccount":"You should create an account",
+  "cancel":"Cancel"
 
 }

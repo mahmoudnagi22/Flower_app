@@ -130,4 +130,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgetPassword => 'Forgot Password?';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get inStock => 'In Stock';
+
+  @override
+  String get outStock => 'Out of Stock';
+
+  @override
+  String get tax => 'All prices include tax';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get haveAccount => 'You should create an account';
+
+  @override
+  String get cancel => 'Cancel';
 }
