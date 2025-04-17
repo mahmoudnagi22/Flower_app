@@ -1,3 +1,4 @@
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
@@ -39,7 +40,10 @@ class RouteGenerator {
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.editProfileRoute:
-        return MaterialPageRoute(builder: (context) => EditProfileScreen(userProfile: ,));
+        return MaterialPageRoute(
+          builder:
+              (context) => EditProfileScreen(userModel: UserModel.instance),
+        );
       case Routes.splash:
         return MaterialPageRoute(
           builder:

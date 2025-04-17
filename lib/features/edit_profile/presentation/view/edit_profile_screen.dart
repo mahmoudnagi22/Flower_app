@@ -15,19 +15,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key, required this.userProfile});
-  final UserModel userProfile;
+  const EditProfileScreen({super.key, required this.userModel});
+  final UserModel userModel;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: '+20');
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneController;
+  late TextEditingController passwordController;
   final formKey = GlobalKey<FormState>();
 
   bool isObscurePassword = true;
@@ -35,15 +35,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String selectedGender = 'Female';
   String token = 'token';
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   firstNameController.text = widget.userProfile.firstName;
-  //   lastNameController.text = widget.userProfile.lastName;
-  //   emailController.text = widget.userProfile.email;
-  //   phoneController.text = widget.userProfile.phoneNumber;
-  //   selectedGender = widget.userProfile.gender;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    final user = widget.userModel;
+    firstNameController = TextEditingController(text: user.firstName);
+    lastNameController = TextEditingController(text: user.lastName);
+    emailController = TextEditingController(text: user.email);
+    phoneController = TextEditingController(text: user.phoneNumber);
+    selectedGender = TextEditingController(text: user.gender) as String;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +126,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 backgroundImage:
                                     viewModel.imageFile != null
                                         ? FileImage(viewModel.imageFile!)
-                                        : (widget.userProfile.profileImage !=
-                                                    null
+                                        : (widget.userModel.profileImage != null
                                                 ? NetworkImage(
                                                   widget
-                                                          .userProfile
+                                                          .userModel
                                                           .profileImage ??
                                                       '',
                                                 ) // or FileImage if local path
@@ -254,15 +254,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                final user = UserModel(
-                                  firstName: firstNameController.text,
-                                  lastName: lastNameController.text,
-                                  email: emailController.text,
-                                  phone: phoneController.text,
-                                  gender: selectedGender,
-                                  imagePath: viewModel.imageFile!.path,
+                                final updatedUser =
+                                    UserModel.instance
+                                      ..firstName =
+                                          firstNameController.text.trim()
+                                      ..lastName =
+                                          lastNameController.text.trim()
+                                      ..email = emailController.text.trim()
+                                      ..phoneNumber =
+                                          phoneController.text.trim()
+                                      ..gender = selectedGender;
+                                viewModel.updateProfile(
+                                  updatedUser,
+                                  UserModel.instance.token!,
                                 );
-                                viewModel.updateProfile(user, token);
                               }
                             },
                             text: 'Update',

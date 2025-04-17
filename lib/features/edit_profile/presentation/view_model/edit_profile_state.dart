@@ -1,4 +1,4 @@
-import 'package:flower_app/features/edit_profile/domain/entities/user_profile_entity.dart';
+import 'package:flower_app/core/models/user_model.dart';
 
 abstract class EditProfileState {}
 
@@ -7,7 +7,7 @@ class EditProfileInitial extends EditProfileState {}
 class EditProfileLoading extends EditProfileState {}
 
 class EditProfileSuccess extends EditProfileState {
-  final UserProfileEntity userProfileEntity;
+  final UserModel userProfileEntity;
   EditProfileSuccess(this.userProfileEntity);
 }
 

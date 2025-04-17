@@ -14,6 +14,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   File? imageFile;
   void pickImage(File file) {
     imageFile = file;
+    UserModel.instance.profileImage = file.path;
     emit(EditProfileInitial());
   }
 
