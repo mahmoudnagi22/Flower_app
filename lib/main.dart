@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LoginCubit()),
+
         BlocProvider(create: (context) => LocalizationCubit(getIt<GetLanguageUseCase>(), getIt<SetLanguageUseCase>())),
       ],
       child: ScreenUtilInit(
@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   home: child,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: Routes.loginRoute,
+
+
                 );
               },
             ),

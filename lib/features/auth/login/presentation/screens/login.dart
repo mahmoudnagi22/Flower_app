@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
@@ -84,14 +83,14 @@ class _LoginState extends State<Login> {
                       Row(
                         children: [
                           Checkbox(
+                            checkColor:Colors.white,
+                            activeColor: ColorManager.appColor ,
                             value: checkboxState,
                             onChanged: (value) {
                               setState(() {
                                 checkboxState = value!;
                               });
-                              BlocProvider.of<LoginCubit>(
-                                context,
-                              ).getToken(checkboxState);
+
                             },
                           ),
                           Text(
@@ -165,6 +164,7 @@ class _LoginState extends State<Login> {
                             LoginUserResponse(
                               email: email.text,
                               password: password.text,
+                              rememberMe: checkboxState,
                             ),
                           );
                         }
