@@ -10,6 +10,5 @@ class AppConstants {
   static const String homeTab = 'home';
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
-
   static const String addToCart = 'cart';
 }
