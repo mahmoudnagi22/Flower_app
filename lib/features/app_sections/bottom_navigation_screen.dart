@@ -1,4 +1,3 @@
-import 'package:flower_app/features/app_sections/cart/presentation/pages/cart_screen.dart';
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +21,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   final List<Widget> _pages = [
     BlocProvider(create: (context) => HomeTabCubit(), child: HomeScreen()),
     CategoriesScreen(),
-    CartScreen(),
+    Cart(),
     Profile(),
   ];
 

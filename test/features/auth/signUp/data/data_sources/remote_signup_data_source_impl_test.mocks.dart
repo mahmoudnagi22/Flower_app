@@ -8,8 +8,6 @@ import 'dart:async' as _i3;
 import 'package:dio/dio.dart' as _i4;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i2;
 import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
-import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart'
-    as _i15;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'
@@ -55,18 +53,13 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
   _i3.Future<_i4.Response<dynamic>?> getRequest(
     String? endpoint, {
     Map<String, dynamic>? queryParameters,
-    _i4.Options? options,
-    Map<String, String>? headers,
+    dynamic headers,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
               #getRequest,
               [endpoint],
-              {
-                #queryParameters: queryParameters,
-                #options: options,
-                #headers: headers,
-              },
+              {#queryParameters: queryParameters, #headers: headers},
             ),
             returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
           )
@@ -217,47 +210,4 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
             ),
           )
           as _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>);
-
-  @override
-  _i3.Future<_i5.ApiResult<List<_i15.Product>>> updateQuantity(
-    String? cartId,
-    int? quantity,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#updateQuantity, [cartId, quantity]),
-            returnValue: _i3.Future<_i5.ApiResult<List<_i15.Product>>>.value(
-              _i8.dummyValue<_i5.ApiResult<List<_i15.Product>>>(
-                this,
-                Invocation.method(#updateQuantity, [cartId, quantity]),
-              ),
-            ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i15.Product>>>);
-
-  @override
-  _i3.Future<_i5.ApiResult<List<_i15.CartItemsDto>>> getCartsItem() =>
-      (super.noSuchMethod(
-            Invocation.method(#getCartsItem, []),
-            returnValue:
-                _i3.Future<_i5.ApiResult<List<_i15.CartItemsDto>>>.value(
-                  _i8.dummyValue<_i5.ApiResult<List<_i15.CartItemsDto>>>(
-                    this,
-                    Invocation.method(#getCartsItem, []),
-                  ),
-                ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i15.CartItemsDto>>>);
-
-  @override
-  _i3.Future<_i5.ApiResult<List<_i15.Product>>> deleteCart(String? cartId) =>
-      (super.noSuchMethod(
-            Invocation.method(#deleteCart, [cartId]),
-            returnValue: _i3.Future<_i5.ApiResult<List<_i15.Product>>>.value(
-              _i8.dummyValue<_i5.ApiResult<List<_i15.Product>>>(
-                this,
-                Invocation.method(#deleteCart, [cartId]),
-              ),
-            ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i15.Product>>>);
 }
