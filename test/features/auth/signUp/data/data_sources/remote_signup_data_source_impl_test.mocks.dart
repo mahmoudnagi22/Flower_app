@@ -8,6 +8,10 @@ import 'dart:async' as _i3;
 import 'package:dio/dio.dart' as _i4;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i2;
 import 'package:flower_app/core/models/api_result.dart' as _i5;
+import 'package:flower_app/features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart'
+    as _i16;
+import 'package:flower_app/features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart'
+    as _i15;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'
@@ -210,4 +214,20 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
             ),
           )
           as _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>);
+
+  @override
+  _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>> addToCart(
+    _i16.AddToCartParameters? parameters,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addToCart, [parameters]),
+            returnValue:
+                _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>.value(
+                  _i8.dummyValue<_i5.ApiResult<_i15.AddToCartResponse>>(
+                    this,
+                    Invocation.method(#addToCart, [parameters]),
+                  ),
+                ),
+          )
+          as _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>);
 }
