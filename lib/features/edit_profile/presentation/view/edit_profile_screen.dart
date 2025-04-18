@@ -41,6 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     lastNameController = TextEditingController(text: user.lastName);
     emailController = TextEditingController(text: user.email);
     phoneController = TextEditingController(text: user.phoneNumber);
+    passwordController = TextEditingController(text: user.passWord);
     gender = user.gender ?? 'female';
   }
 
