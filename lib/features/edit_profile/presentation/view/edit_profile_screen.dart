@@ -207,7 +207,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             isObscure: isObscurePassword,
                             keyboardType: TextInputType.visiblePassword,
                             suffix: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                viewModel.changePassword(
+                                  token: UserModel.instance.token!,
+                                  currentPassword: "*********",
+                                  newPassword: passwordController.text.trim(),
+                                );
+                              },
                               child: const Padding(
                                 padding: EdgeInsets.only(right: 8),
                                 child: Text(
@@ -283,6 +289,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   updatedUser,
                                   UserModel.instance.token!,
                                 );
+                                Navigator.pop(context);
                               }
                             },
                             text: 'Update',
@@ -300,31 +307,3 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
-      // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //   children: [
-                          //     const Text(
-                          //       'Gender',
-                          //       style: TextStyle(fontSize: 16),
-                          //     ),
-                          //     CustomRadio(
-                          //       gender: 'Female',
-                          //       selectedGender: selectedGender,
-                          //       onTap: () {
-                          //         setState(() {
-                          //           selectedGender = 'Female';
-                          //         });
-                          //       },
-                          //     ),
-                          //     CustomRadio(
-                          //       gender: 'Male',
-                          //       selectedGender: selectedGender,
-                          //       onTap: () {
-                          //         setState(() {
-                          //           selectedGender = 'Male';
-                          //         });
-                          //       },
-                          //     ),
-                          //   ],
-                          // ),
-                       

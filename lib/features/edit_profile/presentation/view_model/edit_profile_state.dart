@@ -15,3 +15,12 @@ class EditProfileError extends EditProfileState {
   final String message;
   EditProfileError(this.message);
 }
+
+class ChangePassLoading extends EditProfileState {}
+
+class ChangePassSuccess extends EditProfileState {}
+
+class ChangePassError extends EditProfileState {
+  final String message;
+  ChangePassError(this.message);
+}
