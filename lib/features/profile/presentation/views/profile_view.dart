@@ -64,11 +64,24 @@ class Profile extends StatelessWidget {
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.editProfileRoute);
-              },
-              child: Image.asset('assets/images/noto-v1_pen.png', height: 30.h),
+            SizedBox(height: 25.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Edit Profile',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.editProfileRoute);
+                  },
+                  child: Image.asset(
+                    'assets/images/noto-v1_pen.png',
+                    height: 50.h,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

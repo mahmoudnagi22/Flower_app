@@ -26,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController lastNameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
-  // late TextEditingController passwordController;
+  late TextEditingController passwordController;
   final formKey = GlobalKey<FormState>();
 
   bool isObscurePassword = true;
@@ -55,7 +55,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: const Icon(Icons.arrow_back_ios_rounded),
               ),
               title: Text(
@@ -197,30 +199,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppValidators.validatePhoneNumber(value),
                           ),
                           15.verticalSpace,
-                          // CustomTextFormField(
-                          //   readOnly: false,
-                          //   controller: passwordController,
-                          //   labelText: "Password",
-                          //   isObscure: isObscurePassword,
-                          //   keyboardType: TextInputType.visiblePassword,
-                          //   suffix: InkWell(
-                          //     onTap: () {},
-                          //     child: const Padding(
-                          //       padding: EdgeInsets.only(right: 8),
-                          //       child: Text(
-                          //         'Change',
-                          //         style: TextStyle(
-                          //           color: ColorManager.appColor,
-                          //           fontWeight: FontWeight.w500,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          //   validator:
-                          //       (value) =>
-                          //           AppValidators.validatePassword(value),
-                          // ),
-                          // 15.verticalSpace,
+                          CustomTextFormField(
+                            readOnly: false,
+                            controller: passwordController,
+                            labelText: "Password",
+                            isObscure: isObscurePassword,
+                            keyboardType: TextInputType.visiblePassword,
+                            suffix: InkWell(
+                              onTap: () {},
+                              child: const Padding(
+                                padding: EdgeInsets.only(right: 8),
+                                child: Text(
+                                  'Change',
+                                  style: TextStyle(
+                                    color: ColorManager.appColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            validator:
+                                (value) =>
+                                    AppValidators.validatePassword(value),
+                          ),
+                          15.verticalSpace,
                           IntrinsicWidth(
                             child: Row(
                               children: [

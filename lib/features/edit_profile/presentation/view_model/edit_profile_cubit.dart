@@ -19,12 +19,13 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   }
 
   void updateProfile(UserModel userProfile, String token) async {
+    if (isClosed) return;
     emit(EditProfileLoading());
     try {
       final editUserProfile = await updateProfileUsecase(userProfile, token);
-      emit(EditProfileSuccess(editUserProfile));
+      if (!isClosed) emit(EditProfileSuccess(editUserProfile));
     } catch (e) {
-      emit(EditProfileError(e.toString()));
+      if (!isClosed) emit(EditProfileError(e.toString()));
     }
   }
 }
