@@ -1,4 +1,5 @@
 import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
+
 
 class OccasionScreen extends StatelessWidget {
   OccasionScreen({super.key});
@@ -41,7 +43,6 @@ class OccasionScreen extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-
         create: (context) => getIt<OccasionCubit>()..getOccasions(),
         child: BlocBuilder<OccasionCubit, OccasionState>(
           builder: (context, state) {
@@ -67,9 +68,10 @@ class OccasionScreen extends StatelessWidget {
                         unselectedLabelColor: ColorManager.gray,
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
-                          final selectedOccasion = state.occasionList?[index].id;
+                          final selectedOccasion =
+                              state.occasionList?[index].id;
                           context.read<OccasionCubit>().getProducts(
-                            ProductFilter(occasionId: selectedOccasion)
+                            ProductFilter(occasionId: selectedOccasion),
                           );
                         },
                         tabs:
@@ -97,7 +99,15 @@ class OccasionScreen extends StatelessWidget {
                                   context,
                                   index,
                                 ) {
-                                  return Card(
+                                  return GestureDetector(
+                                      onTap: (){
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: state.products![index],
+                                    );
+                                  },
+                                  child: Card(
                                     color: ColorManager.white,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(

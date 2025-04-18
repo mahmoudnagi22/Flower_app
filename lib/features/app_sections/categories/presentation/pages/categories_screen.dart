@@ -1,3 +1,4 @@
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -110,7 +111,15 @@ class CategoriesScreen extends StatelessWidget {
                                   context,
                                   index,
                                 ) {
-                                  return Card(
+                                  return GestureDetector(
+                                      onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: state.products![index],
+                                    );
+                                  },
+                                  child:Card(
                                     color: ColorManager.white,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
@@ -252,7 +261,7 @@ class CategoriesScreen extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ),),
                                   );
                                 }, childCount: state.products?.length),
                                 gridDelegate:

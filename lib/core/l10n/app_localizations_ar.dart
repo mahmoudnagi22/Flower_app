@@ -130,4 +130,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get forgetPassword => 'هل نسيت كلمة المرور؟';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get inStock => 'متوفر';
+
+  @override
+  String get outStock => 'غير متوفر';
+
+  @override
+  String get tax => 'جميع الأسعار تشمل الضريبة';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get haveAccount => 'يجب ان يكون لديك حساب';
+
+  @override
+  String get cancel => 'الغاء';
 }
