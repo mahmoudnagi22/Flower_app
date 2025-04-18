@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_request_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/repositories/signup_repo.dart';

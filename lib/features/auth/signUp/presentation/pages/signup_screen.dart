@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/di.dart';
 import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/color_manager.dart';
+import '../../../../../core/routes_manager/routes.dart';
 import '../../../../../core/utils/dialog_utils.dart';
 import '../../../../../core/utils/status.dart';
 import '../../../login/presentation/screens/login.dart';
@@ -273,12 +274,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                             CustomText(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Login(),
-                                  ),
-                                );
+                               Navigator.pushReplacementNamed(context, Routes.loginRoute);
                               },
                               child: Text(
                                 lang.login,

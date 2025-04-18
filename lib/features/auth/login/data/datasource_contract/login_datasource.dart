@@ -1,9 +1,10 @@
 
-import '../model/LoginResponse.dart';
+
+import 'package:flower_app/core/models/api_result.dart';
+
 import '../model/login_user_response.dart';
 
 abstract class LoginDataSource{
-  Future<LoginResponse> login(LoginUserResponse parameters);
-  Future<void> saveToken(String token);
-  Future<String?> getToken();
+  Future<ApiResult> login(LoginUserResponse parameters);
+
 }

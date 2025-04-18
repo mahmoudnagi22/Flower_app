@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_request_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_response_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/use_cases/signup_use_case.dart';

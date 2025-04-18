@@ -1,6 +1,6 @@
 import 'package:flower_app/features/app_sections/home/domain/repository_contract/home_repo.dart';
 
-import '../../../../../core/api_manager/api_result.dart';
+import '../../../../../core/models/api_result.dart';
 import '../../data/model/HomeDataResponse.dart';
 
 class HomeTabUseCases{

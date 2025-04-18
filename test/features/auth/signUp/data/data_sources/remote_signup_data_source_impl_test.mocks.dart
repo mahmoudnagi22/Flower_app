@@ -7,7 +7,7 @@ import 'dart:async' as _i3;
 
 import 'package:dio/dio.dart' as _i4;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i2;
-import 'package:flower_app/core/api_manager/api_result.dart' as _i5;
+import 'package:flower_app/core/models/api_result.dart' as _i5;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'

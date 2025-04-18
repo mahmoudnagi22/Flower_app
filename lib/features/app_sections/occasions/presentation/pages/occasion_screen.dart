@@ -9,6 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
+import '../../../add_to_cart/data/model/add_to_cart_parameters.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_cubit.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
@@ -97,135 +100,157 @@ class OccasionScreen extends StatelessWidget {
                                   index,
                                 ) {
                                   return GestureDetector(
-                                    onTap: (){
-                                      Navigator.pushNamed(
-                                        context,
-                                        Routes.productDetails,
-                                        arguments: state.products![index],
-                                      );
-                                    },
-                                    child: Card(
-                                      color: ColorManager.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        side: BorderSide(
-                                          color: ColorManager.textField
-                                              .withOpacity(.7),
-                                        ),
+                                      onTap: (){
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: state.products![index],
+                                    );
+                                  },
+                                  child: Card(
+                                    color: ColorManager.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: BorderSide(
+                                        color: ColorManager.textField
+                                            .withOpacity(.7),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Image.network(
-                                                state.products![index].imgCover
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Image.network(
+                                              state.products![index].imgCover
+                                                  .toString(),
+                                              width: double.infinity,
+                                              height: 200.h,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                            ),
+                                            child: Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text(
+                                                state.products![index].title
                                                     .toString(),
-                                                width: double.infinity,
-                                                height: 200.h,
-                                                fit: BoxFit.fill,
+                                                style: TextStyle(
+                                                  color: ColorManager.black,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
                                               ),
                                             ),
-                                            const SizedBox(height: 8),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
-                                              child: Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Text(
-                                                  state.products![index].title
-                                                      .toString(),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "${lang.currency} ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.w),
+                                                Text(
+                                                  "${state.products![index].price}",
+                                                  style: TextStyle(
+                                                    color: ColorManager.gray,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12.sp,
+                                                    decoration:
+                                                        TextDecoration
+                                                            .lineThrough,
+                                                    decorationColor:
+                                                        ColorManager.gray,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5.w),
+                                                Text(
+                                                  "${state.products![index].discount}%",
+                                                  style: TextStyle(
+                                                    color: ColorManager.green,
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "${lang.currency} ${state.products![index].priceAfterDiscount}",
-                                                    style: TextStyle(
-                                                      color: ColorManager.black,
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 5.w),
-                                                  Text(
-                                                    "${state.products![index].price}",
-                                                    style: TextStyle(
-                                                      color: ColorManager.gray,
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: 12.sp,
-                                                      decoration:
-                                                          TextDecoration
-                                                              .lineThrough,
-                                                      decorationColor:
-                                                          ColorManager.gray,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 5.w),
-                                                  Text(
-                                                    "${state.products![index].discount}%",
-                                                    style: TextStyle(
-                                                      color: ColorManager.green,
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w400,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(height: 5.h),
-                                            GestureDetector(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: 147.w,
-                                                height: 30.h,
-                                                decoration: BoxDecoration(
-                                                  color: ColorManager.appColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(25.r),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      IconsAssets.cart,
-                                                      height: 18,
-                                                      width: 18,
-                                                    ),
-                                                    SizedBox(width: 8.w),
-                                                    Text(
-                                                      lang.addToCart,
-                                                      style: TextStyle(
-                                                        color: ColorManager.white,
-                                                        fontSize: 13.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          BlocProvider(
+                                            create: (_) => AddToCartCubit(),
+                                            child: BlocListener<AddToCartCubit, AddToCartState>(
+                                              listener: (context, state) {
+                                                if(state is AddToCartLoadingState){
+                                                  DialogUtils.showLoading(context, lang.lang);
+                                                }
+                                                if (state is AddToCartSuccessState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showSuccess(context, "✅ Product has been added to cart");
+                                                } else if (state is AddToCartErrorState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showError(context, state.massage);
+                                                }
+                                              },
+                                              child: Builder(
+                                                builder: (innerContext) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      final productId = state.products![index].id ?? '';
+                                                      innerContext.read<AddToCartCubit>().addToCart(
+                                                        AddToCartParameters(product: productId),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 147.w,
+                                                      height: 30.h,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorManager.appColor,
+                                                        borderRadius: BorderRadius.circular(25.r),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            IconsAssets.cart,
+                                                            height: 18,
+                                                            width: 18,
+                                                          ),
+                                                          SizedBox(width: 8.w),
+                                                          Text(
+                                                            lang.addToCart,
+                                                            style: TextStyle(
+                                                              color: ColorManager.white,
+                                                              fontSize: 13.sp,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  );
+                                                },
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  );
+                                  ),);
                                 }, childCount: state.products?.length),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(

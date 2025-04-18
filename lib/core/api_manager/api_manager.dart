@@ -1,18 +1,20 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart';
+import '../../features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
 import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/categories/domain/entities/product_filter.dart';
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
 import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
 import '../../features/app_sections/occasions/data/models/products_dto.dart';
+import '../models/api_result.dart';
 import '../models/user_model.dart';
 
 @singleton
@@ -25,7 +27,7 @@ class ApiManager {
     _dio.options.receiveTimeout = const Duration(seconds: 10);
     _dio.options.sendTimeout = const Duration(seconds: 10);
     _dio.options.followRedirects = false;
-    _dio.options.headers = {"token": UserModel.instance.token};
+    _dio.options.headers = {"token": UserModel.instance.token,"Authorization": "Bearer ${UserModel.instance.token}"};
   }
 
   // TODO : =================== GetRequest ==============
@@ -265,6 +267,7 @@ class ApiManager {
     }
   }
 
+
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {
     if (!await _isConnected()) {
@@ -336,7 +339,9 @@ class ApiManager {
     }
   }
 
-  //TODO:====================== Function IS home tab =======
+
+
+//TODO:====================== Function IS home tab =======
   Future<ApiResult<HomeDataResponse>> homeTab() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -352,6 +357,43 @@ class ApiManager {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return ApiSuccessResult(
             data: HomeDataResponse.fromJson(response.data),
+          );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+            errorMessage: e.message ?? 'An unexpected error occurred'),
+      );
+    }
+  }
+
+
+
+  //TODO:====================== Function IS Add to cart =======
+  Future<ApiResult<AddToCartResponse>> addToCart(AddToCartParameters parameters) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await postRequest(
+        AppConstants.baseUrl + AppConstants.addToCart, AddToCartParameters(product: parameters.product),
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(
+            data: AddToCartResponse.fromJson(response.data),
           );
         } else {
           return ApiErrorResult(

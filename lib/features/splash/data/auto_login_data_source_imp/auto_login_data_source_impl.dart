@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/api_manager/api_manager.dart';
 
-import '../../../../core/api_manager/api_result.dart';
+import '../../../../core/models/api_result.dart';
 import '../../../../core/models/user_model.dart';
 import '../../../../core/resources/constants_manager.dart';
 import '../../../../core/utils/failures.dart';
