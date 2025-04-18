@@ -3,7 +3,7 @@ import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cu
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/resources/assets_manager.dart';
 import '../../../../../core/resources/color_manager.dart';
@@ -30,7 +30,6 @@ class _CartItemState extends State<CartItem> {
       children: [
         Expanded(
           child: BlocBuilder<CartCubit, CartState>(
-            // bloc: widget.viewModel,
             builder: (context, state) {
               if (state.cartStatus == Status.loading) {
                 return const Center(
@@ -43,10 +42,14 @@ class _CartItemState extends State<CartItem> {
                       fontWeight: FontWeight.w600),),);
               } else if (state.cartStatus == Status.success) {
                 final carts = state.cartsList ?? [];
-                final totalPrice = carts.fold<double>(
-                  0, (previousValue, element) =>
-                previousValue +
-                    (element.product?.price ?? 0) * (element.quantity ?? 1),
+
+                final totalPrice = carts.asMap().entries.fold<double>(0, (previousValue, entry) {
+                    final index = entry.key;
+                    final item = entry.value;
+                    final quantity = localQuantities[index] ?? item.quantity ?? 1;
+                    final price = item.product?.price ?? 0;
+                    return previousValue + price * quantity;
+                  },
                 );
                 return Padding(
                   padding: EdgeInsets.all(12.sp),
@@ -62,7 +65,6 @@ class _CartItemState extends State<CartItem> {
                             final cartItem = state.cartsList![index].product;
                             localQuantities[index] ??=
                             state.cartsList![index].quantity as int;
-
                             return Column(
                               children: [
                                 Container(
@@ -100,8 +102,7 @@ class _CartItemState extends State<CartItem> {
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                                 maxLines: 2,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               subtitle: Text(
                                                 cartItem?.description ?? '',
@@ -111,8 +112,7 @@ class _CartItemState extends State<CartItem> {
                                                   color: ColorManager.gray,
                                                 ),
                                                 maxLines: 1,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               trailing: InkWell(
                                                 onTap: () async {
@@ -120,7 +120,7 @@ class _CartItemState extends State<CartItem> {
                                                       CartCubit>().deleteItem(
                                                       cartItem?.id ?? '');
                                                 },
-                                                child: Icon(Icons.delete)
+                                                  child: SvgPicture.asset(IconsAssets.delete)
                                               ),
                                             ),
                                             10.verticalSpace,
@@ -141,7 +141,6 @@ class _CartItemState extends State<CartItem> {
                                                 InkWell(
                                                   onTap: () {
                                                     if (localQuantities[index]! > 1) {
-
                                                       setState(() {
                                                         localQuantities[index] =
                                                             localQuantities[index]! -
@@ -150,7 +149,9 @@ class _CartItemState extends State<CartItem> {
                                                       });
                                                     }
                                                   },
-                                                  child: Icon(Icons.minimize)
+                                                  child: SvgPicture.asset(
+                                                    IconsAssets.decrement,
+                                                  ),
                                                 ),
                                                 10.horizontalSpace,
                                                 Text(
@@ -173,7 +174,9 @@ class _CartItemState extends State<CartItem> {
                                                       widget.viewModel.updateQuantity(cartItem?.id??'', localQuantities[index]!);
                                                     });
                                                   },
-                                                  child: Icon(Icons.add),
+                                                  child: SvgPicture.asset(
+                                                    IconsAssets.increment,
+                                                  ),
                                                 ),
                                                 20.horizontalSpace,
                                               ],
@@ -193,6 +196,7 @@ class _CartItemState extends State<CartItem> {
                             "Your cart is empty!",
                             style: TextStyle(
                               fontSize: 18,
+                              color: ColorManager.appColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -264,4 +268,3 @@ class _CartItemState extends State<CartItem> {
     );
   }
 }
-

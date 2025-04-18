@@ -21,8 +21,9 @@ abstract class IconsAssets {
   static const String location = "$iconsPath/location.png";
   static const String arrow = "$iconsPath/sahm.png";
   static const String gift = "$iconsPath/Gift.png";
-
-
+  static const String delete = "$iconsPath/deleter.svg";
+  static const String decrement = "$iconsPath/decrement.svg";
+  static const String increment = "$iconsPath/increment.svg";
 }
 
 
