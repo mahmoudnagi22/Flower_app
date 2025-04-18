@@ -6,7 +6,6 @@ import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
-import 'package:flower_app/features/edit_profile/presentation/view/widgets/custom_radio.dart';
 import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_cubit.dart';
 import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_state.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +26,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController lastNameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
-  late TextEditingController passwordController;
+  // late TextEditingController passwordController;
   final formKey = GlobalKey<FormState>();
 
   bool isObscurePassword = true;
   bool isObscureConfirmPassword = true;
-  String selectedGender = 'Female';
-  String token = 'token';
+  late String gender;
 
   @override
   void initState() {
@@ -43,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     lastNameController = TextEditingController(text: user.lastName);
     emailController = TextEditingController(text: user.email);
     phoneController = TextEditingController(text: user.phoneNumber);
-    selectedGender = TextEditingController(text: user.gender) as String;
+    gender = user.gender ?? 'female';
   }
 
   @override
@@ -132,9 +130,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                           .userModel
                                                           .profileImage ??
                                                       '',
-                                                ) // or FileImage if local path
+                                                )
                                                 : const AssetImage(
-                                                  'assets/avatar.png',
+                                                  'assets/images/user.png',
                                                 ))
                                             as ImageProvider,
                               ),
@@ -199,58 +197,72 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppValidators.validatePhoneNumber(value),
                           ),
                           15.verticalSpace,
-                          CustomTextFormField(
-                            readOnly: false,
-                            controller: passwordController,
-                            labelText: "Password",
-                            isObscure: isObscurePassword,
-                            keyboardType: TextInputType.visiblePassword,
-                            suffix: InkWell(
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.only(right: 8),
-                                child: Text(
-                                  'Change',
-                                  style: TextStyle(
-                                    color: ColorManager.appColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          // CustomTextFormField(
+                          //   readOnly: false,
+                          //   controller: passwordController,
+                          //   labelText: "Password",
+                          //   isObscure: isObscurePassword,
+                          //   keyboardType: TextInputType.visiblePassword,
+                          //   suffix: InkWell(
+                          //     onTap: () {},
+                          //     child: const Padding(
+                          //       padding: EdgeInsets.only(right: 8),
+                          //       child: Text(
+                          //         'Change',
+                          //         style: TextStyle(
+                          //           color: ColorManager.appColor,
+                          //           fontWeight: FontWeight.w500,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          //   validator:
+                          //       (value) =>
+                          //           AppValidators.validatePassword(value),
+                          // ),
+                          // 15.verticalSpace,
+                          IntrinsicWidth(
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Gender',
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              ),
+                                20.horizontalSpace,
+                                Radio<String>(
+                                  activeColor: ColorManager.appColor,
+                                  value: "female",
+                                  groupValue: gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      gender = value!;
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  'Female',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(width: 20.w),
+                                Radio<String>(
+                                  activeColor: ColorManager.appColor,
+                                  value: "male",
+                                  groupValue: gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      gender = value!;
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  'Male',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
                             ),
-                            validator:
-                                (value) =>
-                                    AppValidators.validatePassword(value),
                           ),
-                          15.verticalSpace,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Text(
-                                'Gender',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              CustomRadio(
-                                gender: 'Female',
-                                selectedGender: selectedGender,
-                                onTap: () {
-                                  setState(() {
-                                    selectedGender = 'Female';
-                                  });
-                                },
-                              ),
-                              CustomRadio(
-                                gender: 'Male',
-                                selectedGender: selectedGender,
-                                onTap: () {
-                                  setState(() {
-                                    selectedGender = 'Male';
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          15.verticalSpace,
+
+                          // 15.verticalSpace,
                           CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
@@ -263,7 +275,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       ..email = emailController.text.trim()
                                       ..phoneNumber =
                                           phoneController.text.trim()
-                                      ..gender = selectedGender;
+                                      ..gender = gender;
                                 viewModel.updateProfile(
                                   updatedUser,
                                   UserModel.instance.token!,
@@ -285,3 +297,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
+      // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //   children: [
+                          //     const Text(
+                          //       'Gender',
+                          //       style: TextStyle(fontSize: 16),
+                          //     ),
+                          //     CustomRadio(
+                          //       gender: 'Female',
+                          //       selectedGender: selectedGender,
+                          //       onTap: () {
+                          //         setState(() {
+                          //           selectedGender = 'Female';
+                          //         });
+                          //       },
+                          //     ),
+                          //     CustomRadio(
+                          //       gender: 'Male',
+                          //       selectedGender: selectedGender,
+                          //       onTap: () {
+                          //         setState(() {
+                          //           selectedGender = 'Male';
+                          //         });
+                          //       },
+                          //     ),
+                          //   ],
+                          // ),
+                       

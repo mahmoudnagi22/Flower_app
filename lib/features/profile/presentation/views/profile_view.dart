@@ -1,5 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -63,7 +64,12 @@ class Profile extends StatelessWidget {
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
             ),
-            Image.asset('assets/images/noto-v1_pen.png', height: 30.h),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.editProfileRoute);
+              },
+              child: Image.asset('assets/images/noto-v1_pen.png', height: 30.h),
+            ),
           ],
         ),
       ),
