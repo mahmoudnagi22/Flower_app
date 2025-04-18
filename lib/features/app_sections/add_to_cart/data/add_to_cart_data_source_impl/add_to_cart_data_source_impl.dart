@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart';
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../../../../core/resources/constants_manager.dart';
@@ -19,9 +19,9 @@ class AddToCartDataSourceImpl implements AddToCartDataSource {
         AppConstants.baseUrl + AppConstants.addToCart,
         parameters.toJson(),
       );
-      if (response != null && response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      if ( response?.statusCode== 200 || response?.statusCode == 201) {
         return ApiSuccessResult(
-          data: AddToCartResponse.fromJson(response.data),
+          data: AddToCartResponse.fromJson(response?.data),
         );
       } else {
         return ApiErrorResult(

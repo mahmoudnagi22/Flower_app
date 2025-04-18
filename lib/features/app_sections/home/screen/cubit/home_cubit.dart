@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/app_sections/home/data/data_sources_impl/home_datasource_impl.dart';
 import 'package:flower_app/features/app_sections/home/data/model/HomeDataResponse.dart';
 import 'package:flower_app/features/app_sections/home/data/repositror_impl/home_repo_impl.dart';

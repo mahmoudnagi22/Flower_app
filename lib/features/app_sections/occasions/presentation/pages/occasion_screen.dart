@@ -250,7 +250,7 @@ class OccasionScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ),);
                                 }, childCount: state.products?.length),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(

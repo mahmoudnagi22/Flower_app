@@ -6,25 +6,32 @@ import 'package:flower_app/features/app_sections/add_to_cart/domain/add_to_cart_
 import 'package:flower_app/features/app_sections/add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/api_manager/api_result.dart';
+import '../../../../../core/models/api_result.dart';
 import '../../data/model/AddToCaetResponse.dart';
 import '../../data/model/add_to_cart_parameters.dart';
 
-class AddToCartCubit extends Cubit<AddToCartState>{
+class AddToCartCubit extends Cubit<AddToCartState> {
   AddToCartCubit() : super(AddToCartInitState());
 
-  AddToCartUseCases addToCartUseCases =AddToCartUseCases(addToCartRepo: AddToCartRepoImpl(addToCartDataSource: AddToCartDataSourceImpl(apiManager: ApiManager(Dio()))));
-
+  AddToCartUseCases addToCartUseCases = AddToCartUseCases(
+    addToCartRepo: AddToCartRepoImpl(
+      addToCartDataSource: AddToCartDataSourceImpl(
+        apiManager: ApiManager(Dio()),
+      ),
+    ),
+  );
 
   addToCart(AddToCartParameters parameters) async {
     emit(AddToCartLoadingState());
-    final result = await addToCartUseCases.call(AddToCartParameters(product: parameters.product));
+    final result = await addToCartUseCases.call(
+      AddToCartParameters(product: parameters.product),
+    );
 
-   switch(result) {
-     case ApiSuccessResult<AddToCartResponse>():
-       emit(AddToCartSuccessState(addToCartResponse: result.data));
-     case ApiErrorResult<AddToCartResponse>():
-       emit(AddToCartErrorState(massage: result.failures.errorMessage));
-   }
+    switch (result) {
+      case ApiSuccessResult<AddToCartResponse>():
+        emit(AddToCartSuccessState(addToCartResponse: result.data));
+      case ApiErrorResult<AddToCartResponse>():
+        emit(AddToCartErrorState(massage: result.failures.errorMessage));
+    }
   }
 }

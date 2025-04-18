@@ -1,4 +1,4 @@
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../categories/domain/entities/product_filter.dart';

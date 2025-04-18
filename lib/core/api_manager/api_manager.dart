@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
@@ -15,6 +14,7 @@ import '../../features/app_sections/categories/domain/entities/product_filter.da
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
 import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
 import '../../features/app_sections/occasions/data/models/products_dto.dart';
+import '../models/api_result.dart';
 import '../models/user_model.dart';
 
 @singleton
@@ -27,7 +27,7 @@ class ApiManager {
     _dio.options.receiveTimeout = const Duration(seconds: 10);
     _dio.options.sendTimeout = const Duration(seconds: 10);
     _dio.options.followRedirects = false;
-    _dio.options.headers = {"token": UserModel.instance.token};
+    _dio.options.headers = {"token": UserModel.instance.token,"Authorization": "Bearer ${UserModel.instance.token}"};
   }
 
   // TODO : =================== GetRequest ==============
