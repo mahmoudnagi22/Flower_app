@@ -1,3 +1,4 @@
+import '../../../cart/data/models/carts_response_dto.dart';
 import 'Product.dart';
 
 class CartItems {
