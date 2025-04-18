@@ -1,5 +1,7 @@
-import 'package:flower_app/features/edit_profile/change_pass/domain/repositories/change_pass_repo_contract.dart';
+import 'package:flower_app/features/edit_profile/domain/repositories/change_pass_repo_contract.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class ChangePassUsecase {
   final ChangePassRepoContract changePassRepoContract;
 

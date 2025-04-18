@@ -10,4 +10,5 @@ class AppConstants {
   static const String editProfile = 'auth/editProfile';
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
+  static const String changePassword = 'auth/change-password';
 }

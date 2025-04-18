@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flower_app/core/models/user_model.dart';
-import 'package:flower_app/features/edit_profile/edit_data/domain/use_cases/update_profile_usecase.dart';
-import 'package:flower_app/features/edit_profile/edit_data/presentation/view_model/edit_profile_state.dart';
+import 'package:flower_app/features/edit_profile/domain/use_cases/update_profile_usecase.dart';
+import 'package:flower_app/features/edit_profile/presentation/view_model/edit_profile_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
