@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class AppConstants {
   static const String baseUrl = 'https://flower.elevateegy.com/api/v1/';
@@ -12,5 +11,4 @@ class AppConstants {
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
 
-  static const String cart = 'cart';
 }
