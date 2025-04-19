@@ -1,16 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/models/api_result.dart';
-import 'package:flower_app/core/error/app_exceptions.dart';
+import 'package:flower_app/core/models/user_model.dart';
+import 'package:flower_app/core/resources/constants_manager.dart';
+import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/auth/login/data/datasource_contract/login_datasource.dart';
+import 'package:flower_app/features/auth/login/data/model/login_user_response.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../core/models/user_model.dart';
-import '../../../../../core/resources/constants_manager.dart';
-import '../../../../../core/utils/failures.dart';
-import '../datasource_contract/login_datasource.dart';
-import '../model/login_user_response.dart';
 
 @Singleton(as: LoginDataSource)
 class LoginDataSourceImpl implements LoginDataSource {
