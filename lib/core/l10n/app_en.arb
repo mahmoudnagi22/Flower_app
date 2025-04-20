@@ -46,6 +46,8 @@
   "tax":"All prices include tax",
   "description":"Description",
   "haveAccount":"You should create an account",
-  "cancel":"Cancel"
-
+  "cancel":"Cancel",
+  "titleAboutUs":"About Flowery App",
+  "titleTermsAndConditions":"Terms and Conditions for Flowery App"
+  
 }

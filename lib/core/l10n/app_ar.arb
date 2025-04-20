@@ -46,6 +46,7 @@
   "tax":"جميع الأسعار تشمل الضريبة",
   "description":"الوصف",
   "haveAccount":"يجب ان يكون لديك حساب",
-  "cancel":"الغاء"
-
+  "cancel":"الغاء",
+  "titleAboutUs":"عن تطبيق فلاوري",
+  "titleTermsAndConditions":"الشروط والأحكام لتطبيق فلاوري"
 }

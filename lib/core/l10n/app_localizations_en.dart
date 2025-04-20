@@ -151,4 +151,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get titleAboutUs => 'About Flowery App';
+
+  @override
+  String get titleTermsAndConditions => 'Terms and Conditions for Flowery App';
 }
