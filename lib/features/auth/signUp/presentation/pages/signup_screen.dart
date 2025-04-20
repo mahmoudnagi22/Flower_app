@@ -1,5 +1,3 @@
-import 'package:flower_app/core/routes_manager/route_generator.dart';
-import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';

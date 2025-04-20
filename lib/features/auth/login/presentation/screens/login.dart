@@ -161,12 +161,6 @@ class _LoginState extends State<Login> {
                               rememberMe: checkboxState,
                             ),
                           );
-                          Navigator.push(
-                            context,
-                            RouteGenerator.getRoute(
-                              RouteSettings(name: Routes.editProfileRoute),
-                            ),
-                          );
                         }
                       },
                       child: Text(

@@ -1,3 +1,4 @@
+
 class AppConstants {
   static const String baseUrl = 'https://flower.elevateegy.com/api/v1/';
   static const String sinUp = 'auth/signup';
@@ -7,9 +8,7 @@ class AppConstants {
   static const String categories = 'categories';
   static const String products = 'products';
   static const String homeTab = 'home';
-  static const String editProfile = 'auth/editProfile';
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
-  static const String changePassword = 'auth/change-password';
   static const String addToCart = 'cart';
 }

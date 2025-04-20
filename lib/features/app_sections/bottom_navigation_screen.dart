@@ -1,5 +1,4 @@
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
-import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,7 +43,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         selectedItemColor: Colors.pink,
         currentIndex: _selectedItem,
         onTap: _onItemTapped,
-        items: [
+        items:  [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             label: lang!.home,
@@ -95,3 +94,6 @@ class Category extends StatelessWidget {
     );
   }
 }
+
+
+

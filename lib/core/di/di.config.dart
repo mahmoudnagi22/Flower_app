@@ -78,28 +78,6 @@ import '../../features/auth/signUp/domain/use_cases/signup_use_case.dart'
     as _i211;
 import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
     as _i959;
-import '../../features/edit_profile/data/data_sources/change_pass_ds_contract.dart'
-    as _i781;
-import '../../features/edit_profile/data/data_sources/change_pass_ds_impl.dart'
-    as _i393;
-import '../../features/edit_profile/data/data_sources/remote_profile_datasorce_contract.dart'
-    as _i317;
-import '../../features/edit_profile/data/data_sources/remote_profile_datasource_impl.dart'
-    as _i520;
-import '../../features/edit_profile/data/repositories/change_pass_repo_impl.dart'
-    as _i268;
-import '../../features/edit_profile/data/repositories/profile_repo_impl.dart'
-    as _i158;
-import '../../features/edit_profile/domain/repositories/change_pass_repo_contract.dart'
-    as _i66;
-import '../../features/edit_profile/domain/repositories/profile_repo_contract.dart'
-    as _i725;
-import '../../features/edit_profile/domain/use_cases/change_pass_usecase.dart'
-    as _i233;
-import '../../features/edit_profile/domain/use_cases/update_profile_usecase.dart'
-    as _i66;
-import '../../features/edit_profile/presentation/view_model/edit_profile_cubit.dart'
-    as _i303;
 import '../../features/localization/data/data_source/data_source.dart' as _i254;
 import '../../features/localization/data/data_source_impl/data_source_impl.dart'
     as _i178;
@@ -131,9 +109,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
-    gh.singleton<_i781.ChangePassDsContract>(
-      () => _i393.ChangePassDsImpl(gh<_i266.ApiManager>()),
-    );
     gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
     gh.factory<_i702.GetLanguageUseCase>(
       () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
@@ -182,9 +157,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i537.AutoLoginDataSource>(
       () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
     );
-    gh.singleton<_i66.ChangePassRepoContract>(
-      () => _i268.ChangePassRepoImpl(gh<_i781.ChangePassDsContract>()),
-    );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
@@ -196,15 +168,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i318.GetCartsUseCase>(
       () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
-    );
-    gh.singleton<_i317.RemoteProfileDatasorceContract>(
-      () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
-    );
-    gh.singleton<_i725.ProfileRepoContract>(
-      () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
-    );
-    gh.factory<_i66.UpdateProfileUsecase>(
-      () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
@@ -222,9 +185,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i372.AutoLoginRepo>(
       () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),
-    );
-    gh.factory<_i233.ChangePassUsecase>(
-      () => _i233.ChangePassUsecase(gh<_i66.ChangePassRepoContract>()),
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
@@ -246,12 +206,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i776.CategoriesCubit(
         useCase: gh<_i66.GetCategoriesUseCase>(),
         productsUseCase: gh<_i824.ProductsUseCase>(),
-      ),
-    );
-    gh.singleton<_i303.EditProfileCubit>(
-      () => _i303.EditProfileCubit(
-        gh<_i66.UpdateProfileUsecase>(),
-        gh<_i233.ChangePassUsecase>(),
       ),
     );
     gh.factory<_i618.OccasionCubit>(
