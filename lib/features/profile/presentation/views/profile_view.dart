@@ -1,6 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,6 +84,12 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.savedAddress);
+              },
+              child: const Text('Saved address'),
             ),
           ],
         ),

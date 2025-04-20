@@ -164,7 +164,7 @@ class _LoginState extends State<Login> {
                           Navigator.push(
                             context,
                             RouteGenerator.getRoute(
-                              RouteSettings(name: Routes.editProfileRoute),
+                              RouteSettings(name: Routes.bottomNav),
                             ),
                           );
                         }

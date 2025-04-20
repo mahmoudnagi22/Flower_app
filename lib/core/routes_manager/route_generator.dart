@@ -6,6 +6,7 @@ import 'package:flower_app/features/app_sections/product_details/presentation/pa
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
 import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
+import 'package:flower_app/features/saved_address/presentation/view/screens/saved_address_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,9 +57,17 @@ class RouteGenerator {
               ),
           settings: settings,
         );
-         return MaterialPageRoute(builder: (_) =>   const BestSeller());
+      case Routes.savedAddress:
+        return MaterialPageRoute(
+          builder: (context) => const SavedAddressScreen(),
+        );
+        return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => ProductDetails(product: settings.arguments as ProductEntity,));
+        return MaterialPageRoute(
+          builder:
+              (_) =>
+                  ProductDetails(product: settings.arguments as ProductEntity),
+        );
       default:
         return unDefinedRoute();
     }
