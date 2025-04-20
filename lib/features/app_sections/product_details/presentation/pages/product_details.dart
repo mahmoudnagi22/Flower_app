@@ -1,4 +1,3 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/assets_manager.dart';
@@ -8,6 +7,7 @@ import 'package:flower_app/features/app_sections/occasions/domain/entities/produ
 import 'package:flower_app/features/app_sections/product_details/presentation/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductDetails extends StatefulWidget {

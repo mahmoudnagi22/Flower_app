@@ -1,6 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -63,6 +64,25 @@ class Profile extends StatelessWidget {
                 if (value == "English") cubit.changeLanguage("en");
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
+            ),
+            SizedBox(height: 25.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Edit Profile',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.editProfileRoute);
+                  },
+                  child: Image.asset(
+                    'assets/images/noto-v1_pen.png',
+                    height: 50.h,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

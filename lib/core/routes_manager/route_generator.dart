@@ -1,9 +1,11 @@
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
 import 'package:flower_app/features/app_sections/occasions/domain/entities/products_entity.dart';
 import 'package:flower_app/features/app_sections/product_details/presentation/pages/product_details.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
+import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +22,13 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) =>
-            BlocProvider(
-              create: (context) => LoginCubit(),
-              child: const Login(),
-            ));
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => LoginCubit(),
+                child: const Login(),
+              ),
+        );
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
       case Routes.bottomNav:
@@ -37,11 +41,15 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());
       case Routes.best:
         return MaterialPageRoute(builder: (_) => const BestSeller());
+      case Routes.editProfileRoute:
+        return MaterialPageRoute(
+          builder:
+              (context) => EditProfileScreen(userModel: UserModel.instance),
+        );
       case Routes.splash:
         return MaterialPageRoute(
           builder:
-              (context) =>
-              BlocProvider(
+              (context) => BlocProvider(
                 create:
                     (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
                 child: const SplashView(),
@@ -59,8 +67,7 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
       builder:
-          (_) =>
-          Scaffold(
+          (_) => Scaffold(
             appBar: AppBar(title: const Text('No Route Found')),
             body: const Center(child: Text('No Route Found')),
           ),

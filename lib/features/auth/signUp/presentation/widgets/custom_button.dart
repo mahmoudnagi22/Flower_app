@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,8 +8,11 @@ class CustomButton extends StatelessWidget {
   String text;
   Color? backgroundColor;
 
-  CustomButton(
-      {required this.onPressed, required this.text, this.backgroundColor});
+  CustomButton({
+    required this.onPressed,
+    required this.text,
+    this.backgroundColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,19 @@ class CustomButton extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: ColorManager.appColor,
-              shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.r),
+              ),
               padding: EdgeInsets.all(12.sp),
             ),
             onPressed: onPressed,
             child: Text(
               text,
-              style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.white)
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
