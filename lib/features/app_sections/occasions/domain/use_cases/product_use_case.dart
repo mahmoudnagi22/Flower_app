@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../../../core/api_manager/api_result.dart';
+import '../../../../../core/models/api_result.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../entities/products_entity.dart';
 import '../repositories/occasion_repo.dart';

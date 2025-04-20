@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/l10n/app_localizations.dart';
 import '../profile/presentation/views/profile_view.dart';
+import 'cart/presentation/pages/cart_screen.dart';
 import 'categories/presentation/pages/categories_screen.dart';
 import 'home/screen/home_screen.dart';
 
@@ -22,7 +23,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   final List<Widget> _pages = [
     BlocProvider(create: (context) => HomeTabCubit(), child: HomeScreen()),
     CategoriesScreen(),
-    Cart(),
+    CartScreen(),
     Profile(),
   ];
 
@@ -89,20 +90,6 @@ class Category extends StatelessWidget {
     return const Center(
       child: Text(
         "Category Screen",
-        style: TextStyle(fontSize: 24, color: Colors.black),
-      ),
-    );
-  }
-}
-
-class Cart extends StatelessWidget {
-  const Cart({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Cart Screen",
         style: TextStyle(fontSize: 24, color: Colors.black),
       ),
     );

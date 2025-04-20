@@ -5,7 +5,7 @@ import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/features/app_sections/home/data/data_sources_contract/home_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../core/api_manager/api_result.dart';
+import '../../../../../core/models/api_result.dart';
 import '../../../../../core/utils/failures.dart';
 import '../model/HomeDataResponse.dart';
 @Injectable(as: HomeDataSources )

@@ -1,3 +1,4 @@
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,9 @@ import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/dialog_utils.dart';
 import '../../../../../../core/utils/status.dart';
+import '../../../add_to_cart/data/model/add_to_cart_parameters.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_cubit.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import '../../domain/entities/product_filter.dart';
 import '../cubit/categories_cubit.dart';
 import '../widgets/custom_search.dart';
@@ -107,7 +111,15 @@ class CategoriesScreen extends StatelessWidget {
                                   context,
                                   index,
                                 ) {
-                                  return Card(
+                                  return GestureDetector(
+                                      onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: state.products![index],
+                                    );
+                                  },
+                                  child:Card(
                                     color: ColorManager.white,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
@@ -191,42 +203,65 @@ class CategoriesScreen extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(height: 5.h),
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: Container(
-                                              width: 147.w,
-                                              height: 30.h,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.appColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(25.r),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    IconsAssets.cart,
-                                                    height: 18,
-                                                    width: 18,
-                                                  ),
-                                                  SizedBox(width: 8.w),
-                                                  Text(
-                                                    lang!.addToCart,
-                                                    style: TextStyle(
-                                                      color: ColorManager.white,
-                                                      fontSize: 13.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                          BlocProvider(
+                                            create: (_) => AddToCartCubit(),
+                                            child: BlocListener<AddToCartCubit, AddToCartState>(
+                                              listener: (context, state) {
+                                                if(state is AddToCartLoadingState){
+                                                  DialogUtils.showLoading(context, "${lang.login}");
+                                                }
+                                                if (state is AddToCartSuccessState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showSuccess(context, "✅ Product has been added to cart");
+                                                } else if (state is AddToCartErrorState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showError(context, state.massage);
+                                                }
+                                              },
+                                              child: Builder(
+                                                builder: (innerContext) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      final productId = state.products![index].id ?? '';
+                                                      innerContext.read<AddToCartCubit>().addToCart(
+                                                        AddToCartParameters(product: productId),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 147.w,
+                                                      height: 30.h,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorManager.appColor,
+                                                        borderRadius: BorderRadius.circular(25.r),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            IconsAssets.cart,
+                                                            height: 18,
+                                                            width: 18,
+                                                          ),
+                                                          SizedBox(width: 8.w),
+                                                          Text(
+                                                            lang.addToCart,
+                                                            style: TextStyle(
+                                                              color: ColorManager.white,
+                                                              fontSize: 13.sp,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ),),
                                   );
                                 }, childCount: state.products?.length),
                                 gridDelegate:

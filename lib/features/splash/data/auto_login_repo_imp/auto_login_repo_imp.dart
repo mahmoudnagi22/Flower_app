@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api_manager/api_result.dart';
+import '../../../../core/models/api_result.dart';
 import '../../domain/auto_login_repo/auto_login_repo.dart';
 import '../auto_login_data_source/auto_login_data_source.dart';
 @Injectable(as: AutoLoginRepo)

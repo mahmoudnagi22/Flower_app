@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
   bool checkboxState = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  GlobalKey<FormState> formState = GlobalKey();
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final lang = AppLocalizations.of(context)!;
+    LoginCubit loginCubit = LoginCubit.get(context);
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -83,14 +84,13 @@ class _LoginState extends State<Login> {
                       Row(
                         children: [
                           Checkbox(
-                            checkColor:Colors.white,
-                            activeColor: ColorManager.appColor ,
+                            checkColor: Colors.white,
+                            activeColor: ColorManager.appColor,
                             value: checkboxState,
                             onChanged: (value) {
                               setState(() {
                                 checkboxState = value!;
                               });
-
                             },
                           ),
                           Text(
@@ -120,20 +120,14 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 55.h),
                   BlocListener<LoginCubit, LoginCubitState>(
                     listener: (context, state) {
-                      if (state is CheckGetTokenTrueState) {
-                        Navigator.push(
-                          context,
-                          RouteGenerator.getRoute(
-                            const RouteSettings(name: Routes.bottomNav),
-                          ),
-                        );
-                      } else if (state is CheckGetTokenFalseState == false) {}
                       if (state is LoginLoadingState) {
                         DialogUtils.showLoading(context, lang.loading);
-                      } else if (state is LoginErrorState) {
+                      }
+                      if (state is LoginErrorState) {
                         DialogUtils.hideLoading(context);
                         DialogUtils.showError(context, state.massage);
-                      } else if (state is LoginSuccessState) {
+                      }
+                      if (state is LoginSuccessState) {
                         DialogUtils.hideLoading(context);
                         Navigator.push(
                           context,
@@ -160,7 +154,7 @@ class _LoginState extends State<Login> {
                       color: ColorManager.bank,
                       onPressed: () {
                         if (formState.currentState!.validate()) {
-                          BlocProvider.of<LoginCubit>(context).login(
+                          loginCubit.login(
                             LoginUserResponse(
                               email: email.text,
                               password: password.text,

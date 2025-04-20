@@ -13,6 +13,22 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/app_sections/cart/data/data_sources/carts_contract.dart'
+    as _i1027;
+import '../../features/app_sections/cart/data/data_sources/carts_impl.dart'
+    as _i333;
+import '../../features/app_sections/cart/data/repositories/cart_repo_impl.dart'
+    as _i938;
+import '../../features/app_sections/cart/domain/repositories/cart_repo.dart'
+    as _i112;
+import '../../features/app_sections/cart/domain/use_cases/delete_cart_use_case.dart'
+    as _i886;
+import '../../features/app_sections/cart/domain/use_cases/get_carts_entity.dart'
+    as _i318;
+import '../../features/app_sections/cart/domain/use_cases/update_quantity_use_case.dart'
+    as _i287;
+import '../../features/app_sections/cart/presentation/cubit/cart_cubit.dart'
+    as _i204;
 import '../../features/app_sections/categories/data/data_sources/categories_data_source_contract.dart'
     as _i510;
 import '../../features/app_sections/categories/data/data_sources/categories_data_source_impl.dart'
@@ -140,6 +156,9 @@ extension GetItInjectableX on _i174.GetIt {
         loginDataSource: gh<_i1040.LoginDataSource>(),
       ),
     );
+    gh.factory<_i1027.CartsContract>(
+      () => _i333.CartsImpl(apiManager: gh<_i266.ApiManager>()),
+    );
     gh.factory<_i449.RemoteOccasionDataSourceContract>(
       () => _i683.RemoteOccasionDataSourceImpl(
         apiManager: gh<_i266.ApiManager>(),
@@ -157,6 +176,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i565.SetLanguageUseCase>(),
       ),
     );
+    gh.factory<_i112.CartsRepo>(
+      () => _i938.CartRepoImpl(dataSource: gh<_i1027.CartsContract>()),
+    );
     gh.factory<_i537.AutoLoginDataSource>(
       () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
     );
@@ -165,6 +187,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
+    );
+    gh.factory<_i886.DeleteCartUseCase>(
+      () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i318.GetCartsUseCase>(
+      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.singleton<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
@@ -200,6 +231,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i66.GetCategoriesUseCase>(
       () => _i66.GetCategoriesUseCase(repo: gh<_i509.CategoriesRepo>()),
+    );
+    gh.factory<_i204.CartCubit>(
+      () => _i204.CartCubit(
+        updateUseCase: gh<_i287.UpdateQuantityUseCase>(),
+        getUseCase: gh<_i318.GetCartsUseCase>(),
+        deleteCartUseCase: gh<_i886.DeleteCartUseCase>(),
+      ),
     );
     gh.factory<_i824.ProductsUseCase>(
       () => _i824.ProductsUseCase(gh<_i942.OccasionRepo>()),

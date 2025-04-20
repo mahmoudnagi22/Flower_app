@@ -39,6 +39,13 @@
   "invalidEmail": "هذا البريد الإلكتروني غير صالح",
   "invalidPassword": "كلمة المرور غير صحيحة",
   "loading": "جارٍ التحميل...",
-  "forgetPassword": "هل نسيت كلمة المرور؟"
+  "forgetPassword": "هل نسيت كلمة المرور؟",
+  "status":"الحالة",
+  "inStock":"متوفر",
+  "outStock":"غير متوفر",
+  "tax":"جميع الأسعار تشمل الضريبة",
+  "description":"الوصف",
+  "haveAccount":"يجب ان يكون لديك حساب",
+  "cancel":"الغاء"
 
 }

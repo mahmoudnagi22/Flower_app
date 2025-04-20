@@ -1,18 +1,22 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart';
+import '../../features/app_sections/add_to_cart/data/model/Product.dart';
+import '../../features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart';
+import '../../features/app_sections/cart/data/models/carts_response_dto.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
 import '../../features/app_sections/categories/data/models/category_by_id_dto.dart';
 import '../../features/app_sections/categories/domain/entities/product_filter.dart';
 import '../../features/app_sections/home/data/model/HomeDataResponse.dart';
 import '../../features/app_sections/occasions/data/models/occasions_dto.dart';
 import '../../features/app_sections/occasions/data/models/products_dto.dart';
+import '../models/api_result.dart';
 import '../models/user_model.dart';
 
 @singleton
@@ -25,7 +29,7 @@ class ApiManager {
     _dio.options.receiveTimeout = const Duration(seconds: 10);
     _dio.options.sendTimeout = const Duration(seconds: 10);
     _dio.options.followRedirects = false;
-    _dio.options.headers = {"token": UserModel.instance.token};
+    _dio.options.headers = {"token": UserModel.instance.token,"Authorization": "Bearer ${UserModel.instance.token}"};
   }
 
   // TODO : =================== GetRequest ==============
@@ -265,6 +269,7 @@ class ApiManager {
     }
   }
 
+
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {
     if (!await _isConnected()) {
@@ -336,7 +341,9 @@ class ApiManager {
     }
   }
 
-  //TODO:====================== Function IS home tab =======
+
+
+//TODO:====================== Function IS home tab =======
   Future<ApiResult<HomeDataResponse>> homeTab() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -353,6 +360,169 @@ class ApiManager {
           return ApiSuccessResult(
             data: HomeDataResponse.fromJson(response.data),
           );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+            errorMessage: e.message ?? 'An unexpected error occurred'),
+      );
+    }
+  }
+
+
+
+  //TODO:====================== Function IS Add to cart =======
+  Future<ApiResult<AddToCartResponse>> addToCart(AddToCartParameters parameters) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await postRequest(
+        AppConstants.baseUrl + AppConstants.addToCart, AddToCartParameters(product: parameters.product),
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          return ApiSuccessResult(
+            data: AddToCartResponse.fromJson(response.data),
+          );
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+  Future<ApiResult<List<CartItemsDto>>> getCartsItem() async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await getRequest(
+          AppConstants.addToCart,
+        headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        }
+
+
+
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final cartItemsJson = response.data['cart']['cartItems'] as List;
+          final items = cartItemsJson.map((e) => CartItemsDto.fromJson(e)).toList();
+          return ApiSuccessResult(data: items);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+  Future<ApiResult<List<Product>>> updateQuantity(String cartId,int quantity) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+    try {
+      final response = await putRequest(
+        '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+        },
+        {
+          'quantity': quantity,
+        },
+      );
+      // print('Response Update is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+
+//TODO:====================== Function IS Delete Carts Products =======
+  Future<ApiResult<List<Product>>> deleteCart(String cartId) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(
+            errorMessage: 'Please check your internet connection'),
+      );
+    }
+
+    try {
+      final response = await deleteRequest(
+          '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+          }
+      );
+      // print('Response Delete is: $response');
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final List<dynamic> result = response.data['product'] ?? [];
+          final List<Product> productJson = result.map((json) =>
+              Product.fromJson(json)).toList();
+          return ApiSuccessResult(data: productJson);
         } else {
           return ApiErrorResult(
             failures: ServerError(errorMessage: response.data.toString()),

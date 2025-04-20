@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api_manager/api_result.dart';
+import '../../../../core/models/api_result.dart';
 import '../auto_login_repo/auto_login_repo.dart';
 @injectable
 class GetUserDataUseCase {

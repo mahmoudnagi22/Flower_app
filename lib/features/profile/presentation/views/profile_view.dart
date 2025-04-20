@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = LocalizationCubit.get(context);
     var lang = AppLocalizations.of(context);
-
+    print(UserModel.instance.token);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: SafeArea(

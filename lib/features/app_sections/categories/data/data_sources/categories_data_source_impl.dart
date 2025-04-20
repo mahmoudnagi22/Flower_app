@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:injectable/injectable.dart';
 

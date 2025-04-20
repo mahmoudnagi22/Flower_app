@@ -7,4 +7,5 @@ class Routes {
   static const String best = "/best";
   static const String splash = "/";
   static const String editProfileRoute = "/edit";
+  static const String productDetails = "/productDetails";
 }
