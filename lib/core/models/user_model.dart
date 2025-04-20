@@ -30,9 +30,8 @@ class UserModel {
     addresses = List<String>.from(json['user']?['addresses'] ?? []);
     id = json['user']?['_id'];
     token = json['token'];
-    createdAt =
-        json['user']?['createdAt'] != null
-            ? DateTime.parse(json['user']?['createdAt'])
-            : null;
+    createdAt = json['user']?['createdAt'] != null
+        ? DateTime.parse(json['user']?['createdAt'])
+        : null;
   }
 }

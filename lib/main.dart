@@ -8,6 +8,7 @@ import 'core/di/di.dart';
 import 'core/l10n/app_localizations.dart';
 import 'features/auth/login/presentation/cubit/login_cubit.dart';
 
+
 import 'features/localization/domain/use_cases/get_language.dart';
 import 'features/localization/domain/use_cases/set_language.dart';
 
@@ -26,13 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create:
-              (context) => LocalizationCubit(
-                getIt<GetLanguageUseCase>(),
-                getIt<SetLanguageUseCase>(),
-              ),
-        ),
+
+        BlocProvider(create: (context) => LocalizationCubit(getIt<GetLanguageUseCase>(), getIt<SetLanguageUseCase>())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
