@@ -1,4 +1,5 @@
 import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/auth/change_password/presentation/cubit/change_password_cubit.dart';
 import 'package:flower_app/features/auth/change_password/presentation/cubit/change_password_state.dart';
@@ -12,6 +13,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
     return BlocProvider(
       create: (context) => getIt<ChangePasswordCubit>(),
       child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
@@ -48,7 +50,7 @@ class ChangePasswordScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: ColorManager.white,
-              title: const Text("Change Password"),
+              title: Text(lang.changePassword),
             ),
             body: Form(
               key: cubit.formKey,
@@ -57,7 +59,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomTextFormField(
-                      labelText: "Current Password",
+                      labelText: lang.changePassword,
                       hintText: "Enter current password",
                       controller: cubit.currentPasswordController,
                       keyboardType: TextInputType.visiblePassword,
@@ -72,7 +74,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                      labelText: "New Password",
+                      labelText: lang.newPassword,
                       hintText: "Enter new password",
                       controller: cubit.newPasswordController,
                       keyboardType: TextInputType.visiblePassword,
@@ -87,9 +89,9 @@ class ChangePasswordScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                      labelText: "Confirm Password",
+                      labelText: lang.confirmPassword,
                       hintText: "Confirm new password",
-                      controller: TextEditingController(), // يمكنك تعديله ليكون في الكيوبت
+                      controller: cubit.confirmPasswordController,
                       keyboardType: TextInputType.visiblePassword,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -113,7 +115,7 @@ class ChangePasswordScreen extends StatelessWidget {
                       onPressed: () {
                         cubit.changePassword();
                       },
-                      text: "Change Password",
+                      text: "${lang.changePassword}",
                       backgroundColor: ColorManager.bank,
                     ),
                   ],

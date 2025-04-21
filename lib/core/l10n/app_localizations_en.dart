@@ -151,4 +151,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get changePassword => 'Change Password';
 }

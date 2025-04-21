@@ -151,4 +151,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'الغاء';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get currentPassword => 'كلمة المرور الحالية';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
 }

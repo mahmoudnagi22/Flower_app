@@ -40,12 +40,14 @@
   "invalidPassword": "Invalid password",
   "loading": "Loading...",
   "forgetPassword": "Forgot Password?",
-  "status":"Status",
-  "inStock":"In Stock",
-  "outStock":"Out of Stock",
-  "tax":"All prices include tax",
-  "description":"Description",
-  "haveAccount":"You should create an account",
-  "cancel":"Cancel"
-
+  "status": "Status",
+  "inStock": "In Stock",
+  "outStock": "Out of Stock",
+  "tax": "All prices include tax",
+  "description": "Description",
+  "haveAccount": "You should create an account",
+  "cancel": "Cancel",
+  "newPassword": "New Password",
+  "currentPassword": "Current Password",
+  "changePassword": "Change Password"
 }

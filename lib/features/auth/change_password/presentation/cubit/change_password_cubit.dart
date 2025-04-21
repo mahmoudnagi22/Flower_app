@@ -16,6 +16,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -31,17 +32,16 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
     ApiResult<ChangePasswordResponse> result = await changePasswordUseCase(updatePassword);
 
-    switch (result) {
-      case ApiSuccessResult<ChangePasswordResponse>():
-        emit(state.copyWith(
-          status: Status.success,
-          message: "Password changed successfully",
-        ));
-      case ApiErrorResult<ChangePasswordResponse>():
-        emit(state.copyWith(
-          status: Status.error,
-          message: result.failures.errorMessage,
-        ));
+    if (result is ApiSuccessResult<ChangePasswordResponse>) {
+      emit(state.copyWith(
+        status: Status.success,
+        message: "Password changed successfully",
+      ));
+    } else if (result is ApiErrorResult<ChangePasswordResponse>) {
+      emit(state.copyWith(
+        status: Status.error,
+        message: result.failures.errorMessage,
+      ));
     }
   }
 
@@ -49,6 +49,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   Future<void> close() {
     currentPasswordController.dispose();
     newPasswordController.dispose();
+    confirmPasswordController.dispose();
     return super.close();
   }
 }

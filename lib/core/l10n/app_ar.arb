@@ -40,12 +40,14 @@
   "invalidPassword": "كلمة المرور غير صحيحة",
   "loading": "جارٍ التحميل...",
   "forgetPassword": "هل نسيت كلمة المرور؟",
-  "status":"الحالة",
-  "inStock":"متوفر",
-  "outStock":"غير متوفر",
-  "tax":"جميع الأسعار تشمل الضريبة",
-  "description":"الوصف",
-  "haveAccount":"يجب ان يكون لديك حساب",
-  "cancel":"الغاء"
-
+  "status": "الحالة",
+  "inStock": "متوفر",
+  "outStock": "غير متوفر",
+  "tax": "جميع الأسعار تشمل الضريبة",
+  "description": "الوصف",
+  "haveAccount": "يجب ان يكون لديك حساب",
+  "cancel": "الغاء",
+  "newPassword": "كلمة المرور الجديدة",
+  "currentPassword": "كلمة المرور الحالية",
+  "changePassword": "تغيير كلمة المرور"
 }

@@ -5,7 +5,6 @@ import 'package:flower_app/features/auth/login/data/repository_impl/login_repo_i
 import 'package:flower_app/features/auth/login/domain/usecases/login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'login_status.dart';
 
 @singleton
@@ -27,7 +26,7 @@ class LoginCubit extends Cubit<LoginCubitState> {
         emit(LoginSuccessState());
 
       case ApiErrorResult():
-        emit(LoginErrorState(massage: response.failures!.errorMessage));
+        emit(LoginErrorState(massage: response.failures.errorMessage));
     }
   }
 }
