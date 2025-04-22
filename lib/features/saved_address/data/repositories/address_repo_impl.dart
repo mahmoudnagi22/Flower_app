@@ -1,28 +1,28 @@
-import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
+import 'package:flower_app/features/saved_address/data/data_sources/remote_address_ds_contract.dart';
+import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 import 'package:flower_app/features/saved_address/domain/repositories/address_repo_contract.dart';
 
 class AddressRepoImpl implements AddressRepoContract {
+  final RemoteAddressDsContract remoteAddressDsContract;
+  AddressRepoImpl(this.remoteAddressDsContract);
+
   @override
-  Future<void> addAddress(Map<String, dynamic> body) {
-    // TODO: implement addAddress
-    throw UnimplementedError();
+  Future<void> addAddress(AddressModel address) {
+    return remoteAddressDsContract.addAddress(address);
   }
 
   @override
-  Future<void> deleteAddress(String id) {
-    // TODO: implement deleteAddress
-    throw UnimplementedError();
+  Future<void> deleteAddress(AddressModel address) {
+    return remoteAddressDsContract.deleteAddress(address);
   }
 
   @override
-  Future<List<AddressEntity>> getAddresses() {
-    // TODO: implement getAddresses
-    throw UnimplementedError();
+  Future<List<AddressModel>> getAddresses() {
+    return remoteAddressDsContract.getAddresses();
   }
 
   @override
-  Future<void> updateAddress(String id, Map<String, dynamic> body) {
-    // TODO: implement updateAddress
-    throw UnimplementedError();
+  Future<void> updateAddress(AddressModel address) {
+    return remoteAddressDsContract.updateAddress(address);
   }
 }
