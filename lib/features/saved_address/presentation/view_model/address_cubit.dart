@@ -5,7 +5,9 @@ import 'package:flower_app/features/saved_address/domain/usecases/get_addresses_
 import 'package:flower_app/features/saved_address/domain/usecases/update_address_usecase.dart';
 import 'package:flower_app/features/saved_address/presentation/view_model/address_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class AddressCubit extends Cubit<AddressState> {
   final AddAddressUsecase addAddressUsecase;
   final GetAddressesUsecase getAddressesUsecase;

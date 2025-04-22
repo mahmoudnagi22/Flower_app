@@ -1,8 +1,8 @@
-import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
+import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 
 abstract class AddressRepoContract {
-  Future<List<AddressEntity>> getAddresses();
-  Future<void> deleteAddress(String id);
-  Future<void> addAddress(Map<String, dynamic> body);
-  Future<void> updateAddress(String id, Map<String, dynamic> body);
+  Future<List<AddressModel>> getAddresses();
+  Future<void> deleteAddress(AddressModel address);
+  Future<void> addAddress(AddressModel address);
+  Future<void> updateAddress(AddressModel address);
 }

@@ -107,6 +107,16 @@ import '../../features/localization/domain/use_cases/get_language.dart'
     as _i702;
 import '../../features/localization/domain/use_cases/set_language.dart'
     as _i565;
+import '../../features/saved_address/domain/usecases/add_address_usecase.dart'
+    as _i685;
+import '../../features/saved_address/domain/usecases/delete_address_usecase.dart'
+    as _i498;
+import '../../features/saved_address/domain/usecases/get_addresses_usecase.dart'
+    as _i150;
+import '../../features/saved_address/domain/usecases/update_address_usecase.dart'
+    as _i722;
+import '../../features/saved_address/presentation/view_model/address_cubit.dart'
+    as _i146;
 import '../../features/splash/data/auto_login_data_source/auto_login_data_source.dart'
     as _i537;
 import '../../features/splash/data/auto_login_data_source_imp/auto_login_data_source_impl.dart'
@@ -130,6 +140,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
+    gh.factory<_i146.AddressCubit>(
+      () => _i146.AddressCubit(
+        gh<_i685.AddAddressUsecase>(),
+        gh<_i150.GetAddressesUsecase>(),
+        gh<_i722.UpdateAddressUsecase>(),
+        gh<_i498.DeleteAddressUsecase>(),
+      ),
+    );
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
     gh.singleton<_i781.ChangePassDsContract>(
       () => _i393.ChangePassDsImpl(gh<_i266.ApiManager>()),
@@ -188,20 +206,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
-    gh.factory<_i886.DeleteCartUseCase>(
-      () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
-    );
-    gh.factory<_i287.UpdateQuantityUseCase>(
-      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
-    );
-    gh.factory<_i318.GetCartsUseCase>(
-      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
-    );
     gh.singleton<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
     );
     gh.singleton<_i725.ProfileRepoContract>(
       () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
+    );
+    gh.factory<_i886.DeleteCartUseCase>(
+      () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i318.GetCartsUseCase>(
+      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i66.UpdateProfileUsecase>(
       () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
