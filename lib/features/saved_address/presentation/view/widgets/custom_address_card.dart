@@ -1,5 +1,7 @@
 import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/presentation/view_model/address_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAddressCard extends StatelessWidget {
@@ -8,6 +10,7 @@ class CustomAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AddressCubit>();
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.only(bottom: 14),
@@ -37,7 +40,9 @@ class CustomAddressCard extends StatelessWidget {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        cubit.deleteAddress(address.id);
+                      },
                       child: const Icon(
                         Icons.delete,
                         color: Color(0xffCC1010),
@@ -46,7 +51,20 @@ class CustomAddressCard extends StatelessWidget {
                     ),
                     12.horizontalSpace,
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        // final updatedAddress =
+                        //     await Navigator.push<AddressModel>(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) {
+                        //           return AddAddressScreen(address: address);
+                        //         },
+                        //       ),
+                        //     );
+                        // if (updatedAddress != null) {
+                        //   cubit.updateAddress(updatedAddress);
+                        // }
+                      },
                       child: const Icon(
                         Icons.edit,
                         color: Colors.black,

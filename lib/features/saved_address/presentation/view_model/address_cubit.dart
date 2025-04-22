@@ -51,10 +51,10 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> deleteAddress(AddressModel address) async {
+  Future<void> deleteAddress(String addressId) async {
     emit(AddressLoading());
     try {
-      await deleteAddressUsecase(address);
+      await deleteAddressUsecase(addressId);
       await getAddresses();
     } catch (e) {
       emit(AddressError(e.toString()));

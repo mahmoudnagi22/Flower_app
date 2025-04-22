@@ -21,8 +21,8 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
   }
 
   @override
-  Future<void> deleteAddress(AddressModel address) async {
-    await apiManager.deleteRequest('addresses/${address.id}');
+  Future<void> deleteAddress(String addressId) async {
+    await apiManager.deleteRequest('addresses/$addressId');
   }
 
   @override

@@ -14,8 +14,8 @@ class AddressRepoImpl implements AddressRepoContract {
   }
 
   @override
-  Future<void> deleteAddress(AddressModel address) {
-    return remoteAddressDsContract.deleteAddress(address);
+  Future<void> deleteAddress(String addressId) {
+    return remoteAddressDsContract.deleteAddress(addressId);
   }
 
   @override
