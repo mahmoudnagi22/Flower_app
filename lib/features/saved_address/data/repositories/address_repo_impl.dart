@@ -1,7 +1,9 @@
 import 'package:flower_app/features/saved_address/data/data_sources/remote_address_ds_contract.dart';
 import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 import 'package:flower_app/features/saved_address/domain/repositories/address_repo_contract.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: AddressRepoContract)
 class AddressRepoImpl implements AddressRepoContract {
   final RemoteAddressDsContract remoteAddressDsContract;
   AddressRepoImpl(this.remoteAddressDsContract);

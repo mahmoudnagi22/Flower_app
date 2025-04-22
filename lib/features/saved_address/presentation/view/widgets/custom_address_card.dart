@@ -1,8 +1,10 @@
+import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAddressCard extends StatelessWidget {
-  const CustomAddressCard({super.key});
+  const CustomAddressCard({super.key, required this.address});
+  final AddressModel address;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class CustomAddressCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.location_on_outlined),
                     5.horizontalSpace,
-                    const Text(
-                      'Cairo',
+                    Text(
+                      address.city,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -56,7 +58,7 @@ class CustomAddressCard extends StatelessWidget {
               ],
             ),
             12.verticalSpace,
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 4),
               child: Text(
                 '2XVP+XC - Sheikh Zayed',

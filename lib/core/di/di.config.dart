@@ -107,6 +107,14 @@ import '../../features/localization/domain/use_cases/get_language.dart'
     as _i702;
 import '../../features/localization/domain/use_cases/set_language.dart'
     as _i565;
+import '../../features/saved_address/data/data_sources/remote_address_ds_contract.dart'
+    as _i541;
+import '../../features/saved_address/data/data_sources/remote_address_ds_impl.dart'
+    as _i836;
+import '../../features/saved_address/data/repositories/address_repo_impl.dart'
+    as _i896;
+import '../../features/saved_address/domain/repositories/address_repo_contract.dart'
+    as _i496;
 import '../../features/saved_address/domain/usecases/add_address_usecase.dart'
     as _i685;
 import '../../features/saved_address/domain/usecases/delete_address_usecase.dart'
@@ -140,14 +148,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
-    gh.factory<_i146.AddressCubit>(
-      () => _i146.AddressCubit(
-        gh<_i685.AddAddressUsecase>(),
-        gh<_i150.GetAddressesUsecase>(),
-        gh<_i722.UpdateAddressUsecase>(),
-        gh<_i498.DeleteAddressUsecase>(),
-      ),
-    );
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
     gh.singleton<_i781.ChangePassDsContract>(
       () => _i393.ChangePassDsImpl(gh<_i266.ApiManager>()),
@@ -188,6 +188,9 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
     );
+    gh.factory<_i541.RemoteAddressDsContract>(
+      () => _i836.RemoteAddressDsImpl(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i691.LocalizationCubit>(
       () => _i691.LocalizationCubit(
         gh<_i702.GetLanguageUseCase>(),
@@ -208,6 +211,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i496.AddressRepoContract>(
+      () => _i896.AddressRepoImpl(gh<_i541.RemoteAddressDsContract>()),
     );
     gh.singleton<_i725.ProfileRepoContract>(
       () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
@@ -247,6 +253,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
     );
+    gh.factory<_i685.AddAddressUsecase>(
+      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
+    );
+    gh.factory<_i498.DeleteAddressUsecase>(
+      () => _i498.DeleteAddressUsecase(gh<_i496.AddressRepoContract>()),
+    );
+    gh.factory<_i150.GetAddressesUsecase>(
+      () => _i150.GetAddressesUsecase(gh<_i496.AddressRepoContract>()),
+    );
+    gh.factory<_i722.UpdateAddressUsecase>(
+      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
+    );
     gh.factory<_i66.GetCategoriesUseCase>(
       () => _i66.GetCategoriesUseCase(repo: gh<_i509.CategoriesRepo>()),
     );
@@ -280,6 +298,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i595.GetUserDataUseCase>(
       () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
+    );
+    gh.factory<_i146.AddressCubit>(
+      () => _i146.AddressCubit(
+        gh<_i685.AddAddressUsecase>(),
+        gh<_i150.GetAddressesUsecase>(),
+        gh<_i722.UpdateAddressUsecase>(),
+        gh<_i498.DeleteAddressUsecase>(),
+      ),
     );
     return this;
   }

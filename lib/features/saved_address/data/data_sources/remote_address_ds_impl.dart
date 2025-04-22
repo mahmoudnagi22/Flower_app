@@ -1,7 +1,9 @@
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/features/saved_address/data/data_sources/remote_address_ds_contract.dart';
 import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: RemoteAddressDsContract)
 class RemoteAddressDsImpl implements RemoteAddressDsContract {
   final ApiManager apiManager;
   RemoteAddressDsImpl(this.apiManager);
