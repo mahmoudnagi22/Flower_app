@@ -1,5 +1,6 @@
 import 'package:flower_app/features/saved_address/data/data_sources/remote_address_ds_contract.dart';
 import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
 import 'package:flower_app/features/saved_address/domain/repositories/address_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,22 +10,40 @@ class AddressRepoImpl implements AddressRepoContract {
   AddressRepoImpl(this.remoteAddressDsContract);
 
   @override
-  Future<void> addAddress(AddressModel address) {
-    return remoteAddressDsContract.addAddress(address);
+  Future<void> addAddress(AddressEntity address) {
+    return remoteAddressDsContract.addAddress(
+      AddressModel(
+        id: address.id,
+        address: address.address,
+        phoneNumber: address.phoneNumber,
+        city: address.city,
+        recipientName: address.recipientName,
+        area: address.area,
+      ),
+    );
   }
 
   @override
-  Future<void> deleteAddress(String addressId) {
+  Future<void> deleteAddress(int addressId) {
     return remoteAddressDsContract.deleteAddress(addressId);
   }
 
   @override
-  Future<List<AddressModel>> getAddresses() {
+  Future<List<AddressEntity>> getAddresses() {
     return remoteAddressDsContract.getAddresses();
   }
 
   @override
-  Future<void> updateAddress(AddressModel address) {
-    return remoteAddressDsContract.updateAddress(address);
+  Future<void> updateAddress(AddressEntity address) {
+    return remoteAddressDsContract.updateAddress(
+      AddressModel(
+        id: address.id,
+        address: address.address,
+        phoneNumber: address.phoneNumber,
+        city: address.city,
+        recipientName: address.recipientName,
+        area: address.area,
+      ),
+    );
   }
 }
