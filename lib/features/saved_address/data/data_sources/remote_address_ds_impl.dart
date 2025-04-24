@@ -10,37 +10,24 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
 
   @override
   Future<void> addAddress(AddressModel address) async {
-    await apiManager.postRequest('addresses', {
-      "street": address.street,
-      "phone": address.phone,
-      "city": address.city,
-      "lat": address.lat,
-      "long": address.long,
-      "username": address.username,
-    });
+    await apiManager.postRequest('addresses', address.toJson());
   }
 
   @override
-  Future<void> deleteAddress(String addressId) async {
+  Future<void> deleteAddress(int addressId) async {
     await apiManager.deleteRequest('addresses/$addressId');
   }
 
   @override
   Future<List<AddressModel>> getAddresses() async {
     final response = await apiManager.getRequest('addresses');
-    final List addressesJson = response?.data['addresses'];
-    return addressesJson.map((e) => AddressModel.fromJson(e)).toList();
+    return (response!.data as List)
+        .map((e) => AddressModel.fromJson(e))
+        .toList();
   }
 
   @override
   Future<void> updateAddress(AddressModel address) async {
-    await apiManager.putRequest('addresses/${address.id}', {
-      "street": address.street,
-      "phone": address.phone,
-      "city": address.city,
-      "lat": address.lat,
-      "long": address.long,
-      "username": address.username,
-    });
+    await apiManager.putRequest('addresses/${address.id}', address.toJson());
   }
 }
