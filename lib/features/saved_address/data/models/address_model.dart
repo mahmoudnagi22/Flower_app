@@ -3,32 +3,35 @@ import 'package:flower_app/features/saved_address/domain/entities/address_entity
 class AddressModel extends AddressEntity {
   AddressModel({
     required super.id,
-    required super.address,
-    required super.phoneNumber,
+    required super.street,
+    required super.phone,
     required super.city,
-    required super.recipientName,
-    required super.area,
+    required super.userName,
+    required super.lat,
+    required super.long,
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
       id: json['_id'],
-      address: json['address'],
-      phoneNumber: json['phoneNumber'],
-      recipientName: json['recipientName'],
+      street: json['street'],
+      phone: json['phone'],
+      userName: json['username'],
       city: json['city'],
-      area: json['area'],
+      lat: json['lat'],
+      long: json['long'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
-      'address': address,
-      'phoneNumber': phoneNumber,
-      'recipientName': recipientName,
+      'street': street,
+      'phone': phone,
+      'username': userName,
       'city': city,
-      'area': area,
+      'lat': lat,
+      'long': long,
     };
   }
 }
