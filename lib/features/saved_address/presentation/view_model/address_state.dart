@@ -1,4 +1,4 @@
-import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
 
 abstract class AddressState {}
 
@@ -7,7 +7,7 @@ class AddressInitial extends AddressState {}
 class AddressLoading extends AddressState {}
 
 class AddressSuccess extends AddressState {
-  final List<AddressModel> addresses;
+  final List<AddressEntity> addresses;
   AddressSuccess(this.addresses);
 }
 

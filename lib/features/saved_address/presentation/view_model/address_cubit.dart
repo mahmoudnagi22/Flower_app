@@ -1,4 +1,4 @@
-import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
 import 'package:flower_app/features/saved_address/domain/usecases/add_address_usecase.dart';
 import 'package:flower_app/features/saved_address/domain/usecases/delete_address_usecase.dart';
 import 'package:flower_app/features/saved_address/domain/usecases/get_addresses_usecase.dart';
@@ -31,7 +31,7 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> addAddress(AddressModel address) async {
+  Future<void> addAddress(AddressEntity address) async {
     emit(AddressLoading());
     try {
       await addAddressUsecase(address);
@@ -41,7 +41,7 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> updateAddress(AddressModel address) async {
+  Future<void> updateAddress(AddressEntity address) async {
     emit(AddressLoading());
     try {
       await updateAddressUsecase(address);
@@ -51,7 +51,7 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> deleteAddress(String addressId) async {
+  Future<void> deleteAddress(int addressId) async {
     emit(AddressLoading());
     try {
       await deleteAddressUsecase(addressId);
