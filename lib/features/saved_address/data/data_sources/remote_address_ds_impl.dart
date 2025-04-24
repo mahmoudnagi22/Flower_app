@@ -21,7 +21,7 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
   @override
   Future<List<AddressModel>> getAddresses() async {
     final response = await apiManager.getRequest('addresses');
-    return (response!.data['data'] as List)
+    return (response!.data['address'] as List)
         .map((e) => AddressModel.fromJson(e))
         .toList();
   }

@@ -22,17 +22,13 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
   @override
   void initState() {
     super.initState();
-    addressController = TextEditingController(
-      text: widget.address?.address ?? '',
-    );
-    phoneController = TextEditingController(
-      text: widget.address?.phoneNumber ?? '',
-    );
+    addressController = TextEditingController(text: widget.address?.lat ?? '');
+    phoneController = TextEditingController(text: widget.address?.phone ?? '');
     nameController = TextEditingController(
-      text: widget.address?.recipientName ?? '',
+      text: widget.address?.userName ?? '',
     );
     selectedCity = widget.address?.city ?? 'Cairo';
-    selectedArea = widget.address?.area ?? 'October';
+    selectedArea = widget.address?.street ?? 'October';
   }
 
   @override
@@ -47,11 +43,12 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
     if (_formKey.currentState!.validate()) {
       final address = AddressEntity(
         id: widget.address?.id ?? 0,
-        address: addressController.text,
-        phoneNumber: phoneController.text,
-        recipientName: nameController.text,
+        lat: addressController.text,
+        phone: phoneController.text,
+        userName: nameController.text,
         city: selectedCity,
-        area: selectedArea,
+        street: selectedArea,
+        long: '',
       );
       if (widget.address == null) {
         context.read<AddressCubit>().addAddress(address);

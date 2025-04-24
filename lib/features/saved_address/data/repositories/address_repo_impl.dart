@@ -14,11 +14,12 @@ class AddressRepoImpl implements AddressRepoContract {
     return remoteAddressDsContract.addAddress(
       AddressModel(
         id: address.id,
-        address: address.address,
-        phoneNumber: address.phoneNumber,
+        street: address.street,
+        phone: address.phone,
         city: address.city,
-        recipientName: address.recipientName,
-        area: address.area,
+        userName: address.userName,
+        lat: address.lat,
+        long: address.long,
       ),
     );
   }
@@ -38,11 +39,12 @@ class AddressRepoImpl implements AddressRepoContract {
     return remoteAddressDsContract.updateAddress(
       AddressModel(
         id: address.id,
-        address: address.address,
-        phoneNumber: address.phoneNumber,
+        street: address.street,
+        phone: address.phone,
         city: address.city,
-        recipientName: address.recipientName,
-        area: address.area,
+        userName: address.userName,
+        lat: address.lat,
+        long: address.long,
       ),
     );
   }
