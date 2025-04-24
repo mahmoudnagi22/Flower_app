@@ -7,7 +7,8 @@ import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_butt
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
 
@@ -19,25 +20,28 @@ class ChangePasswordScreen extends StatelessWidget {
       child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
         listener: (context, state) {
           if (state.status == Status.success) {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Center(child: const Text("Successfully completed")),
-                content: const Text("Your password has been changed successfully, you will be logged out."),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/login',
-                            (route) => false,
-                      );
-                    },
-                    child: const Text("OK"),
-                  ),
-                ],
-              ),
-            );
+            final storage = FlutterSecureStorage();
+            storage.delete(key: 'user_token').then((_) {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Center(child: const Text("Successfully completed")),
+                  content: const Text("Your password has been changed successfully, you will be logged out."),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/login',
+                              (route) => false,
+                        );
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
+                ),
+              );
+            });
           } else if (state.status == Status.error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("${state.message}")),
