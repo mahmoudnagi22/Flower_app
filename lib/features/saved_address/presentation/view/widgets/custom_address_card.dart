@@ -1,4 +1,4 @@
-import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
 import 'package:flower_app/features/saved_address/presentation/view_model/address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAddressCard extends StatelessWidget {
   const CustomAddressCard({super.key, required this.address});
-  final AddressModel address;
+  final AddressEntity address;
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +52,12 @@ class CustomAddressCard extends StatelessWidget {
                     12.horizontalSpace,
                     InkWell(
                       onTap: () async {
-                        // final updatedAddress =
-                        //     await Navigator.push<AddressModel>(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) {
-                        //           return AddAddressScreen(address: address);
-                        //         },
-                        //       ),
-                        //     );
-                        // if (updatedAddress != null) {
-                        //   cubit.updateAddress(updatedAddress);
-                        // }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AddressFormScreen(address: address),
+                          ),
+                        );
                       },
                       child: const Icon(
                         Icons.edit,

@@ -43,20 +43,32 @@ class SavedAddressScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        itemCount: state.addresses.length,
+                        itemCount: state.addresses.length + 1,
                         itemBuilder: (context, index) {
+                          if (index == state.addresses.length) {
+                            return CustomButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const AddressFormScreen(),
+                                  ),
+                                );
+                              },
+                              text: 'Add new address',
+                            );
+                          }
                           final address = state.addresses[index];
                           return CustomAddressCard(address: address);
                         },
                       ),
                     ),
-                    CustomButton(onPressed: () {}, text: 'Add new address'),
                     const SizedBox(height: 24),
                   ],
                 ),
               );
             } else {
-              return const SizedBox();
+              return const SizedBox.shrink();
             }
           },
         ),
