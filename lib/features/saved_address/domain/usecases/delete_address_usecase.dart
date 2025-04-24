@@ -1,4 +1,3 @@
-import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 import 'package:flower_app/features/saved_address/domain/repositories/address_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +7,7 @@ class DeleteAddressUsecase {
 
   DeleteAddressUsecase(this.addressRepoContract);
 
-  Future<void> call(String addressId) async {
+  Future<void> call(int addressId) async {
     return await addressRepoContract.deleteAddress(addressId);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
 import 'package:flower_app/features/saved_address/domain/repositories/address_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +8,7 @@ class GetAddressesUsecase {
 
   GetAddressesUsecase(this.addressRepoContract);
 
-  Future<List<AddressModel>> call() async {
+  Future<List<AddressEntity>> call() async {
     return await addressRepoContract.getAddresses();
   }
 }
