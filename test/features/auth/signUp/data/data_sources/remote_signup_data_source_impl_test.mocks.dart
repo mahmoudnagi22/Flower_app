@@ -12,6 +12,8 @@ import 'package:flower_app/features/app_sections/add_to_cart/data/model/add_to_c
     as _i16;
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart'
     as _i15;
+import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart'
+    as _i17;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'
@@ -24,6 +26,8 @@ import 'package:flower_app/features/app_sections/occasions/data/models/occasions
     as _i9;
 import 'package:flower_app/features/app_sections/occasions/data/models/products_dto.dart'
     as _i10;
+import 'package:flower_app/features/app_sections/search/data/models/search_response_dto.dart'
+    as _i18;
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart'
     as _i7;
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart'
@@ -230,4 +234,60 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
                 ),
           )
           as _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>);
+
+  @override
+  _i3.Future<_i5.ApiResult<List<_i17.CartItemsDto>>> getCartsItem() =>
+      (super.noSuchMethod(
+            Invocation.method(#getCartsItem, []),
+            returnValue:
+                _i3.Future<_i5.ApiResult<List<_i17.CartItemsDto>>>.value(
+                  _i8.dummyValue<_i5.ApiResult<List<_i17.CartItemsDto>>>(
+                    this,
+                    Invocation.method(#getCartsItem, []),
+                  ),
+                ),
+          )
+          as _i3.Future<_i5.ApiResult<List<_i17.CartItemsDto>>>);
+
+  @override
+  _i3.Future<_i5.ApiResult<List<_i17.Product>>> updateQuantity(
+    String? cartId,
+    int? quantity,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateQuantity, [cartId, quantity]),
+            returnValue: _i3.Future<_i5.ApiResult<List<_i17.Product>>>.value(
+              _i8.dummyValue<_i5.ApiResult<List<_i17.Product>>>(
+                this,
+                Invocation.method(#updateQuantity, [cartId, quantity]),
+              ),
+            ),
+          )
+          as _i3.Future<_i5.ApiResult<List<_i17.Product>>>);
+
+  @override
+  _i3.Future<_i5.ApiResult<List<_i17.Product>>> deleteCart(String? cartId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteCart, [cartId]),
+            returnValue: _i3.Future<_i5.ApiResult<List<_i17.Product>>>.value(
+              _i8.dummyValue<_i5.ApiResult<List<_i17.Product>>>(
+                this,
+                Invocation.method(#deleteCart, [cartId]),
+              ),
+            ),
+          )
+          as _i3.Future<_i5.ApiResult<List<_i17.Product>>>);
+
+  @override
+  _i3.Future<_i5.ApiResult<_i18.SearchDto>> fetchProducts(String? keyWord) =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchProducts, [keyWord]),
+            returnValue: _i3.Future<_i5.ApiResult<_i18.SearchDto>>.value(
+              _i8.dummyValue<_i5.ApiResult<_i18.SearchDto>>(
+                this,
+                Invocation.method(#fetchProducts, [keyWord]),
+              ),
+            ),
+          )
+          as _i3.Future<_i5.ApiResult<_i18.SearchDto>>);
 }

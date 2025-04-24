@@ -59,6 +59,18 @@ import '../../features/app_sections/occasions/domain/use_cases/product_use_case.
     as _i824;
 import '../../features/app_sections/occasions/presentation/cubit/occasion_cubit.dart'
     as _i618;
+import '../../features/app_sections/search/data/data_sources/search_data_source.dart'
+    as _i190;
+import '../../features/app_sections/search/data/data_sources/search_data_source_impl.dart'
+    as _i891;
+import '../../features/app_sections/search/data/repositories/search_repo_impl.dart'
+    as _i859;
+import '../../features/app_sections/search/domain/repositories/search_repo.dart'
+    as _i67;
+import '../../features/app_sections/search/domain/use_cases/get_products_by_search.dart'
+    as _i887;
+import '../../features/app_sections/search/presentation/cubit/search_cubit.dart'
+    as _i596;
 import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
     as _i1040;
 import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
@@ -122,6 +134,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i593.HomeDataSources>(
       () => _i409.HomeDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
+    gh.factory<_i190.SearchDataSource>(
+      () => _i891.SearchDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
           _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
@@ -160,19 +175,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
+    gh.factory<_i67.SearchRepo>(
+      () => _i859.SearchRepoImpl(dataSource: gh<_i190.SearchDataSource>()),
+    );
     gh.factory<_i886.DeleteCartUseCase>(
       () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
     );
-    gh.factory<_i287.UpdateQuantityUseCase>(
-      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
-    );
     gh.factory<_i318.GetCartsUseCase>(
       () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
         categoriesDataSourceContract: gh<_i510.CategoriesDataSourceContract>(),
       ),
+    );
+    gh.factory<_i887.GetProductsBySearch>(
+      () => _i887.GetProductsBySearch(repo: gh<_i67.SearchRepo>()),
     );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
@@ -182,6 +203,9 @@ extension GetItInjectableX on _i174.GetIt {
         remoteOccasionDataSourceContract:
             gh<_i449.RemoteOccasionDataSourceContract>(),
       ),
+    );
+    gh.factory<_i596.SearchCubit>(
+      () => _i596.SearchCubit(useCase: gh<_i887.GetProductsBySearch>()),
     );
     gh.factory<_i372.AutoLoginRepo>(
       () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),

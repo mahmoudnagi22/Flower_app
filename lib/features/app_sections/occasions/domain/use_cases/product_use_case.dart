@@ -12,7 +12,7 @@ class ProductsUseCase {
   ProductsUseCase(this.repository);
 
   Future<ApiResult<List<ProductEntity>>> call(ProductFilter productFilter) {
-    if(productFilter.occasionId !=null || productFilter.categoryId!=null){
+    if(productFilter.occasionId !=null || productFilter.categoryId!=null || productFilter.filter!=null){
       return repository.getProducts(productFilter);
     }else{
       throw ArgumentError('Either occasionId or categoryId must be provided.');
