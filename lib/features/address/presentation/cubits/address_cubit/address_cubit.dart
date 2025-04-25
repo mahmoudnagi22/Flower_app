@@ -51,59 +51,10 @@ class AddressCubit extends Cubit<AddressState> {
     return await _getStateUseCase.call(id);
   }
 
-  Widget buildMap(AddressState state) {
-    if (state is AddressSuccess) {
-      print(state.searchResult.address);
-      print("dcjndsncjnsdjkcnjsdcjnsjkdnckjnsdkjcnjksdcn");
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: state.searchResult.location,
-            zoom: 15,
-          ),
-          markers: {
-            Marker(
-              markerId: const MarkerId("current"),
-              position: state.searchResult.location,
-              infoWindow: InfoWindow(title: state.searchResult.address),
-            ),
-          },
-          mapToolbarEnabled: false,
-          zoomControlsEnabled: false,
-          myLocationButtonEnabled: false,
-          rotateGesturesEnabled: false,
-          scrollGesturesEnabled: false,
-          zoomGesturesEnabled: false,
-          tiltGesturesEnabled: false,
-          liteModeEnabled: true,
-        ),
-      );
-    } else if (state is AddressError) {
-      return Center(child: Text(state.message));
-    } else if (state is AddressLoading) {
-      return Center(
-        child: CircularProgressIndicator(color: ColorManager.appColor),
-      );
-    } else if (state is AddressAccessDenied) {
-      return Center(
-        child: TextButton(
-          onPressed: () {},
-          child: Text(
-            "Allow access to location",
-            style: TextStyle(
-              color: ColorManager.appColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      );
-    }
-    return Container();
-  }
+
 
   void updateAddress(SearchResult searchResult) {
+    emit(AddressInitial());
     emit(AddressSuccess(searchResult: searchResult));
   }
 }

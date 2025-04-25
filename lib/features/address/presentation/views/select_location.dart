@@ -203,7 +203,6 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
   }
 
   void _useLocation() {
-
     Navigator.pop(context, {
       "address": currentAddress,
       "location": selectedPosition,
@@ -221,6 +220,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
               target: selectedPosition,
               zoom: 15,
             ),
+
             onMapCreated: (controller) => mapController = controller,
             onTap: _onMapTap,
 
@@ -233,7 +233,6 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
           ),
-          // Search bar at the top of the map
           Positioned(
             top: 16,
             left: 16,
@@ -293,7 +292,6 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                     ),
                   ),
                 ),
-                // Search results
                 if (searchResults.isNotEmpty)
                   Container(
                     margin: const EdgeInsets.only(top: 4),
@@ -301,10 +299,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 8,
-                        ),
+                        BoxShadow(color: Colors.black, blurRadius: 8),
                       ],
                     ),
                     constraints: BoxConstraints(
