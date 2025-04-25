@@ -7,7 +7,15 @@ import 'package:flower_app/features/best_seller.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../features/address/domain/use_cases/get_cities_use_case.dart';
+import '../../features/address/domain/use_cases/get_current_address_info.dart';
+import '../../features/address/domain/use_cases/get_permission.dart';
+import '../../features/address/domain/use_cases/get_state_use_case.dart';
+import '../../features/address/presentation/cubits/address_cubit/address_cubit.dart';
+import '../../features/address/presentation/views/add_address.dart';
+import '../../features/address/presentation/views/select_location.dart';
 import '../../features/app_sections/categories/presentation/pages/categories_screen.dart';
 import '../../features/app_sections/occasions/presentation/pages/occasion_screen.dart';
 import '../../features/auth/login/presentation/cubit/login_cubit.dart';
@@ -20,13 +28,36 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_) =>
-            BlocProvider(
-              create: (context) => LoginCubit(),
-              child: const Login(),
-            ));
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => LoginCubit(),
+                child: const Login(),
+              ),
+        );
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+      case Routes.addAddress:
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create:
+                    (context) => AddressCubit(
+                      getIt<GetCurrentAddressInfo>(),
+                      getIt<GetPermissionUseCase>(),
+                      getIt<GetCitiesUseCase>(),
+                      getIt<GetStateUseCase>(),
+                    ),
+                child: AddAddressScreen(),
+              ),
+        );
+      case Routes.selectLocation:
+        return MaterialPageRoute(
+          builder:
+              (_) => SelectLocationScreen(
+                initialPosition: settings.arguments as LatLng,
+              ),
+        );
       case Routes.bottomNav:
         return MaterialPageRoute(
           builder: (_) => const BottomNavigationScreen(),
@@ -40,17 +71,20 @@ class RouteGenerator {
       case Routes.splash:
         return MaterialPageRoute(
           builder:
-              (context) =>
-              BlocProvider(
+              (context) => BlocProvider(
                 create:
                     (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
                 child: const SplashView(),
               ),
           settings: settings,
         );
-         return MaterialPageRoute(builder: (_) =>   const BestSeller());
+        return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => ProductDetails(product: settings.arguments as ProductEntity,));
+        return MaterialPageRoute(
+          builder:
+              (_) =>
+                  ProductDetails(product: settings.arguments as ProductEntity),
+        );
       default:
         return unDefinedRoute();
     }
@@ -59,8 +93,7 @@ class RouteGenerator {
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
       builder:
-          (_) =>
-          Scaffold(
+          (_) => Scaffold(
             appBar: AppBar(title: const Text('No Route Found')),
             body: const Center(child: Text('No Route Found')),
           ),
