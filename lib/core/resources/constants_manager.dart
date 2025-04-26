@@ -11,4 +11,5 @@ class AppConstants {
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
   static const String addToCart = 'cart';
+  static const String address = 'addresses';
 }

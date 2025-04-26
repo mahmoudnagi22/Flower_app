@@ -1,4 +1,5 @@
 import 'package:flower_app/core/models/api_result.dart';
+import 'package:flower_app/features/address/data/models/address.dart';
 import 'package:flower_app/features/address/data/models/cities_model.dart';
 import 'package:flower_app/features/address/data/models/states_model.dart';
 import 'package:flower_app/features/address/domain/repo/address_repo.dart';
@@ -42,5 +43,25 @@ class AddressRepoImpl implements AddressRepo {
   @override
   Future<List<StatesModel>> getStates(String? id) {
     return _dataSource.getStates(id);
+  }
+
+  @override
+  Future<ApiResult> addAddress(Address address) {
+    return _dataSource.addAddress(address);
+  }
+
+  @override
+  Future<ApiResult> deleteAddress(String id) {
+    return _dataSource.deleteAddress(id);
+  }
+
+  @override
+  Future<ApiResult> getUserAddresses() {
+    return _dataSource.getUserAddresses();
+  }
+
+  @override
+  Future<ApiResult> updateAddress(Address address, String id) {
+    return _dataSource.updateAddress(address, id);
   }
 }

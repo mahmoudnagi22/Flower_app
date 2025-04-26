@@ -1,7 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/models/api_result.dart';
+import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/address/data/models/address.dart';
 import 'package:flower_app/features/address/data/models/search_result.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
@@ -15,7 +19,10 @@ import '../models/states_model.dart';
 
 @Injectable(as: AddressDataSource)
 class DataSourceImpl implements AddressDataSource {
-  @override
+  final ApiManager _apiManager;
+
+  DataSourceImpl(this._apiManager);
+
   @override
   Future<ApiResult> getCurrentAddressInfo() async {
     try {
@@ -61,7 +68,6 @@ class DataSourceImpl implements AddressDataSource {
     );
     final data = jsonDecode(jsonString);
 
-
     return (data[2]["data"] as List)
         .map<CitiesModel>((e) => CitiesModel.fromJson(e))
         .toList();
@@ -79,5 +85,137 @@ class DataSourceImpl implements AddressDataSource {
         .where((e) => e['governorate_id'] == id)
         .map<StatesModel>((e) => StatesModel.fromJson(e))
         .toList();
+  }
+
+  @override
+  Future<ApiResult> addAddress(Address address) async   {
+    try {
+      final response = await _apiManager.patchRequest(
+        AppConstants.address,
+        address.toJson(),
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          List<Address> addresses =
+              (response.data["address"] as List)
+                  .map<Address>((e) => Address.fromJson(e))
+                  .toList();
+          return ApiSuccessResult(data: addresses);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data["error"]),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResult> deleteAddress(String id)async {
+    try {
+      final response = await _apiManager.deleteRequest(
+        '${AppConstants.address}/$id',
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          List<Address> addresses =
+          (response.data["address"] as List)
+              .map<Address>((e) => Address.fromJson(e))
+              .toList();
+          return ApiSuccessResult(data: addresses);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data["error"]),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResult> getUserAddresses() async {
+    try {
+      final response = await _apiManager.getRequest(AppConstants.address);
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          List<Address> addresses =
+              (response.data["addresses"] as List)
+                  .map<Address>((e) => Address.fromJson(e))
+                  .toList();
+          return ApiSuccessResult(data: addresses);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data["error"]),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResult> updateAddress(Address address, String id) async{
+    try {
+      final response = await _apiManager.patchRequest(
+        '${AppConstants.address}/$id',
+        address.toJson(),
+      );
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          List<Address> addresses =
+          (response.data["addresses"] as List)
+              .map<Address>((e) => Address.fromJson(e))
+              .toList();
+          return ApiSuccessResult(data: addresses);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data["error"]),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
   }
 }
