@@ -69,7 +69,7 @@ class Profile extends StatelessWidget {
               },
             ),
             SizedBox(height: 25.h),
-            ElevatedButton(onPressed: () => Navigator.pushNamed(context, Routes.addAddress), child: Text("test"))
+            ElevatedButton(onPressed: () => Navigator.pushNamed(context, Routes.addAddress), child: Text("test")),
             CustomButton(
               onPressed: () {
                 Navigator.push(

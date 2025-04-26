@@ -94,10 +94,7 @@ class DataSourceImpl implements AddressDataSource {
       final response = await _apiManager.patchRequest(
         AppConstants.address,
        address.toJson(),
-        headers: {
 
-          'Authorization': 'Bearer ${UserModel.instance.token}'
-        }
       );
 
       if (response != null && response.statusCode != null) {
