@@ -50,15 +50,6 @@ class AddressRepoImpl implements AddressRepo {
     return _dataSource.addAddress(address);
   }
 
-  @override
-  Future<ApiResult> deleteAddress(String id) {
-    return _dataSource.deleteAddress(id);
-  }
-
-  @override
-  Future<ApiResult> getUserAddresses() {
-    return _dataSource.getUserAddresses();
-  }
 
   @override
   Future<ApiResult> updateAddress(Address address, String id) {

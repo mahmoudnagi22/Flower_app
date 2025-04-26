@@ -8,8 +8,8 @@ abstract class AddressRepo {
   Future<bool> checkPermission();
   Future<List<CitiesModel>> getCities();
   Future<List<StatesModel>> getStates(String? id);
-  Future<ApiResult> getUserAddresses();
-  Future<ApiResult> deleteAddress(String id);
+
+
   Future<ApiResult> addAddress(Address address);
   Future<ApiResult> updateAddress(Address address,String id);
 

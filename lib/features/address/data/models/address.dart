@@ -5,7 +5,7 @@ class Address {
   final String lat;
   final String long;
   final String username;
-  final String id;
+  final String? id;
 
   Address({
     required this.street,
@@ -14,7 +14,7 @@ class Address {
     required this.lat,
     required this.long,
     required this.username,
-    required this.id,
+     this.id,
   });
 
   factory Address.fromJson(Map<String, dynamic> json) {

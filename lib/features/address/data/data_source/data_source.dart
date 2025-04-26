@@ -5,8 +5,7 @@ import '../models/states_model.dart';
 
 abstract class AddressDataSource {
   Future<ApiResult> getCurrentAddressInfo();
-  Future<ApiResult> getUserAddresses();
-  Future<ApiResult> deleteAddress(String id);
+
   Future<ApiResult> addAddress(Address address);
   Future<ApiResult> updateAddress(Address address,String id);
   Future<List<CitiesModel>> getCities();

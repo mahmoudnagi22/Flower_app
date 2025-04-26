@@ -16,6 +16,7 @@ class Profile extends StatelessWidget {
     var cubit = LocalizationCubit.get(context);
     var lang = AppLocalizations.of(context);
     print(UserModel.instance.token);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: SafeArea(

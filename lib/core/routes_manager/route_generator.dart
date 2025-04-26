@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../features/address/domain/use_cases/add_address.dart';
 import '../../features/address/domain/use_cases/get_cities_use_case.dart';
 import '../../features/address/domain/use_cases/get_current_address_info.dart';
 import '../../features/address/domain/use_cases/get_permission.dart';
 import '../../features/address/domain/use_cases/get_state_use_case.dart';
+import '../../features/address/presentation/cubits/add_edit_address/add_edit_address_cubit.dart';
 import '../../features/address/presentation/cubits/address_cubit/address_cubit.dart';
 import '../../features/address/presentation/views/add_address.dart';
 import '../../features/address/presentation/views/select_location.dart';
@@ -40,14 +42,20 @@ class RouteGenerator {
       case Routes.addAddress:
         return MaterialPageRoute(
           builder:
-              (_) => BlocProvider(
-                create:
-                    (context) => AddressCubit(
+              (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => AddressCubit(
                       getIt<GetCurrentAddressInfo>(),
                       getIt<GetPermissionUseCase>(),
                       getIt<GetCitiesUseCase>(),
                       getIt<GetStateUseCase>(),
                     ),
+                  ),
+                  BlocProvider(
+                    create: (context) => AddEditAddressCubit(getIt<AddAddressUseCase>()),
+                  ),
+                ],
                 child: AddAddressScreen(),
               ),
         );

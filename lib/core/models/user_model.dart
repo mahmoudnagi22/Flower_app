@@ -1,3 +1,5 @@
+import 'package:flower_app/features/address/data/models/address.dart';
+
 class UserModel {
   String? firstName;
   String? lastName;
@@ -7,7 +9,7 @@ class UserModel {
   String? profileImage;
   String? role;
   List<dynamic>? wishlist;
-  List<String>? addresses;
+  List<Address>? addresses;
   String? id;
   String? token;
   DateTime? createdAt;
@@ -27,7 +29,9 @@ class UserModel {
     profileImage = json['user']?['photo'];
     role = json['user']?['role'];
     wishlist = json['user']?['wishlist'] ?? [];
-    addresses = List<String>.from(json['user']?['addresses'] ?? []);
+    addresses = (json['user']?['addresses'] as List<dynamic>?)
+        ?.map((item) => Address.fromJson(item))
+        .toList() ?? [];
     id = json['user']?['_id'];
     token = json['token'];
     createdAt = json['user']?['createdAt'] != null

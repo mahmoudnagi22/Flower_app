@@ -13,6 +13,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/models/user_model.dart';
 import '../data_source/data_source.dart';
 import '../models/cities_model.dart';
 import '../models/states_model.dart';
@@ -92,7 +93,11 @@ class DataSourceImpl implements AddressDataSource {
     try {
       final response = await _apiManager.patchRequest(
         AppConstants.address,
-        address.toJson(),
+       address.toJson(),
+        headers: {
+
+          'Authorization': 'Bearer ${UserModel.instance.token}'
+        }
       );
 
       if (response != null && response.statusCode != null) {
@@ -121,69 +126,6 @@ class DataSourceImpl implements AddressDataSource {
     }
   }
 
-  @override
-  Future<ApiResult> deleteAddress(String id)async {
-    try {
-      final response = await _apiManager.deleteRequest(
-        '${AppConstants.address}/$id',
-      );
-
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          List<Address> addresses =
-          (response.data["address"] as List)
-              .map<Address>((e) => Address.fromJson(e))
-              .toList();
-          return ApiSuccessResult(data: addresses);
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data["error"]),
-          );
-        }
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<ApiResult> getUserAddresses() async {
-    try {
-      final response = await _apiManager.getRequest(AppConstants.address);
-
-      if (response != null && response.statusCode != null) {
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          List<Address> addresses =
-              (response.data["addresses"] as List)
-                  .map<Address>((e) => Address.fromJson(e))
-                  .toList();
-          return ApiSuccessResult(data: addresses);
-        } else {
-          return ApiErrorResult(
-            failures: ServerError(errorMessage: response.data["error"]),
-          );
-        }
-      } else {
-        return ApiErrorResult(
-          failures: ServerError(errorMessage: 'No response from server'),
-        );
-      }
-    } on DioException catch (e) {
-      return ApiErrorResult(
-        failures: ServerError(
-          errorMessage: e.message ?? 'An unexpected error occurred',
-        ),
-      );
-    }
-  }
 
   @override
   Future<ApiResult> updateAddress(Address address, String id) async{
