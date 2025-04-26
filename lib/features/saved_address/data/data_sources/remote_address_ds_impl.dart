@@ -14,7 +14,7 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
     await apiManager.patchRequest(
       'addresses',
       address.toJson(),
-      headers: {"Authorization": "Bearer ${UserModel.instance.token}"},
+      token: "Bearer ${UserModel.instance.token}",
     );
   }
 
@@ -44,7 +44,7 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
     await apiManager.patchRequest(
       'addresses/${address.id}',
       address.toJson(),
-      headers: {"Authorization": "Bearer ${UserModel.instance.token}"},
+      token: "Bearer ${UserModel.instance.token}",
     );
   }
 }

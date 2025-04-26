@@ -3,6 +3,8 @@ import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
+import 'package:flower_app/features/auth/change_password/presentation/screens/change_password_screen.dart';
+import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -66,24 +68,17 @@ class Profile extends StatelessWidget {
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
             ),
-            SizedBox(height: 25.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Edit Profile',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.editProfileRoute);
-                  },
-                  child: Image.asset(
-                    'assets/images/noto-v1_pen.png',
-                    height: 50.h,
+            CustomButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChangePasswordScreen(),
                   ),
-                ),
-              ],
+                );
+              },
+              text: "Change Password",
+              backgroundColor: ColorManager.bank,
             ),
             TextButton(
               onPressed: () {
