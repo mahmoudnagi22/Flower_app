@@ -200,11 +200,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
     );
-    gh.singleton<_i725.ProfileRepoContract>(
+    gh.singleton<_i725.EditProfileRepoContract>(
       () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
     );
     gh.factory<_i66.UpdateProfileUsecase>(
-      () => _i66.UpdateProfileUsecase(gh<_i725.ProfileRepoContract>()),
+      () => _i66.UpdateProfileUsecase(gh<_i725.EditProfileRepoContract>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
