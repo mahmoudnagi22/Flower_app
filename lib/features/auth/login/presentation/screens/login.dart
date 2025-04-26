@@ -1,19 +1,18 @@
-import 'dart:developer';
+import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flower_app/core/widget/validators.dart';
+import 'package:flower_app/features/auth/login/data/model/login_user_response.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
+import 'package:flower_app/features/auth/login/presentation/cubit/login_status.dart';
+import 'package:flower_app/features/auth/login/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../../core/l10n/app_localizations.dart';
-import '../../data/model/login_user_response.dart';
-import '../cubit/login_status.dart';
-import '../widgets/text_field.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -69,6 +68,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 25.h),
+
                   BuildTextField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: password,
@@ -132,7 +132,7 @@ class _LoginState extends State<Login> {
                         Navigator.push(
                           context,
                           RouteGenerator.getRoute(
-                            RouteSettings(name: Routes.bottomNav),
+                            const RouteSettings(name: Routes.bottomNav),
                           ),
                         );
                       }
@@ -194,7 +194,7 @@ class _LoginState extends State<Login> {
                       Navigator.push(
                         context,
                         RouteGenerator.getRoute(
-                          RouteSettings(name: Routes.bottomNav),
+                          const RouteSettings(name: Routes.bottomNav),
                         ),
                       );
                     },

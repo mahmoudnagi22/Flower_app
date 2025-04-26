@@ -9,25 +9,25 @@ import 'package:dio/dio.dart' as _i4;
 import 'package:flower_app/core/api_manager/api_manager.dart' as _i2;
 import 'package:flower_app/core/models/api_result.dart' as _i5;
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart'
-    as _i16;
+as _i16;
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart'
-    as _i15;
+as _i15;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
-    as _i12;
+as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'
-    as _i13;
+as _i13;
 import 'package:flower_app/features/app_sections/categories/domain/entities/product_filter.dart'
-    as _i11;
+as _i11;
 import 'package:flower_app/features/app_sections/home/data/model/HomeDataResponse.dart'
-    as _i14;
+as _i14;
 import 'package:flower_app/features/app_sections/occasions/data/models/occasions_dto.dart'
-    as _i9;
+as _i9;
 import 'package:flower_app/features/app_sections/occasions/data/models/products_dto.dart'
-    as _i10;
+as _i10;
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart'
-    as _i7;
+as _i7;
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart'
-    as _i6;
+as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
 
@@ -55,179 +55,175 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
 
   @override
   _i3.Future<_i4.Response<dynamic>?> getRequest(
-    String? endpoint, {
-    Map<String, dynamic>? queryParameters,
-    dynamic headers,
-  }) =>
+      String? endpoint, {
+        Map<String, dynamic>? queryParameters,
+        dynamic headers,
+      }) =>
       (super.noSuchMethod(
-            Invocation.method(
-              #getRequest,
-              [endpoint],
-              {#queryParameters: queryParameters, #headers: headers},
-            ),
-            returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
-          )
-          as _i3.Future<_i4.Response<dynamic>?>);
+        Invocation.method(
+          #getRequest,
+          [endpoint],
+          {#queryParameters: queryParameters, #headers: headers},
+        ),
+        returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
+      )
+      as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
   _i3.Future<_i4.Response<dynamic>?> postRequest(
-    String? endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) =>
+      String? endpoint,
+      dynamic data, {
+        Map<String, String>? headers,
+      }) =>
       (super.noSuchMethod(
-            Invocation.method(
-              #postRequest,
-              [endpoint, data],
-              {#headers: headers},
-            ),
-            returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
-          )
-          as _i3.Future<_i4.Response<dynamic>?>);
+        Invocation.method(
+          #postRequest,
+          [endpoint, data],
+          {#headers: headers},
+        ),
+        returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
+      )
+      as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
   _i3.Future<_i4.Response<dynamic>?> putRequest(
-    String? endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) =>
+      String? endpoint,
+      dynamic data, {
+        Map<String, String>? headers,
+      }) =>
       (super.noSuchMethod(
-            Invocation.method(
-              #putRequest,
-              [endpoint, data],
-              {#headers: headers},
-            ),
-            returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
-          )
-          as _i3.Future<_i4.Response<dynamic>?>);
+        Invocation.method(
+          #putRequest,
+          [endpoint, data],
+          {#headers: headers},
+        ),
+        returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
+      )
+      as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
   _i3.Future<_i4.Response<dynamic>?> patchRequest(
-    String? endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) =>
+      String endpoint,
+      Map<String, dynamic> data, {
+        String? token,
+      }) =>
       (super.noSuchMethod(
-            Invocation.method(
-              #patchRequest,
-              [endpoint, data],
-              {#headers: headers},
-            ),
-            returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
-          )
-          as _i3.Future<_i4.Response<dynamic>?>);
+        Invocation.method(#patchRequest, [endpoint, data], {#token: token}),
+        returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
+      )
+      as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
   _i3.Future<_i4.Response<dynamic>?> deleteRequest(
-    String? endpoint, {
-    Map<String, String>? headers,
-  }) =>
+      String? endpoint, {
+        Map<String, String>? headers,
+      }) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteRequest, [endpoint], {#headers: headers}),
-            returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
-          )
-          as _i3.Future<_i4.Response<dynamic>?>);
+        Invocation.method(#deleteRequest, [endpoint], {#headers: headers}),
+        returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
+      )
+      as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
   _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>> signup(
-    _i7.SignupRequestDto? signup,
-  ) =>
+      _i7.SignupRequestDto? signup,
+      ) =>
       (super.noSuchMethod(
+        Invocation.method(#signup, [signup]),
+        returnValue: _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>>.value(
+          _i8.dummyValue<_i5.ApiResult<_i6.SignupResponseDto>>(
+            this,
             Invocation.method(#signup, [signup]),
-            returnValue: _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>>.value(
-              _i8.dummyValue<_i5.ApiResult<_i6.SignupResponseDto>>(
-                this,
-                Invocation.method(#signup, [signup]),
-              ),
-            ),
-          )
-          as _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>>);
 
   @override
   _i3.Future<_i5.ApiResult<List<_i9.OccasionsDto>>> getOccasions() =>
       (super.noSuchMethod(
+        Invocation.method(#getOccasions, []),
+        returnValue:
+        _i3.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>.value(
+          _i8.dummyValue<_i5.ApiResult<List<_i9.OccasionsDto>>>(
+            this,
             Invocation.method(#getOccasions, []),
-            returnValue:
-                _i3.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>.value(
-                  _i8.dummyValue<_i5.ApiResult<List<_i9.OccasionsDto>>>(
-                    this,
-                    Invocation.method(#getOccasions, []),
-                  ),
-                ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<List<_i9.OccasionsDto>>>);
 
   @override
   _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>> getProducts(
-    _i11.ProductFilter? filter,
-  ) =>
+      _i11.ProductFilter? filter,
+      ) =>
       (super.noSuchMethod(
+        Invocation.method(#getProducts, [filter]),
+        returnValue: _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
+          _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
+            this,
             Invocation.method(#getProducts, [filter]),
-            returnValue: _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
-              _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
-                this,
-                Invocation.method(#getProducts, [filter]),
-              ),
-            ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
 
   @override
   _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>> getCategories() =>
       (super.noSuchMethod(
+        Invocation.method(#getCategories, []),
+        returnValue:
+        _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>>.value(
+          _i8.dummyValue<_i5.ApiResult<List<_i12.CategoryDto>>>(
+            this,
             Invocation.method(#getCategories, []),
-            returnValue:
-                _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>>.value(
-                  _i8.dummyValue<_i5.ApiResult<List<_i12.CategoryDto>>>(
-                    this,
-                    Invocation.method(#getCategories, []),
-                  ),
-                ),
-          )
-          as _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>>);
 
   @override
   _i3.Future<_i5.ApiResult<_i13.CategoriesByIdDto>> getCategoriesById(
-    String? categoryId,
-  ) =>
+      String? categoryId,
+      ) =>
       (super.noSuchMethod(
+        Invocation.method(#getCategoriesById, [categoryId]),
+        returnValue:
+        _i3.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>.value(
+          _i8.dummyValue<_i5.ApiResult<_i13.CategoriesByIdDto>>(
+            this,
             Invocation.method(#getCategoriesById, [categoryId]),
-            returnValue:
-                _i3.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>.value(
-                  _i8.dummyValue<_i5.ApiResult<_i13.CategoriesByIdDto>>(
-                    this,
-                    Invocation.method(#getCategoriesById, [categoryId]),
-                  ),
-                ),
-          )
-          as _i3.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<_i13.CategoriesByIdDto>>);
 
   @override
   _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>> homeTab() =>
       (super.noSuchMethod(
+        Invocation.method(#homeTab, []),
+        returnValue: _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>.value(
+          _i8.dummyValue<_i5.ApiResult<_i14.HomeDataResponse>>(
+            this,
             Invocation.method(#homeTab, []),
-            returnValue: _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>.value(
-              _i8.dummyValue<_i5.ApiResult<_i14.HomeDataResponse>>(
-                this,
-                Invocation.method(#homeTab, []),
-              ),
-            ),
-          )
-          as _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<_i14.HomeDataResponse>>);
 
   @override
   _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>> addToCart(
-    _i16.AddToCartParameters? parameters,
-  ) =>
+      _i16.AddToCartParameters? parameters,
+      ) =>
       (super.noSuchMethod(
+        Invocation.method(#addToCart, [parameters]),
+        returnValue:
+        _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>.value(
+          _i8.dummyValue<_i5.ApiResult<_i15.AddToCartResponse>>(
+            this,
             Invocation.method(#addToCart, [parameters]),
-            returnValue:
-                _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>.value(
-                  _i8.dummyValue<_i5.ApiResult<_i15.AddToCartResponse>>(
-                    this,
-                    Invocation.method(#addToCart, [parameters]),
-                  ),
-                ),
-          )
-          as _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>);
+          ),
+        ),
+      )
+      as _i3.Future<_i5.ApiResult<_i15.AddToCartResponse>>);
 }

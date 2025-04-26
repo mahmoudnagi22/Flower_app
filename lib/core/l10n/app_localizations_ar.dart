@@ -153,8 +153,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'الغاء';
 
   @override
+
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get currentPassword => 'كلمة المرور الحالية';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
   String get titleAboutUs => 'عن تطبيق فلاوري';
 
   @override
   String get titleTermsAndConditions => 'الشروط والأحكام لتطبيق فلاوري';
+
 }
