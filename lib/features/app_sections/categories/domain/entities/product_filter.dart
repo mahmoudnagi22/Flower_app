@@ -1,6 +1,6 @@
 class ProductFilter {
    String? occasionId;
    String? categoryId;
-
-  ProductFilter({this.occasionId, this.categoryId});
+   String? filter;
+  ProductFilter({this.occasionId, this.categoryId,this.filter});
 }

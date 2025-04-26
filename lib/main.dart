@@ -33,6 +33,7 @@ class FlowerApp extends StatelessWidget {
                 getIt<SetLanguageUseCase>(),
               ),
         ),
+        BlocProvider(create: (context) => LocalizationCubit(getIt<GetLanguageUseCase>(), getIt<SetLanguageUseCase>())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

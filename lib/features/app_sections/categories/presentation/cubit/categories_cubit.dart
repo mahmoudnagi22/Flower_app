@@ -49,14 +49,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   Future<void> getProducts(ProductFilter filter) async {
     emit(state.copyWith(productsState: Status.loading));
-
     ApiResult<List<ProductEntity>> result = await productsUseCase.call(filter);
-
     switch (result) {
       case ApiSuccessResult<List<ProductEntity>>():
         emit(
           state.copyWith(productsState: Status.success, products: result.data),
         );
+
       case ApiErrorResult<List<ProductEntity>>():
         emit(
           state.copyWith(
