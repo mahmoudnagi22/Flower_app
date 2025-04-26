@@ -341,6 +341,24 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgetPassword;
 
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
   /// No description provided for @status.
   ///
   /// In en, this message translates to:
@@ -382,6 +400,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @titleAboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Flowery App'**
+  String get titleAboutUs;
+
+  /// No description provided for @titleTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions for Flowery App'**
+  String get titleTermsAndConditions;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

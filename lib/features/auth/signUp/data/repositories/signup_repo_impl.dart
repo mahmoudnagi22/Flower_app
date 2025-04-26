@@ -1,12 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/auth/signUp/data/data_sources/remote_signup_data_source_contract.dart';
+import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_request_entity.dart';
+import 'package:flower_app/features/auth/signUp/domain/entities/signup_response_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/repositories/signup_repo.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../domain/entities/signup_response_entity.dart';
-import '../models/signup_request_dto.dart';
 
 @Injectable(as: SignupRepo)
 class SignupRepoImpl implements SignupRepo {

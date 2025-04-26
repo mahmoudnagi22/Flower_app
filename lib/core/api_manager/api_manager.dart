@@ -100,25 +100,29 @@ class ApiManager {
   }
 
   // TODO : =================== PatchRequest ==============
-  Future<Response?> patchRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+  Future<Response?> patchRequest(String endpoint, Map<String, dynamic> data, {String? token}) async {
     try {
       Response response = await _dio.patch(
         endpoint,
         data: data,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            'Authorization': token ?? '',
+            'Content-Type': 'application/json',
+          },
+        ),
+
       );
       return response;
     } on DioException catch (error) {
       print(
         "Patch Error: "
-        '${error.message}',
+            '${error.message}',
       );
       return error.response;
-    }
+  }
+
+
   }
 
   // TODO : =================== DeleteRequest ==============
