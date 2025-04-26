@@ -3,8 +3,8 @@ import 'package:flower_app/features/edit_profile/data/data_sources/remote_profil
 import 'package:flower_app/features/edit_profile/domain/repositories/profile_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: ProfileRepoContract)
-class ProfileRepoImpl extends ProfileRepoContract {
+@Singleton(as: EditProfileRepoContract)
+class ProfileRepoImpl extends EditProfileRepoContract {
   final RemoteProfileDatasorceContract remoteProfileDatasorceContract;
   ProfileRepoImpl(this.remoteProfileDatasorceContract);
 

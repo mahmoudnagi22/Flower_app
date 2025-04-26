@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class UpdateProfileUsecase {
-  final ProfileRepoContract profileRepoContract;
+  final EditProfileRepoContract profileRepoContract;
   UpdateProfileUsecase(this.profileRepoContract);
 
   Future<UserModel> call(UserModel userModel, String token) {
