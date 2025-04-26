@@ -3,6 +3,7 @@ import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/auth/change_password/presentation/screens/change_password_screen.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,6 +18,7 @@ class Profile extends StatelessWidget {
     var cubit = LocalizationCubit.get(context);
     var lang = AppLocalizations.of(context);
     print(UserModel.instance.token);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: SafeArea(
@@ -66,6 +68,8 @@ class Profile extends StatelessWidget {
                 if (value == "عربى") cubit.changeLanguage("ar");
               },
             ),
+            SizedBox(height: 25.h),
+            ElevatedButton(onPressed: () => Navigator.pushNamed(context, Routes.addAddress), child: Text("test")),
             CustomButton(
               onPressed: () {
                 Navigator.push(

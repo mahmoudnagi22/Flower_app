@@ -36,6 +36,9 @@ dependencies:
     sdk: flutter
   intl: any
   dots_indicator: ^4.0.1
+  google_maps_flutter: ^2.12.1
+  geolocator: ^14.0.0
+  geocoding: ^3.0.0
 
 
 dev_dependencies:
@@ -60,3 +63,4 @@ flutter:
     - assets/icons/
     - assets/data/about_us.json
     - assets/data/terms_conditions.json
+    - assets/files/

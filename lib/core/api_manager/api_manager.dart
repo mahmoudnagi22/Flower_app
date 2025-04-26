@@ -100,14 +100,18 @@ class ApiManager {
   }
 
   // TODO : =================== PatchRequest ==============
-  Future<Response?> patchRequest(String endpoint, Map<String, dynamic> data, {String? token}) async {
+  Future<Response?> patchRequest(
+    String endpoint,
+    Map<String, dynamic> data, {
+    String? token,
+  }) async {
     try {
       Response response = await _dio.patch(
         endpoint,
         data: data,
         options: Options(
           headers: {
-            'Authorization': token ?? '',
+            'Authorization': 'Bearer ${UserModel.instance.token}',
             'Content-Type': 'application/json',
           },
         ),
@@ -256,7 +260,7 @@ class ApiManager {
         '${AppConstants.baseUrl}${AppConstants.products}/',
         queryParameters: queryParameters,
       );
-      print('sort response: $response');
+
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final List<dynamic> productsJson = response.data['products'] ?? [];
         final List<ProductDto> productsList =
@@ -316,7 +320,8 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Categories By Id=======
   Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
-      String categoryId,) async {
+    String categoryId,
+  ) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -462,7 +467,6 @@ class ApiManager {
       );
     }
   }
-
   Future<ApiResult<List<Product>>> updateQuantity(String cartId,int quantity) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -600,6 +604,7 @@ class ApiManager {
 
 
 }
+
 @module
 abstract class RegisterModule {
   @singleton

@@ -13,6 +13,20 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/address/data/data_source/data_source.dart' as _i514;
+import '../../features/address/data/data_source_impl/data_source_impl.dart'
+    as _i794;
+import '../../features/address/data/repo_impl/address_repo_impl.dart' as _i778;
+import '../../features/address/domain/repo/address_repo.dart' as _i366;
+import '../../features/address/domain/use_cases/add_address.dart' as _i280;
+import '../../features/address/domain/use_cases/get_cities_use_case.dart'
+    as _i573;
+import '../../features/address/domain/use_cases/get_current_address_info.dart'
+    as _i403;
+import '../../features/address/domain/use_cases/get_permission.dart' as _i512;
+import '../../features/address/domain/use_cases/get_state_use_case.dart'
+    as _i340;
+import '../../features/address/domain/use_cases/update_address.dart' as _i457;
 import '../../features/app_sections/cart/data/data_sources/carts_contract.dart'
     as _i1027;
 import '../../features/app_sections/cart/data/data_sources/carts_impl.dart'
@@ -194,8 +208,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i537.AutoLoginDataSource>(
       () => _i975.AutoLoginDataSourceImp(gh<_i266.ApiManager>()),
     );
+    gh.factory<_i514.AddressDataSource>(
+      () => _i794.DataSourceImpl(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
+    );
+    gh.factory<_i366.AddressRepo>(
+      () => _i778.AddressRepoImpl(gh<_i514.AddressDataSource>()),
     );
     gh.factory<_i67.SearchRepo>(
       () => _i859.SearchRepoImpl(dataSource: gh<_i190.SearchDataSource>()),
@@ -236,6 +256,24 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i372.AutoLoginRepo>(
       () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),
+    );
+    gh.factory<_i573.GetCitiesUseCase>(
+      () => _i573.GetCitiesUseCase(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i340.GetStateUseCase>(
+      () => _i340.GetStateUseCase(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i457.UpdateAddressUseCase>(
+      () => _i457.UpdateAddressUseCase(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i403.GetCurrentAddressInfo>(
+      () => _i403.GetCurrentAddressInfo(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i512.GetPermissionUseCase>(
+      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i280.AddAddressUseCase>(
+      () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
