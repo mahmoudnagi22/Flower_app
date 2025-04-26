@@ -58,3 +58,5 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/data/about_us.json
+    - assets/data/terms_conditions.json

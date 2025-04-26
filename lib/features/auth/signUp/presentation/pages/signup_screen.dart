@@ -240,14 +240,19 @@ class _SignupScreenState extends State<SignupScreen> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            Text(
-                              lang.termsAndConditions,
-                              style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.black,
-                                decorationThickness: 3,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, Routes.termsConditions);
+                              },
+                              child: Text(
+                                lang.termsAndConditions,
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.black,
+                                  decorationThickness: 3,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ],

@@ -153,6 +153,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'الغاء';
 
   @override
+
   String get newPassword => 'كلمة المرور الجديدة';
 
   @override
@@ -160,4 +161,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get changePassword => 'تغيير كلمة المرور';
+
+  String get titleAboutUs => 'عن تطبيق فلاوري';
+
+  @override
+  String get titleTermsAndConditions => 'الشروط والأحكام لتطبيق فلاوري';
+
 }

@@ -7,6 +7,11 @@ class Routes {
   static const String best = "/best";
   static const String productDetails = "/productDetails";
   static const String splash = "/";
+
   static const String cart = "/cart";
   static const String changepassword = "/changepassword";
+
+  static const String aboutUs='/aboutUs';
+   static const String termsConditions='/terms_coditions';
+
 }

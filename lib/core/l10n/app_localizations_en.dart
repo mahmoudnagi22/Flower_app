@@ -153,6 +153,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+
   String get newPassword => 'New Password';
 
   @override
@@ -160,4 +161,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changePassword => 'Change Password';
+
+  String get titleAboutUs => 'About Flowery App';
+
+  @override
+  String get titleTermsAndConditions => 'Terms and Conditions for Flowery App';
+
 }

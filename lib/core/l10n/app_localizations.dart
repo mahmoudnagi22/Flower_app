@@ -383,6 +383,7 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+
   /// No description provided for @newPassword.
   ///
   /// In en, this message translates to:
@@ -400,6 +401,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Password'**
   String get changePassword;
+
+  /// No description provided for @titleAboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Flowery App'**
+  String get titleAboutUs;
+
+  /// No description provided for @titleTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions for Flowery App'**
+  String get titleTermsAndConditions;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
