@@ -73,6 +73,20 @@ import '../../features/app_sections/occasions/domain/use_cases/product_use_case.
     as _i824;
 import '../../features/app_sections/occasions/presentation/cubit/occasion_cubit.dart'
     as _i618;
+import '../../features/auth/change_password/data/api_call/api_call.dart'
+    as _i663;
+import '../../features/auth/change_password/data/data_source/contract/change_password_data_source_contract.dart'
+    as _i107;
+import '../../features/auth/change_password/data/data_source/remote/change_password_data_source.dart'
+    as _i879;
+import '../../features/auth/change_password/data/repository/change_password_repository.dart'
+    as _i419;
+import '../../features/auth/change_password/domain/repository/change_password_repository_interface.dart'
+    as _i1013;
+import '../../features/auth/change_password/domain/use_case/change_password_use_case.dart'
+    as _i370;
+import '../../features/auth/change_password/presentation/cubit/change_password_cubit.dart'
+    as _i81;
 import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
     as _i1040;
 import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
@@ -124,6 +138,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
     gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
+    gh.singleton<_i663.ChangePasswordService>(
+      () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
+    );
     gh.factory<_i702.GetLanguageUseCase>(
       () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
     );
@@ -135,6 +152,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i593.HomeDataSources>(
       () => _i409.HomeDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i107.ChangePasswordContract>(
+      () => _i879.ChangePasswordRemoteDataSource(
+        changePasswordService: gh<_i663.ChangePasswordService>(),
+      ),
     );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
@@ -194,6 +216,11 @@ extension GetItInjectableX on _i174.GetIt {
         categoriesDataSourceContract: gh<_i510.CategoriesDataSourceContract>(),
       ),
     );
+    gh.factory<_i1013.ChangePasswordRepository>(
+      () => _i419.ChangePasswordRepositoryImpl(
+        changePasswordContract: gh<_i107.ChangePasswordContract>(),
+      ),
+    );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
     );
@@ -226,6 +253,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
+    );
+    gh.factory<_i370.ChangePasswordUseCase>(
+      () => _i370.ChangePasswordUseCase(
+        repository: gh<_i1013.ChangePasswordRepository>(),
+      ),
+    );
+    gh.factory<_i81.ChangePasswordCubit>(
+      () => _i81.ChangePasswordCubit(
+        changePasswordUseCase: gh<_i370.ChangePasswordUseCase>(),
+      ),
     );
     gh.factory<_i66.GetCategoriesUseCase>(
       () => _i66.GetCategoriesUseCase(repo: gh<_i509.CategoriesRepo>()),

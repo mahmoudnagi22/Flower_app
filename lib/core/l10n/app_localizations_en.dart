@@ -132,6 +132,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgetPassword => 'Forgot Password?';
 
   @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
   String get status => 'Status';
 
   @override
@@ -151,4 +160,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get titleAboutUs => 'About Flowery App';
+
+  @override
+  String get titleTermsAndConditions => 'Terms and Conditions for Flowery App';
 }
