@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/l10n/app_localizations.dart';
 
 class CustomSearch extends StatelessWidget {
-  const CustomSearch({super.key});
+   CustomSearch({super.key,this.onFieldSubmitted});
 
+  void Function(String)? onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
     var lang = AppLocalizations.of(context);
@@ -35,7 +36,7 @@ class CustomSearch extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.search,
-        onFieldSubmitted: (value) {},
+        onFieldSubmitted: onFieldSubmitted
       ),
     );
   }

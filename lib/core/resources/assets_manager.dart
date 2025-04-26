@@ -24,6 +24,7 @@ abstract class IconsAssets {
   static const String delete = "$iconsPath/deleter.svg";
   static const String decrement = "$iconsPath/decrement.svg";
   static const String increment = "$iconsPath/increment.svg";
+  static const String filterBottom = "$iconsPath/filter_bottom.svg";
 }
 
 

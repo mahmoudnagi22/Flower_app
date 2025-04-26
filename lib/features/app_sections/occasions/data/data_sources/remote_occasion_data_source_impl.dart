@@ -31,7 +31,7 @@ class RemoteOccasionDataSourceImpl implements RemoteOccasionDataSourceContract {
   @override
   Future<ApiResult<List<ProductEntity>>> getProducts(ProductFilter filter) async{
     try {
-      if (filter.occasionId != null || filter.categoryId != null) {
+      if (filter.occasionId != null || filter.categoryId != null || filter.filter!=null) {
         return await apiManager.getProducts(filter);
       }else{
         throw ArgumentError('Either occasionId or categoryId must be provided.');

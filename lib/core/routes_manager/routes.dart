@@ -16,4 +16,5 @@ class Routes {
   static const String aboutUs='/aboutUs';
    static const String termsConditions='/terms_coditions';
 
+  static const String search = "search";
 }
