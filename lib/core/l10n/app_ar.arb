@@ -42,7 +42,7 @@
   "forgetPassword": "هل نسيت كلمة المرور؟",
   "newPassword": "كلمة المرور الجديدة",
   "currentPassword": "كلمة المرور الحالية",
-  "changePassword": "تغيير كلمة المرور"
+  "changePassword": "تغيير كلمة المرور",
   "status":"الحالة",
   "inStock":"متوفر",
   "outStock":"غير متوفر",
