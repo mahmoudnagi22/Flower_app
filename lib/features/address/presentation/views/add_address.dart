@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../core/cubits/local_cubit/local_cubit.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/widget/validators.dart';
 import '../../data/models/address.dart';
 import '../../data/models/cities_model.dart';
@@ -36,7 +37,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   List<StatesModel> states = [];
   String? selectedCityId;
   String? selectedStateId;
-  LatLng? currentLocation ;
+  LatLng? currentLocation;
 
   @override
   void initState() {
@@ -84,12 +85,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   @override
   Widget build(BuildContext context) {
     var cubit = AddressCubit.get(context);
-
+    final lang = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text("Address")),
+      appBar: AppBar(title: Text(lang.addressTitle)),
       body: BlocBuilder<AddressCubit, AddressState>(
         builder: (context, state) {
-          print(state);
           if (state is AddressSuccess) {
             addressController.text = state.searchResult.address;
           }
@@ -113,38 +113,34 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: buildMap(state),
+                          child: buildMap(state, lang),
                         ),
                         Positioned.fill(
                           child: Material(
                             color: Colors.transparent,
                             child: GestureDetector(
                               onTap: () async {
-                                print("Map tapped. Current state: $state");
-            
                                 if (state is AddressAccessDenied) {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
                                         backgroundColor: Colors.white,
-                                        title: const Text(
-                                          "Location Access Denied",
-                                        ),
+                                        title: Text(lang.locationAccessDenied),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                               openLocationSettings();
                                             },
-                                            child: const Text("Allow"),
+                                            child: Text(lang.allow),
                                           ),
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
                                             child: Text(
-                                              "Cancel",
+                                              lang.cancel,
                                               style: TextStyle(
                                                 color: ColorManager.appColor,
                                               ),
@@ -156,14 +152,14 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                   );
                                   return;
                                 }
-            
+
                                 if (state is! AddressSuccess) {
                                   await cubit.getCurrentAddress();
 
                                   return;
                                 }
                                 currentLocation = (state).searchResult.location;
-            
+
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -174,7 +170,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                         ),
                                   ),
                                 );
-            
+
                                 if (result != null) {
                                   cubit.updateAddress(
                                     SearchResult(
@@ -195,20 +191,20 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                     ),
                     CustomTextField(
                       controller: addressController,
-                      hintText: "Address",
+                      hintText: lang.addressTitle,
                       validator: AppValidators.validateFullName,
                     ),
                     const SizedBox(height: 12),
                     CustomTextField(
                       controller: phoneController,
-                      hintText: "Phone number",
+                      hintText: lang.enterPhoneNumber,
                       validator: AppValidators.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 12),
                     CustomTextField(
                       controller: recipientController,
-                      hintText: "Recipient name",
+                      hintText: lang.recipientNameHint,
                       validator: AppValidators.validateFullName,
                     ),
                     const SizedBox(height: 12),
@@ -216,8 +212,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            value: selectedCityId, validator: AppValidators.validateFullName,
-                            decoration: const InputDecoration(labelText: "City"),
+                            value: selectedCityId,
+                            validator: AppValidators.validateFullName,
+                            decoration: InputDecoration(
+                              labelText: lang.cityLabel,
+                            ),
                             items:
                                 cities.map((city) {
                                   return DropdownMenuItem<String>(
@@ -246,7 +245,9 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                           child: DropdownButtonFormField<String>(
                             value: selectedStateId,
                             validator: AppValidators.validateFullName,
-                            decoration: InputDecoration(labelText: "Area"),
+                            decoration: InputDecoration(
+                              labelText: lang.areaLabel,
+                            ),
                             items:
                                 states.map((state) {
                                   return DropdownMenuItem<String>(
@@ -299,14 +300,21 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                           style: ElevatedButton.styleFrom(
                             backgroundColor: ColorManager.appColor,
                           ),
-                          child: state is AddEditAddressLoading ? Center(child: CircularProgressIndicator(color: Colors.white,)) : Text(
-                            "Save address",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          )
+                          child:
+                              state is AddEditAddressLoading
+                                  ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : Text(
+                                    lang.saveAddress,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                         );
                       },
                     ),
@@ -320,7 +328,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
     );
   }
 
-  Widget buildMap(AddressState state) {
+  Widget buildMap(AddressState state, AppLocalizations lang) {
     if (state is AddressSuccess) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -361,7 +369,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
         child: TextButton(
           onPressed: openLocationSettings,
           child: Text(
-            "Allow access to location",
+            lang.allowLocationAccess,
             style: TextStyle(
               color: ColorManager.appColor,
               fontSize: 20,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/address/presentation/views/select_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../../core/l10n/app_localizations.dart';
 import '../../data/models/search_result.dart';
 import '../cubits/address_cubit/address_cubit.dart';
 
@@ -211,8 +213,9 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text("Select Location")),
+      appBar: AppBar(title: Text(lang.selectLocation)),
       body: Stack(
         children: [
           GoogleMap(
@@ -254,7 +257,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                     onChanged: (value) => showResults = true,
                     controller: searchController,
                     decoration: InputDecoration(
-                      hintText: "Search for a location",
+                      hintText: lang.searchLocation,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 14,
@@ -272,7 +275,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                                     height: 16,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Colors.pink,
+                                      color: ColorManager.appColor,
                                     ),
                                   ),
                                 ),
@@ -320,7 +323,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                                   ),
                                   leading: const Icon(
                                     Icons.location_on,
-                                    color: Colors.pink,
+                                    color: ColorManager.appColor,
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16,
@@ -344,7 +347,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
               child:
@@ -362,7 +365,10 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
             child: FloatingActionButton(
               onPressed: isLoading ? null : _getCurrentLocation,
               backgroundColor: Colors.white,
-              child: const Icon(Icons.my_location, color: Colors.pink),
+              child: const Icon(
+                Icons.my_location,
+                color: ColorManager.appColor,
+              ),
             ),
           ),
           Positioned(
@@ -371,14 +377,18 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
             right: 16,
             child: ElevatedButton.icon(
               onPressed: isLoading ? null : _useLocation,
-              icon: const Icon(Icons.location_on),
+              icon: const Icon(Icons.location_on,color: Colors.white,),
               label: Text(
-                isLoading ? "Loading..." : "Use this location",
-                style: const TextStyle(fontSize: 16),
+                isLoading ? lang.loading : lang.useThisLocation,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                backgroundColor: Colors.pink,
+                backgroundColor: ColorManager.appColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
