@@ -35,9 +35,18 @@ class DataSourceImpl implements AddressDataSource {
 
       if (placeMarks.isNotEmpty) {
         final place = placeMarks.first;
+        final addressParts = [
+          place.street,
+          place.subLocality,
+          place.locality,
+          place.subAdministrativeArea,
+          place.administrativeArea,
+        ];
+
         final formattedAddress =
-            "${place.street ?? ''}, ${place.locality ?? ''}, ${place.administrativeArea ?? ''}"
-                .replaceAll(RegExp(r',\s+,'), ',')
+            addressParts
+                .where((part) => part != null && part.isNotEmpty)
+                .join(', ')
                 .trim();
 
         return ApiSuccessResult(
@@ -89,12 +98,11 @@ class DataSourceImpl implements AddressDataSource {
   }
 
   @override
-  Future<ApiResult> addAddress(Address address) async   {
+  Future<ApiResult> addAddress(Address address) async {
     try {
       final response = await _apiManager.patchRequest(
         AppConstants.address,
-       address.toJson(),
-
+        address.toJson(),
       );
 
       if (response != null && response.statusCode != null) {
@@ -123,9 +131,8 @@ class DataSourceImpl implements AddressDataSource {
     }
   }
 
-
   @override
-  Future<ApiResult> updateAddress(Address address, String id) async{
+  Future<ApiResult> updateAddress(Address address, String id) async {
     try {
       final response = await _apiManager.patchRequest(
         '${AppConstants.address}/$id',
@@ -135,9 +142,9 @@ class DataSourceImpl implements AddressDataSource {
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           List<Address> addresses =
-          (response.data["addresses"] as List)
-              .map<Address>((e) => Address.fromJson(e))
-              .toList();
+              (response.data["addresses"] as List)
+                  .map<Address>((e) => Address.fromJson(e))
+                  .toList();
           return ApiSuccessResult(data: addresses);
         } else {
           return ApiErrorResult(
