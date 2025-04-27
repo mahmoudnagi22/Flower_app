@@ -352,7 +352,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
               ),
               child:
                   isLoading
-                      ? const Center(child: LinearProgressIndicator())
+                      ? const Center(child: LinearProgressIndicator(color: ColorManager.appColor,))
                       : Text(
                         currentAddress,
                         style: const TextStyle(fontSize: 14),

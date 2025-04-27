@@ -1,6 +1,8 @@
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/address/presentation/views/select_location.dart';
+import 'package:flower_app/features/address/presentation/views/widgets/build_alert.dart';
+import 'package:flower_app/features/address/presentation/views/widgets/build_map.dart';
 import 'package:flower_app/features/address/presentation/views/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +31,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   final TextEditingController addressController = TextEditingController();
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  GoogleMapController? mapController;
+
   bool inSettings = false;
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
@@ -113,7 +115,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: buildMap(state, lang),
+                          child: BuildMap.buildMap(
+                            state,
+                            lang,
+                            openLocationSettings,
+                          ),
                         ),
                         Positioned.fill(
                           child: Material(
@@ -124,29 +130,9 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors.white,
-                                        title: Text(lang.locationAccessDenied),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              openLocationSettings();
-                                            },
-                                            child: Text(lang.allow),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              lang.cancel,
-                                              style: TextStyle(
-                                                color: ColorManager.appColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      return BuildAlert(
+                                        openLocationSettings:
+                                            openLocationSettings,
                                       );
                                     },
                                   );
@@ -179,7 +165,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                     ),
                                   );
                                   currentLocation = result['location'];
-                                  mapController?.animateCamera(
+                                  AddressCubit.mapController?.animateCamera(
                                     CameraUpdate.newLatLng(result['location']),
                                   );
                                 }
@@ -294,7 +280,6 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                   username: recipientController.text,
                                 ),
                               );
-                              print(state);
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -326,59 +311,5 @@ class _AddAddressScreenState extends State<AddAddressScreen>
         },
       ),
     );
-  }
-
-  Widget buildMap(AddressState state, AppLocalizations lang) {
-    if (state is AddressSuccess) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: GoogleMap(
-          onMapCreated: (controller) {
-            mapController = controller;
-            currentLocation = (state).searchResult.location;
-          },
-          initialCameraPosition: CameraPosition(
-            target: state.searchResult.location,
-            zoom: 15,
-          ),
-          markers: {
-            Marker(
-              markerId: const MarkerId("current"),
-              position: state.searchResult.location,
-              infoWindow: InfoWindow(title: state.searchResult.address),
-            ),
-          },
-          mapToolbarEnabled: false,
-          zoomControlsEnabled: false,
-          myLocationButtonEnabled: false,
-          rotateGesturesEnabled: false,
-          scrollGesturesEnabled: false,
-          zoomGesturesEnabled: false,
-          tiltGesturesEnabled: false,
-          liteModeEnabled: true,
-        ),
-      );
-    } else if (state is AddressError) {
-      return Center(child: Text(state.message));
-    } else if (state is AddressLoading) {
-      return Center(
-        child: CircularProgressIndicator(color: ColorManager.appColor),
-      );
-    } else if (state is AddressAccessDenied) {
-      return Center(
-        child: TextButton(
-          onPressed: openLocationSettings,
-          child: Text(
-            lang.allowLocationAccess,
-            style: TextStyle(
-              color: ColorManager.appColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      );
-    }
-    return Container();
   }
 }
