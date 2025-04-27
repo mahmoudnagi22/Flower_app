@@ -61,7 +61,6 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> deleteItem(String cartId) async {
     emit(state.copyWith(cartStatus: Status.loading));
-
     ApiResult<List<ProductEntity>> result = await deleteCartUseCase.call(
         cartId);
 

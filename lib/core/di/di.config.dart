@@ -165,13 +165,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i593.HomeDataSources>(
       () => _i409.HomeDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
+    gh.factory<_i190.SearchDataSource>(
+      () => _i891.SearchDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
+    );
     gh.factory<_i107.ChangePasswordContract>(
       () => _i879.ChangePasswordRemoteDataSource(
         changePasswordService: gh<_i663.ChangePasswordService>(),
       ),
-    );
-    gh.factory<_i190.SearchDataSource>(
-      () => _i891.SearchDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
     );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
@@ -214,11 +214,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i211.SignupUseCase>(
       () => _i211.SignupUseCase(signupRepo: gh<_i729.SignupRepo>()),
     );
-    gh.factory<_i366.AddressRepo>(
-      () => _i778.AddressRepoImpl(gh<_i514.AddressDataSource>()),
-    );
     gh.factory<_i67.SearchRepo>(
       () => _i859.SearchRepoImpl(dataSource: gh<_i190.SearchDataSource>()),
+    );
+    gh.factory<_i366.AddressRepo>(
+      () => _i778.AddressRepoImpl(gh<_i514.AddressDataSource>()),
     );
     gh.factory<_i886.DeleteCartUseCase>(
       () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
@@ -266,14 +266,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i457.UpdateAddressUseCase>(
       () => _i457.UpdateAddressUseCase(gh<_i366.AddressRepo>()),
     );
+    gh.factory<_i280.AddAddressUseCase>(
+      () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
+    );
     gh.factory<_i403.GetCurrentAddressInfo>(
       () => _i403.GetCurrentAddressInfo(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i512.GetPermissionUseCase>(
       () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
-    );
-    gh.factory<_i280.AddAddressUseCase>(
-      () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),

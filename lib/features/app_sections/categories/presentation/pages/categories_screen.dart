@@ -14,6 +14,7 @@ import '../../../../../core/l10n/app_localizations.dart';
 import '../../../add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../../add_to_cart/presentation/cubit/add_to_cart_cubit.dart';
 import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
+import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../search/presentation/pages/search_screen.dart';
 import '../../domain/entities/product_filter.dart';
 import '../cubit/categories_cubit.dart';
@@ -248,9 +249,11 @@ class CategoriesScreen extends StatelessWidget {
                                                   if (state is AddToCartSuccessState) {
                                                     DialogUtils.hideLoading(
                                                         context);
+
                                                     DialogUtils.showSuccess(
                                                         context,
                                                         "✅ Product has been added to cart");
+
                                                   } else
                                                   if (state is AddToCartErrorState) {
                                                     DialogUtils.hideLoading(

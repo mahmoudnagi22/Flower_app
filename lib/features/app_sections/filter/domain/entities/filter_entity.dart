@@ -1,8 +1,8 @@
 class FilterEntity {
-  FilterEntity({this.message, this.products});
+  FilterEntity({this.message, this.productFilter});
 
   String? message;
-  List<FilterProducts>? products;
+  List<FilterProducts>? productFilter;
 }
 
 class FilterProducts {
