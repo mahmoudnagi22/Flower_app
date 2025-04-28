@@ -68,6 +68,9 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    phoneController.dispose();
+    addressController.dispose();
+    recipientController.dispose();
     super.dispose();
   }
 
