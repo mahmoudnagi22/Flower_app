@@ -15,8 +15,8 @@ class AddressRepoImpl implements AddressRepo {
   AddressRepoImpl(this._dataSource);
 
   @override
-  Future<ApiResult> getCurrentAddressInfo() {
-    return _dataSource.getCurrentAddressInfo();
+  Future<ApiResult> getCurrentAddressInfo() async{
+    return await _dataSource.getCurrentAddressInfo();
   }
 
   @override
@@ -36,23 +36,23 @@ class AddressRepoImpl implements AddressRepo {
   }
 
   @override
-  Future<List<CitiesModel>> getCities() {
-    return _dataSource.getCities();
+  Future<List<CitiesModel>> getCities() async{
+    return await _dataSource.getCities();
   }
 
   @override
-  Future<List<StatesModel>> getStates(String? id) {
-    return _dataSource.getStates(id);
+  Future<List<StatesModel>> getStates(String? id) async{
+    return await _dataSource.getStates(id);
   }
 
   @override
-  Future<ApiResult> addAddress(Address address) {
-    return _dataSource.addAddress(address);
+  Future<ApiResult> addAddress(Address address) async{
+    return await _dataSource.addAddress(address);
   }
 
 
   @override
-  Future<ApiResult> updateAddress(Address address, String id) {
-    return _dataSource.updateAddress(address, id);
+  Future<ApiResult> updateAddress(Address address, String id) async{
+    return await _dataSource.updateAddress(address, id);
   }
 }
