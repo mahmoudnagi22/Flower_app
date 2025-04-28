@@ -27,8 +27,9 @@ class AddressCubit extends Cubit<AddressState> {
   final GetStateUseCase _getStateUseCase;
 
   static AddressCubit get(context) => BlocProvider.of(context);
-
+  static GoogleMapController? mapController;
   Future<void> getCurrentAddress() async {
+
     if (await _getPermissionUseCase.call()) {
       emit(AddressLoading());
       final address = await _getCurrentAddress.call();

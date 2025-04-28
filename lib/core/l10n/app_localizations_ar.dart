@@ -166,4 +166,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get titleTermsAndConditions => 'الشروط والأحكام لتطبيق فلاوري';
+
+  @override
+  String get addressTitle => 'العنوان';
+
+  @override
+  String get locationAccessDenied => 'تم رفض الوصول للموقع';
+
+  @override
+  String get allow => 'السماح';
+
+  @override
+  String get addressHint => 'العنوان';
+
+  @override
+  String get phoneNumberHint => 'رقم الهاتف';
+
+  @override
+  String get recipientNameHint => 'اسم المستلم';
+
+  @override
+  String get cityLabel => 'المدينة';
+
+  @override
+  String get areaLabel => 'المنطقة';
+
+  @override
+  String get saveAddress => 'حفظ العنوان';
+
+  @override
+  String get allowLocationAccess => 'السماح بالوصول إلى الموقع';
+
+  @override
+  String get selectLocation => 'حدد الموقع';
+
+  @override
+  String get useCurrentLocation => 'استخدام الموقع الحالي';
+
+  @override
+  String get searchLocation => 'ابحث عن الموقع';
+
+  @override
+  String get useThisLocation => 'استخدام هذا الموقع';
 }

@@ -166,4 +166,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get titleTermsAndConditions => 'Terms and Conditions for Flowery App';
+
+  @override
+  String get addressTitle => 'Address';
+
+  @override
+  String get locationAccessDenied => 'Location Access Denied';
+
+  @override
+  String get allow => 'Allow';
+
+  @override
+  String get addressHint => 'Address';
+
+  @override
+  String get phoneNumberHint => 'Phone number';
+
+  @override
+  String get recipientNameHint => 'Recipient name';
+
+  @override
+  String get cityLabel => 'City';
+
+  @override
+  String get areaLabel => 'Area';
+
+  @override
+  String get saveAddress => 'Save address';
+
+  @override
+  String get allowLocationAccess => 'Allow access to location';
+
+  @override
+  String get selectLocation => 'Select Location';
+
+  @override
+  String get useCurrentLocation => 'Use current location';
+
+  @override
+  String get searchLocation => 'Search for location';
+
+  @override
+  String get useThisLocation => 'Use this location';
 }

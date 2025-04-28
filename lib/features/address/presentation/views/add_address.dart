@@ -1,12 +1,15 @@
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/address/presentation/views/select_location.dart';
+import 'package:flower_app/features/address/presentation/views/widgets/build_alert.dart';
+import 'package:flower_app/features/address/presentation/views/widgets/build_map.dart';
 import 'package:flower_app/features/address/presentation/views/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../core/cubits/local_cubit/local_cubit.dart';
+import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/widget/validators.dart';
 import '../../data/models/address.dart';
 import '../../data/models/cities_model.dart';
@@ -28,7 +31,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   final TextEditingController addressController = TextEditingController();
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  GoogleMapController? mapController;
+
   bool inSettings = false;
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
@@ -36,7 +39,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   List<StatesModel> states = [];
   String? selectedCityId;
   String? selectedStateId;
-  LatLng? currentLocation ;
+  LatLng? currentLocation;
 
   @override
   void initState() {
@@ -84,12 +87,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   @override
   Widget build(BuildContext context) {
     var cubit = AddressCubit.get(context);
-
+    final lang = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text("Address")),
+      appBar: AppBar(title: Text(lang.addressTitle)),
       body: BlocBuilder<AddressCubit, AddressState>(
         builder: (context, state) {
-          print(state);
           if (state is AddressSuccess) {
             addressController.text = state.searchResult.address;
           }
@@ -113,57 +115,37 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: buildMap(state),
+                          child: BuildMap.buildMap(
+                            state,
+                            lang,
+                            openLocationSettings,
+                          ),
                         ),
                         Positioned.fill(
                           child: Material(
                             color: Colors.transparent,
                             child: GestureDetector(
                               onTap: () async {
-                                print("Map tapped. Current state: $state");
-            
                                 if (state is AddressAccessDenied) {
                                   showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors.white,
-                                        title: const Text(
-                                          "Location Access Denied",
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              openLocationSettings();
-                                            },
-                                            child: const Text("Allow"),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "Cancel",
-                                              style: TextStyle(
-                                                color: ColorManager.appColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      return BuildAlert(
+                                        openLocationSettings:
+                                            openLocationSettings,
                                       );
                                     },
                                   );
                                   return;
                                 }
-            
+
                                 if (state is! AddressSuccess) {
                                   await cubit.getCurrentAddress();
 
                                   return;
                                 }
                                 currentLocation = (state).searchResult.location;
-            
+
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -174,7 +156,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                         ),
                                   ),
                                 );
-            
+
                                 if (result != null) {
                                   cubit.updateAddress(
                                     SearchResult(
@@ -183,7 +165,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                     ),
                                   );
                                   currentLocation = result['location'];
-                                  mapController?.animateCamera(
+                                  AddressCubit.mapController?.animateCamera(
                                     CameraUpdate.newLatLng(result['location']),
                                   );
                                 }
@@ -195,20 +177,20 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                     ),
                     CustomTextField(
                       controller: addressController,
-                      hintText: "Address",
+                      hintText: lang.addressTitle,
                       validator: AppValidators.validateFullName,
                     ),
                     const SizedBox(height: 12),
                     CustomTextField(
                       controller: phoneController,
-                      hintText: "Phone number",
+                      hintText: lang.enterPhoneNumber,
                       validator: AppValidators.validatePhoneNumber,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 12),
                     CustomTextField(
                       controller: recipientController,
-                      hintText: "Recipient name",
+                      hintText: lang.recipientNameHint,
                       validator: AppValidators.validateFullName,
                     ),
                     const SizedBox(height: 12),
@@ -216,8 +198,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            value: selectedCityId, validator: AppValidators.validateFullName,
-                            decoration: const InputDecoration(labelText: "City"),
+                            value: selectedCityId,
+                            validator: AppValidators.validateFullName,
+                            decoration: InputDecoration(
+                              labelText: lang.cityLabel,
+                            ),
                             items:
                                 cities.map((city) {
                                   return DropdownMenuItem<String>(
@@ -246,7 +231,9 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                           child: DropdownButtonFormField<String>(
                             value: selectedStateId,
                             validator: AppValidators.validateFullName,
-                            decoration: InputDecoration(labelText: "Area"),
+                            decoration: InputDecoration(
+                              labelText: lang.areaLabel,
+                            ),
                             items:
                                 states.map((state) {
                                   return DropdownMenuItem<String>(
@@ -293,20 +280,26 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                   username: recipientController.text,
                                 ),
                               );
-                              print(state);
                             }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: ColorManager.appColor,
                           ),
-                          child: state is AddEditAddressLoading ? Center(child: CircularProgressIndicator(color: Colors.white,)) : Text(
-                            "Save address",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          )
+                          child:
+                              state is AddEditAddressLoading
+                                  ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : Text(
+                                    lang.saveAddress,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                         );
                       },
                     ),
@@ -318,59 +311,5 @@ class _AddAddressScreenState extends State<AddAddressScreen>
         },
       ),
     );
-  }
-
-  Widget buildMap(AddressState state) {
-    if (state is AddressSuccess) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: GoogleMap(
-          onMapCreated: (controller) {
-            mapController = controller;
-            currentLocation = (state).searchResult.location;
-          },
-          initialCameraPosition: CameraPosition(
-            target: state.searchResult.location,
-            zoom: 15,
-          ),
-          markers: {
-            Marker(
-              markerId: const MarkerId("current"),
-              position: state.searchResult.location,
-              infoWindow: InfoWindow(title: state.searchResult.address),
-            ),
-          },
-          mapToolbarEnabled: false,
-          zoomControlsEnabled: false,
-          myLocationButtonEnabled: false,
-          rotateGesturesEnabled: false,
-          scrollGesturesEnabled: false,
-          zoomGesturesEnabled: false,
-          tiltGesturesEnabled: false,
-          liteModeEnabled: true,
-        ),
-      );
-    } else if (state is AddressError) {
-      return Center(child: Text(state.message));
-    } else if (state is AddressLoading) {
-      return Center(
-        child: CircularProgressIndicator(color: ColorManager.appColor),
-      );
-    } else if (state is AddressAccessDenied) {
-      return Center(
-        child: TextButton(
-          onPressed: openLocationSettings,
-          child: Text(
-            "Allow access to location",
-            style: TextStyle(
-              color: ColorManager.appColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      );
-    }
-    return Container();
   }
 }
