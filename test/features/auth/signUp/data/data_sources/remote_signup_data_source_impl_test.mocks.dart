@@ -12,6 +12,8 @@ import 'package:flower_app/features/app_sections/add_to_cart/data/model/add_to_c
     as _i16;
 import 'package:flower_app/features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart'
     as _i15;
+import 'package:flower_app/features/app_sections/cart/data/models/carts_response_dto.dart'
+    as _i17;
 import 'package:flower_app/features/app_sections/categories/data/models/categories_dto.dart'
     as _i12;
 import 'package:flower_app/features/app_sections/categories/data/models/category_by_id_dto.dart'
@@ -162,15 +164,15 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
     _i11.ProductFilter? filter,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(#getProducts, [filter]),
-        returnValue: _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
-          _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
-            this,
             Invocation.method(#getProducts, [filter]),
-          ),
-        ),
-      )
-      as _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
+            returnValue: _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>.value(
+              _i8.dummyValue<_i5.ApiResult<List<_i10.ProductDto>>>(
+                this,
+                Invocation.method(#getProducts, [filter]),
+              ),
+            ),
+          )
+          as _i3.Future<_i5.ApiResult<List<_i10.ProductDto>>>);
 
   @override
   _i3.Future<_i5.ApiResult<List<_i12.CategoryDto>>> getCategories() =>

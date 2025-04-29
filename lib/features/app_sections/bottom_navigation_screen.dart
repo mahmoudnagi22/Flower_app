@@ -43,10 +43,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
     var lang = AppLocalizations.of(context);
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedItem,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _selectedItem, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         unselectedItemColor: Colors.grey,

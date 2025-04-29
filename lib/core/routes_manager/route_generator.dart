@@ -12,6 +12,7 @@ import 'package:flower_app/features/app_sections/terms_about_us/terms_conditions
 
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
+import 'package:flower_app/features/saved_address/presentation/view/screens/saved_address_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,15 +54,18 @@ class RouteGenerator {
               (_) => MultiBlocProvider(
                 providers: [
                   BlocProvider(
-                    create: (context) => AddressCubit(
-                      getIt<GetCurrentAddressInfo>(),
-                      getIt<GetPermissionUseCase>(),
-                      getIt<GetCitiesUseCase>(),
-                      getIt<GetStateUseCase>(),
-                    ),
+                    create:
+                        (context) => AddressCubit(
+                          getIt<GetCurrentAddressInfo>(),
+                          getIt<GetPermissionUseCase>(),
+                          getIt<GetCitiesUseCase>(),
+                          getIt<GetStateUseCase>(),
+                        ),
                   ),
                   BlocProvider(
-                    create: (context) => AddEditAddressCubit(getIt<AddAddressUseCase>()),
+                    create:
+                        (context) =>
+                            AddEditAddressCubit(getIt<AddAddressUseCase>()),
                   ),
                 ],
                 child: AddAddressScreen(),
@@ -91,6 +95,11 @@ class RouteGenerator {
       case Routes.changepassword:
         return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
 
+      // case Routes.editProfileRoute:
+      //   return MaterialPageRoute(
+      //     builder:
+      //         (context) => EditProfileScreen(userModel: UserModel.instance),
+      //   );
       case Routes.splash:
         return MaterialPageRoute(
           builder:
@@ -100,6 +109,11 @@ class RouteGenerator {
                 child: const SplashView(),
               ),
           settings: settings,
+        );
+        return MaterialPageRoute(builder: (_) => const BestSeller());
+      case Routes.savedAddress:
+        return MaterialPageRoute(
+          builder: (context) => const SavedAddressScreen(),
         );
         return MaterialPageRoute(builder: (_) => const BestSeller());
       case Routes.productDetails:
@@ -115,12 +129,21 @@ class RouteGenerator {
                   ProductDetails(product: settings.arguments as ProductEntity),
         );
 
-        return MaterialPageRoute(builder: (_) => ProductDetails(product: settings.arguments as ProductEntity,));
-       case Routes.aboutUs:
-        return MaterialPageRoute(builder: (_) => AboutUsScreen(),);
-        case Routes.termsConditions:
-        return MaterialPageRoute(builder: (_) => TermsAndConditionsScreen(),);
+        return MaterialPageRoute(
+          builder:
+              (_) =>
+                  ProductDetails(product: settings.arguments as ProductEntity),
+        );
+      case Routes.aboutUs:
+        return MaterialPageRoute(builder: (_) => AboutUsScreen());
+      case Routes.termsConditions:
+        return MaterialPageRoute(builder: (_) => TermsAndConditionsScreen());
 
+        return MaterialPageRoute(
+          builder:
+              (_) =>
+                  ProductDetails(product: settings.arguments as ProductEntity),
+        );
       default:
         return unDefinedRoute();
     }

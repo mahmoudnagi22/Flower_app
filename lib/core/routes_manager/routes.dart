@@ -13,8 +13,9 @@ class Routes {
   static const String cart = "/cart";
   static const String changepassword = "/changepassword";
 
-  static const String aboutUs='/aboutUs';
-   static const String termsConditions='/terms_coditions';
+  static const String aboutUs = '/aboutUs';
+  static const String termsConditions = '/terms_coditions';
 
   static const String search = "search";
+  static const String savedAddress = "/savedAddress";
 }
