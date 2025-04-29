@@ -51,6 +51,19 @@
   "haveAccount":"You should create an account",
   "cancel":"Cancel",
   "titleAboutUs":"About Flowery App",
-  "titleTermsAndConditions":"Terms and Conditions for Flowery App"
-  
+  "titleTermsAndConditions":"Terms and Conditions for Flowery App",
+  "addressTitle": "Address",
+  "locationAccessDenied": "Location Access Denied",
+  "allow": "Allow",
+  "addressHint": "Address",
+  "phoneNumberHint": "Phone number",
+  "recipientNameHint": "Recipient name",
+  "cityLabel": "City",
+  "areaLabel": "Area",
+  "saveAddress": "Save address",
+  "allowLocationAccess": "Allow access to location",
+  "selectLocation": "Select Location",
+  "useCurrentLocation": "Use current location",
+  "searchLocation": "Search for location",
+  "useThisLocation": "Use this location"
 }
