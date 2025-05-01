@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/app_sections/home/data/data_sources_impl/home_datasource_impl.dart';
@@ -9,6 +10,7 @@ import 'package:flower_app/features/app_sections/home/data/repositror_impl/home_
 import 'package:flower_app/features/app_sections/home/domain/usecases/usecases.dart';
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../../../core/utils/failures.dart';
 import '../../data/model/Products.dart';
@@ -20,6 +22,23 @@ class HomeTabCubit extends Cubit<HomeStates> {
       homeDataSources: HomeDataSourceImpl(apiManager: ApiManager(Dio())),
     ),
   );
+  void getDeviceToken() async {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    String? deviceToken = await _firebaseMessaging.getToken();
+    log(deviceToken!);
+    const storage = FlutterSecureStorage();
+    await storage.write(key: 'notification_token', value: deviceToken);
+  }
+
+  Future<void> requestNotificationPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
 
   Future<ApiResult<HomeDataResponse>> getHomeData() async {
     emit(HomeLoadingStates());
