@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../core/models/api_result.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../data/models/cities_model.dart';
@@ -11,7 +12,7 @@ import '../../../domain/use_cases/get_current_address_info.dart';
 import '../../../domain/use_cases/get_permission.dart';
 import '../../../domain/use_cases/get_state_use_case.dart';
 import 'address_state.dart';
-
+@injectable
 class AddressCubit extends Cubit<AddressState> {
   AddressCubit(
     this._getCurrentAddress,
