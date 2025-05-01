@@ -9,10 +9,12 @@ import 'core/l10n/app_localizations.dart';
 import 'features/auth/change_password/data/api_call/api_call.dart';
 import 'features/localization/domain/use_cases/get_language.dart';
 import 'features/localization/domain/use_cases/set_language.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
   // Bloc.observer = AppBlocObserver();
+  
   await loadSavedUserToken();
   configureDependencies();
   runApp(const FlowerApp());
