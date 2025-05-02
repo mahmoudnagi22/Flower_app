@@ -21,8 +21,8 @@ class NotificationRepoImpl extends NotificationRepoContract {
   }
 
   @override
-  Future<List<NotificationEntity>> getAllNotifications(String createdAt) async {
-    return await notificationRemoteDsContract.getAllNotifications(createdAt);
+  Future<List<NotificationEntity>> getAllNotifications() async {
+    return await notificationRemoteDsContract.getAllNotifications();
   }
 
   @override

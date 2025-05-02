@@ -13,7 +13,7 @@ class NotificationModel extends NotificationEntity {
       id: json['_id'],
       title: json['title'],
       body: json['body'],
-      createdAt: json['-createdAt'],
+      createdAt: DateTime.parse(json['-createdAt']),
     );
   }
 

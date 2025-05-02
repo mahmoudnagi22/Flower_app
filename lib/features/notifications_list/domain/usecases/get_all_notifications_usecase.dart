@@ -7,7 +7,7 @@ class GetAllNotificationsUsecase {
   final NotificationRepoContract notificationRepoContract;
   GetAllNotificationsUsecase(this.notificationRepoContract);
 
-  Future<List<NotificationEntity>> call(String createdAt) {
-    return notificationRepoContract.getAllNotifications(createdAt);
+  Future<List<NotificationEntity>> call() {
+    return notificationRepoContract.getAllNotifications();
   }
 }

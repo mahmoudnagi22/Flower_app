@@ -1,5 +1,8 @@
+import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/features/notifications_list/presentation/view/widgets/notification_item.dart';
+import 'package:flower_app/features/notifications_list/presentation/view_model/notification_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationsListScreen extends StatelessWidget {
@@ -7,25 +10,28 @@ class NotificationsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Notification',
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+    return BlocProvider(
+      create: (context) => getIt<NotificationCubit>(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Notification',
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios_rounded),
+          ),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
+        body: ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return NotificationItem();
           },
-          icon: const Icon(Icons.arrow_back_ios_rounded),
         ),
-      ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) => Divider(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return NotificationItem();
-        },
       ),
     );
   }

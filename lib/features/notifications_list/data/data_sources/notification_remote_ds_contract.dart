@@ -2,6 +2,6 @@ import 'package:flower_app/features/notifications_list/data/model/notification_m
 
 abstract class NotificationRemoteDsContract {
   Future<void> addNotification(NotificationModel notification);
-  Future<List<NotificationModel>> getAllNotifications(String createdAt);
+  Future<List<NotificationModel>> getAllNotifications();
   Future<NotificationModel> getNotification(String id);
 }

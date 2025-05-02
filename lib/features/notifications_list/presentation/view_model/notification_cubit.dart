@@ -17,10 +17,10 @@ class NotificationCubit extends Cubit<NotificationState> {
     this.getNotificationUsecase,
   ) : super(NotificationInitial());
 
-  void getAllNotifications(String createdAt) async {
+  void getAllNotifications() async {
     emit(NotificationLoading());
     try {
-      final result = await getAllNotificationsUsecase(createdAt);
+      final result = await getAllNotificationsUsecase();
       emit(NotificationSuccess(result));
     } catch (e) {
       emit(NotificationError(e.toString()));
@@ -30,7 +30,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> addNotification(NotificationEntity notification) async {
     try {
       await addNotificationUsecase(notification);
-      getAllNotifications(notification.createdAt);
+      getAllNotifications();
     } catch (e) {
       emit(NotificationError(e.toString()));
     }

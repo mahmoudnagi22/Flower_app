@@ -18,11 +18,11 @@ class NotificationRemoteDsImp implements NotificationRemoteDsContract {
   }
 
   @override
-  Future<List<NotificationModel>> getAllNotifications(String createdAt) async {
+  Future<List<NotificationModel>> getAllNotifications() async {
     final response = await _apiManager.getRequest(
-      '${AppConstants.notifications}?sort=$createdAt',
+      '${AppConstants.notifications}?sort=-createdAt',
     );
-    return (response?.data['metadata'] as List)
+    return (response?.data['notifications'] as List)
         .map((e) => NotificationModel.fromJson(e))
         .toList();
   }
