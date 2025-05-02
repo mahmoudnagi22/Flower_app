@@ -4,7 +4,9 @@ import 'package:flower_app/features/notifications_list/domain/usecases/get_all_n
 import 'package:flower_app/features/notifications_list/domain/usecases/get_notification_usecase.dart';
 import 'package:flower_app/features/notifications_list/presentation/view_model/notification_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class NotificationCubit extends Cubit<NotificationState> {
   final GetAllNotificationsUsecase getAllNotificationsUsecase;
   final AddNotificationUsecase addNotificationUsecase;

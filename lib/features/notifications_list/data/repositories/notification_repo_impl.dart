@@ -2,7 +2,9 @@ import 'package:flower_app/features/notifications_list/data/data_sources/notific
 import 'package:flower_app/features/notifications_list/data/model/notification_model.dart';
 import 'package:flower_app/features/notifications_list/domain/entities/notification_entity.dart';
 import 'package:flower_app/features/notifications_list/domain/repositories/notification_repo_contract.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: NotificationRepoContract)
 class NotificationRepoImpl extends NotificationRepoContract {
   final NotificationRemoteDsContract notificationRemoteDsContract;
   NotificationRepoImpl(this.notificationRemoteDsContract);
@@ -13,13 +15,14 @@ class NotificationRepoImpl extends NotificationRepoContract {
       id: notification.id,
       title: notification.title,
       body: notification.body,
+      createdAt: notification.createdAt,
     );
     await notificationRemoteDsContract.addNotification(model);
   }
 
   @override
-  Future<List<NotificationEntity>> getAllNotifications() async {
-    return await notificationRemoteDsContract.getAllNotifications();
+  Future<List<NotificationEntity>> getAllNotifications(String createdAt) async {
+    return await notificationRemoteDsContract.getAllNotifications(createdAt);
   }
 
   @override
