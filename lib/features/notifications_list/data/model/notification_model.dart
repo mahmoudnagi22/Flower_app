@@ -17,9 +17,5 @@ class NotificationModel extends NotificationEntity {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'title': title,
-    'body': body,
-    '-createdAt': createdAt,
-  };
+  Map<String, dynamic> toJson() => {'title': title, 'body': body};
 }
