@@ -12,6 +12,7 @@ import 'package:flower_app/features/app_sections/terms_about_us/terms_conditions
 
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
+import 'package:flower_app/features/notifications_list/presentation/view/screens/notifications_list_screen.dart';
 import 'package:flower_app/features/saved_address/presentation/view/screens/saved_address_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,14 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CartScreen());
       case Routes.changepassword:
         return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
+      case Routes.savedAddress:
+        return MaterialPageRoute(
+          builder: (context) => const SavedAddressScreen(),
+        );
+      case Routes.notificationsList:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationsListScreen(),
+        );
 
       // case Routes.editProfileRoute:
       //   return MaterialPageRoute(

@@ -18,4 +18,5 @@ class Routes {
 
   static const String search = "search";
   static const String savedAddress = "/savedAddress";
+  static const String notificationsList = "/notificationsList";
 }
