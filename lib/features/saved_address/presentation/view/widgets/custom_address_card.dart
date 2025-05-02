@@ -1,5 +1,5 @@
+import 'package:flower_app/features/address/presentation/views/add_address.dart';
 import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
-import 'package:flower_app/features/saved_address/presentation/view/screens/address_form_screen.dart';
 import 'package:flower_app/features/saved_address/presentation/view_model/address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,9 +55,7 @@ class CustomAddressCard extends StatelessWidget {
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => AddressFormScreen(address: address),
-                          ),
+                          MaterialPageRoute(builder: (_) => AddAddressScreen()),
                         );
                       },
                       child: const Icon(

@@ -1,11 +1,9 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
-import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/auth/change_password/presentation/screens/change_password_screen.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
-import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -71,7 +69,10 @@ class Profile extends StatelessWidget {
               },
             ),
             SizedBox(height: 25.h),
-            ElevatedButton(onPressed: () => Navigator.pushNamed(context, Routes.addAddress), child: Text("test")),
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, Routes.addAddress),
+              child: Text("test"),
+            ),
             CustomButton(
               onPressed: () {
                 Navigator.push(
@@ -89,6 +90,12 @@ class Profile extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.savedAddress);
               },
               child: const Text('Saved address'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.notificationsList);
+              },
+              child: const Text('Notifications List'),
             ),
           ],
         ),
