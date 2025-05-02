@@ -5,6 +5,7 @@ class NotificationModel extends NotificationEntity {
     required super.id,
     required super.title,
     required super.body,
+    required super.createdAt,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
@@ -12,8 +13,13 @@ class NotificationModel extends NotificationEntity {
       id: json['_id'],
       title: json['title'],
       body: json['body'],
+      createdAt: json['-createdAt'],
     );
   }
 
-  Map<String, dynamic> toJson() => {'title': title, 'body': body};
+  Map<String, dynamic> toJson() => {
+    'title': title,
+    'body': body,
+    '-createdAt': createdAt,
+  };
 }
