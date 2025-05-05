@@ -260,7 +260,6 @@ class ApiManager {
         '${AppConstants.baseUrl}${AppConstants.products}/',
         queryParameters: queryParameters,
       );
-
       if (response!.statusCode! >= 200 && response.statusCode! < 300) {
         final List<dynamic> productsJson = response.data['products'] ?? [];
         final List<ProductDto> productsList =
@@ -400,8 +399,14 @@ class ApiManager {
     }
     try {
       final response = await postRequest(
-        AppConstants.baseUrl + AppConstants.addToCart, AddToCartParameters(product: parameters.product),
+        AppConstants.baseUrl+AppConstants.addToCart,
+        headers: {
+          'Authorization': 'Bearer ${UserModel.instance.token}',
+        },
+        AddToCartParameters(product: parameters.product),
       );
+      print('asdasd: ${AppConstants.baseUrl+AppConstants.addToCart}');
+      print('token is: ******: ${UserModel.instance.token}');
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
@@ -525,9 +530,10 @@ class ApiManager {
       final response = await deleteRequest(
           '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
+            'Authorization': 'Bearer ${UserModel.instance.token}',
           }
       );
+
       // print('Response Delete is: $response');
 
       if (response != null && response.statusCode != null) {
@@ -568,15 +574,7 @@ class ApiManager {
         queryParameters: {
           'keyword': keyWord,
         },
-        // queryParameters: {
-        //   'keyword':keyWord
-        // },
-        // headers: {
-        //   "Authorization": "Bearer ${UserModel.instance.token}",}
-
       );
-      print("Response data: ${response?.data}");
-
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final result = SearchDto.fromJson(response.data);
