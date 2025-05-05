@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +13,35 @@ import 'features/auth/change_password/data/api_call/api_call.dart';
 import 'features/localization/domain/use_cases/get_language.dart';
 import 'features/localization/domain/use_cases/set_language.dart';
 
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = AppBlocObserver();
   await loadSavedUserToken();
   configureDependencies();
   runApp(const FlowerApp());
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  print('User granted permission: ${settings.authorizationStatus}');
+  FirebaseMessaging.instance.getToken().then((token) {
+    print("FCM Token: $token");
+  });
+
 }
 
 class FlowerApp extends StatelessWidget {

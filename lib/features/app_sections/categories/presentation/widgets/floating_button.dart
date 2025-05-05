@@ -93,11 +93,10 @@ class FloatingButton extends StatelessWidget {
                   onPressed: () {
                     final filter = ProductFilter(
                       filter: selectedFilter?.filter ?? 'price',
-                      categoryId: '673c46fd1159920171827c85', // بدّلها بالـ id المناسب حسب الحالة
-                      // أو:
-                      // occasionId: '673b351e1159920171827ae5',
                     );
                     getIt<CategoriesCubit>().getProducts(filter);
+                    print('success');
+                    // context.read<CategoriesCubit>().getProducts(ProductFilter(filter: filter.filter));
                     Navigator.pop(context);
                   },
                   text: 'Filter',

@@ -3,5 +3,4 @@ import 'package:flower_app/features/auth/login/data/model/login_user_response.da
 
 abstract class LoginRepository{
   Future<ApiResult> login(LoginUserResponse parameters);
-
 }
