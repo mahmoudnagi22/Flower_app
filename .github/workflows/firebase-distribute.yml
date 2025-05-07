@@ -21,6 +21,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Auto-increment build number
+        run: |
+          VERSION_NAME=$(grep version pubspec.yaml | head -1 | cut -d "+" -f1 | awk '{print $2}')
+          BUILD_NUMBER=$GITHUB_RUN_NUMBER
+          sed -i "s/^version: .*/version: $VERSION_NAME+$BUILD_NUMBER/" pubspec.yaml
+          echo "Updated version to $VERSION_NAME+$BUILD_NUMBER"
+
       - name: Build APK
         run: flutter build apk --release
 
@@ -33,4 +40,3 @@ jobs:
             --app "1:293463341935:android:d00b98b794357778d0069a" \
             --token "1//03m2kNvWPpkqFCgYIARAAGAMSNwF-L9IrGgFJl629Rg4sZtxfJqX2iHpG95MS1ykdeDTD0irc6kiKDbdwvJKWliYpZ1N_LomrbzE" \
             --groups "testers"
-      
