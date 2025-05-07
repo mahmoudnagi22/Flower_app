@@ -1,0 +1,36 @@
+name: Distribute to Firebase
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Upload to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+            --app "com.example.flower_app" \
+            --token "1//03m2kNvWPpkqFCgYIARAAGAMSNwF-L9IrGgFJl629Rg4sZtxfJqX2iHpG95MS1ykdeDTD0irc6kiKDbdwvJKWliYpZ1N_LomrbzE" \
+            --groups "testers"
+      
