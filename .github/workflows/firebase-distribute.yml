@@ -28,11 +28,9 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Upload to Firebase App Distribution
-
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:293463341935:android:d00b98b794357778d0069a" \
-            --release-notes "Test release from commit: $(git log -1 --pretty=%h - %s)" \
+            --token "1//03m2kNvWPpkqFCgYIARAAGAMSNwF-L9IrGgFJl629Rg4sZtxfJqX2iHpG95MS1ykdeDTD0irc6kiKDbdwvJKWliYpZ1N_LomrbzE" \
             --groups "testers"
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-service-account.json
+      
