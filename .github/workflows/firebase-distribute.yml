@@ -13,22 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.29.3'
-          cache: true
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
-
       - name: Install Firebase CLI
         run: npm install -g firebase-tools@13.0.0
 
-      - name: Authenticate and Upload to Firebase App Distribution
+      - name: Test Firebase Login
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-service-account.json
         run: |
@@ -45,20 +33,12 @@ jobs:
           # Set proper permissions on the service account file
           chmod 600 "$GOOGLE_APPLICATION_CREDENTIALS"
           
-          # Verify APK exists
-          echo "Listing APK directory:"
-          ls -la build/app/outputs/flutter-apk/
-          
-          # Test Firebase CLI
+          # Test Firebase CLI version
           firebase --version
           
           # Test Firebase authentication with detailed error output
           echo "Testing Firebase authentication..."
           firebase projects:list || { echo "Authentication failed"; cat ~/.firebase-debug.log; exit 1; }
           
-          # Upload the APK to Firebase App Distribution
-          echo "Uploading APK to Firebase App Distribution..."
-          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
-            --app "1:293463341935:android:d00b98b794357778d0069a" \
-            --groups "testers"
+          echo "Authentication successful!"
         shell: bash
