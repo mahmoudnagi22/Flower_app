@@ -1,19 +1,17 @@
-import 'dart:developer';
-
+import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flower_app/core/widget/validators.dart';
+import 'package:flower_app/features/auth/login/data/model/login_user_response.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
+import 'package:flower_app/features/auth/login/presentation/cubit/login_status.dart';
+import 'package:flower_app/features/auth/login/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../data/model/login_user_response.dart';
-import '../cubit/login_status.dart';
-import '../widgets/text_field.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -26,11 +24,10 @@ class _LoginState extends State<Login> {
   bool checkboxState = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  GlobalKey<FormState> formState = GlobalKey();
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     email.dispose();
     password.dispose();
@@ -38,13 +35,15 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = AppLocalizations.of(context)!;
+    LoginCubit loginCubit = LoginCubit.get(context);
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
         leading: const Icon(Icons.arrow_back_ios_new_outlined),
         title: Text(
-          "Login",
+          lang.login,
           style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 20),
         ),
       ),
@@ -61,19 +60,20 @@ class _LoginState extends State<Login> {
                     child: BuildTextField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: email,
-                      hintText: "Enter you email",
-                      labelText: "Email",
-                      validatorMessage: "This Email is not valid",
+                      hintText: lang.enterEmail,
+                      labelText: lang.email,
+                      validatorMessage: lang.invalidEmail,
                       validation: AppValidators.validateEmail,
                     ),
                   ),
                   SizedBox(height: 25.h),
+
                   BuildTextField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: password,
-                    labelText: "Password",
-                    hintText: "Enter you password ",
-                    validatorMessage: "Invalid password",
+                    labelText: lang.password,
+                    hintText: lang.enterPassword,
+                    validatorMessage: lang.invalidPassword,
                     validation: AppValidators.validatePassword,
                   ),
                   SizedBox(height: 15.h),
@@ -83,22 +83,17 @@ class _LoginState extends State<Login> {
                       Row(
                         children: [
                           Checkbox(
+                            checkColor: Colors.white,
+                            activeColor: ColorManager.appColor,
                             value: checkboxState,
                             onChanged: (value) {
                               setState(() {
                                 checkboxState = value!;
-                                // if(checkboxState = true){
-                                //   sta =CheckGetTokenTrueState ;
-                                // }
                               });
-                              BlocProvider.of<LoginCubit>(
-                                context,
-                              ).getToken(checkboxState);
                             },
                           ),
-                          //SizedBox(width: 0.w),
                           Text(
-                            "Remember me",
+                            lang.rememberMe,
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
@@ -110,7 +105,7 @@ class _LoginState extends State<Login> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Forget password?",
+                          lang.forgetPassword,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
@@ -124,25 +119,19 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 55.h),
                   BlocListener<LoginCubit, LoginCubitState>(
                     listener: (context, state) {
-                      if (state is CheckGetTokenTrueState) {
+                      if (state is LoginLoadingState) {
+                        DialogUtils.showLoading(context, lang.loading);
+                      }
+                      if (state is LoginErrorState) {
+                        DialogUtils.hideLoading(context);
+                        DialogUtils.showError(context, state.massage);
+                      }
+                      if (state is LoginSuccessState) {
+                        DialogUtils.hideLoading(context);
                         Navigator.push(
                           context,
                           RouteGenerator.getRoute(
                             const RouteSettings(name: Routes.bottomNav),
-                          ),
-                        );
-                      } else if (state is CheckGetTokenFalseState == false) {}
-                      if (state is LoginLoadingState) {
-                        DialogUtils.showLoading(context, 'Loading ...');
-                      } else if (state is LoginErrorState) {
-                        DialogUtils.hideLoading(context);
-                        DialogUtils.showError(context, state.massage);
-                      } else if (state is LoginSuccessState) {
-                        DialogUtils.hideLoading(context);
-                        Navigator.push(
-                          context,
-                          RouteGenerator.getRoute(
-                            RouteSettings(name: Routes.bottomNav),
                           ),
                         );
                       }
@@ -164,17 +153,17 @@ class _LoginState extends State<Login> {
                       color: ColorManager.bank,
                       onPressed: () {
                         if (formState.currentState!.validate()) {
-                          // log("SOFO");
-                          BlocProvider.of<LoginCubit>(context).login(
+                          loginCubit.login(
                             LoginUserResponse(
                               email: email.text,
                               password: password.text,
+                              rememberMe: checkboxState,
                             ),
                           );
                         }
                       },
                       child: Text(
-                        "Login",
+                        lang.login,
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 16.sp,
@@ -204,16 +193,15 @@ class _LoginState extends State<Login> {
                       Navigator.push(
                         context,
                         RouteGenerator.getRoute(
-                          RouteSettings(name: Routes.bottomNav),
+                          const RouteSettings(name: Routes.bottomNav),
                         ),
                       );
                     },
                     child: Text(
-                      "Continue as guest",
+                      lang.continueAsGuest,
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: 16.sp,
-                        // color: ColorManager.gray,
                       ),
                     ),
                   ),
@@ -222,7 +210,7 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account? ",
+                        lang.dontHaveAccount,
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w400,
                           fontSize: 16.sp,
@@ -233,17 +221,11 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                             context,
-                            Routes.bottomNav,
+                            Routes.registerRoute,
                           );
-                          // push(
-                          //   context,
-                          //   RouteGenerator.getRoute(
-                          //     RouteSettings(name: Routes.registerRoute),
-                          //   ),
-                          // );
                         },
                         child: Text(
-                          "Sign up",
+                          lang.signUp,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 16.sp,

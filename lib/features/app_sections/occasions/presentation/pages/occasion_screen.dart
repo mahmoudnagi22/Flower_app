@@ -1,4 +1,5 @@
 import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +9,13 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/resources/assets_manager.dart';
 import '../../../../../../core/resources/color_manager.dart';
 import '../../../../../../core/utils/status.dart';
+import '../../../add_to_cart/data/model/add_to_cart_parameters.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_cubit.dart';
+import '../../../add_to_cart/presentation/cubit/add_to_cart_state.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../categories/domain/entities/product_filter.dart';
 import '../cubit/occasion_cubit.dart';
+
 
 class OccasionScreen extends StatelessWidget {
   OccasionScreen({super.key});
@@ -18,13 +24,14 @@ class OccasionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.verticalSpace,
-            const Text('Occasion'),
+             Text(lang!.occasions),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
@@ -61,9 +68,10 @@ class OccasionScreen extends StatelessWidget {
                         unselectedLabelColor: ColorManager.gray,
                         tabAlignment: TabAlignment.center,
                         onTap: (index) {
-                          final selectedOccasion = state.occasionList?[index].id;
+                          final selectedOccasion =
+                              state.occasionList?[index].id;
                           context.read<OccasionCubit>().getProducts(
-                            ProductFilter(occasionId: selectedOccasion)
+                            ProductFilter(occasionId: selectedOccasion),
                           );
                         },
                         tabs:
@@ -91,7 +99,15 @@ class OccasionScreen extends StatelessWidget {
                                   context,
                                   index,
                                 ) {
-                                  return Card(
+                                  return GestureDetector(
+                                      onTap: (){
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: state.products![index],
+                                    );
+                                  },
+                                  child: Card(
                                     color: ColorManager.white,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
@@ -141,7 +157,7 @@ class OccasionScreen extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "EGP ${state.products![index].priceAfterDiscount}",
+                                                  "${lang.currency} ${state.products![index].priceAfterDiscount}",
                                                   style: TextStyle(
                                                     color: ColorManager.black,
                                                     fontSize: 12.sp,
@@ -175,43 +191,66 @@ class OccasionScreen extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(height: 5.h),
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: Container(
-                                              width: 147.w,
-                                              height: 30.h,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.appColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(25.r),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    IconsAssets.cart,
-                                                    height: 18,
-                                                    width: 18,
-                                                  ),
-                                                  SizedBox(width: 8.w),
-                                                  Text(
-                                                    "Add to cart",
-                                                    style: TextStyle(
-                                                      color: ColorManager.white,
-                                                      fontSize: 13.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                          BlocProvider(
+                                            create: (_) => AddToCartCubit(),
+                                            child: BlocListener<AddToCartCubit, AddToCartState>(
+                                              listener: (context, state) {
+                                                if(state is AddToCartLoadingState){
+                                                  DialogUtils.showLoading(context, lang.lang);
+                                                }
+                                                if (state is AddToCartSuccessState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showSuccess(context, "✅ Product has been added to cart");
+                                                } else if (state is AddToCartErrorState) {
+                                                  DialogUtils.hideLoading(context);
+                                                  DialogUtils.showError(context, state.massage);
+                                                }
+                                              },
+                                              child: Builder(
+                                                builder: (innerContext) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      final productId = state.products![index].id ?? '';
+                                                      innerContext.read<AddToCartCubit>().addToCart(
+                                                        AddToCartParameters(product: productId),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 147.w,
+                                                      height: 30.h,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorManager.appColor,
+                                                        borderRadius: BorderRadius.circular(25.r),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            IconsAssets.cart,
+                                                            height: 18,
+                                                            width: 18,
+                                                          ),
+                                                          SizedBox(width: 8.w),
+                                                          Text(
+                                                            lang.addToCart,
+                                                            style: TextStyle(
+                                                              color: ColorManager.white,
+                                                              fontSize: 13.sp,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  );
+                                  ),);
                                 }, childCount: state.products?.length),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(

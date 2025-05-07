@@ -1,14 +1,11 @@
-import 'package:bloc/bloc.dart';
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
+import 'package:flower_app/features/auth/change_password/presentation/cubit/change_password_state.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_request_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_response_entity.dart';
 import 'package:flower_app/features/auth/signUp/domain/use_cases/signup_use_case.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
-
-import '../../../../../core/utils/status.dart';
-
 part 'signup_state.dart';
 
 @injectable

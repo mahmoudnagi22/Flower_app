@@ -1,4 +1,4 @@
-import 'package:flower_app/core/api_manager/api_result.dart';
+import 'package:flower_app/core/models/api_result.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../categories/domain/entities/product_filter.dart';
@@ -19,7 +19,7 @@ class OccasionRepoImpl implements OccasionRepo {
 
   @override
   Future<ApiResult<List<ProductEntity>>> getProducts(ProductFilter productFilter) async {
-    if (productFilter.occasionId != null || productFilter.categoryId != null) {
+    if (productFilter.occasionId != null || productFilter.categoryId != null || productFilter.filter!=null) {
       return await remoteOccasionDataSourceContract.getProducts(productFilter);
     } else {
       throw ArgumentError('Either occasionId or categoryId must be provided.');

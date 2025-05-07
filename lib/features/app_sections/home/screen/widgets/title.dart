@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/color_manager.dart';
-import '../../../../../core/routes_manager/routes.dart';
 
 class TitleOfGroup extends StatelessWidget {
   String nameOfGroup;
@@ -11,6 +11,7 @@ class TitleOfGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
@@ -23,7 +24,7 @@ class TitleOfGroup extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, routesNamed);
             },
-            child: Text("View All" ,style: GoogleFonts.inter(
+            child: Text(lang!.viewAll ,style: GoogleFonts.inter(
               fontWeight: FontWeight.w500 ,fontSize: 12.sp,
               color: ColorManager.bank,
               decoration: TextDecoration.underline,

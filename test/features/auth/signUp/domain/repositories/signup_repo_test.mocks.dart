@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:flower_app/core/api_manager/api_result.dart' as _i4;
+import 'package:flower_app/core/models/api_result.dart' as _i4;
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_request_entity.dart'
     as _i6;
 import 'package:flower_app/features/auth/signUp/domain/entities/signup_response_entity.dart'

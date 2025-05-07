@@ -62,18 +62,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
           borderSide: BorderSide(color: ColorManager.gray),
         ),
       ),
-      validator: (value) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          setState(() {
-            if (widget.validation != null) {
-              errorText = widget.validation!(value);
-            } else {
-              errorText = null;
-            }
-          });
-        });
-        return errorText;
-      },
+      validator:widget.validation
     );
   }
 }
