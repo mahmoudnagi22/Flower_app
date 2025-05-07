@@ -42,4 +42,4 @@ fuchsia/.dart_tool/
 fuchsia/build/
 app.*.symbols
 app.*.map.json
-firebase-service-account.json
+
