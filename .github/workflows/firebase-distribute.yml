@@ -17,6 +17,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.29.3'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -29,40 +30,35 @@ jobs:
 
       - name: Authenticate and Upload to Firebase App Distribution
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-service-account.json
         run: |
           # Show current directory contents
           echo "Listing repo root:"
           ls -la
-
-          # Copy service account key to home
-          cp firebase-service-account.json $HOME/firebase-key.json
-
-          # Set permissions on the key
-          chmod 600 $HOME/firebase-key.json
-
-          # Confirm the key was copied
-          echo "Listing home directory:"
-          ls -la $HOME/firebase-key.json
-
-          # Verify key content (for debugging, shows first few characters)
-          head -n 2 $HOME/firebase-key.json
-
+          
+          # Verify service account exists
+          if [ ! -f "$GOOGLE_APPLICATION_CREDENTIALS" ]; then
+            echo "Error: Service account file not found at $GOOGLE_APPLICATION_CREDENTIALS"
+            exit 1
+          fi
+          
+          # Set proper permissions on the service account file
+          chmod 600 "$GOOGLE_APPLICATION_CREDENTIALS"
+          
           # Verify APK exists
           echo "Listing APK directory:"
           ls -la build/app/outputs/flutter-apk/
-
+          
           # Test Firebase CLI
           firebase --version
-
+          
           # Test Firebase authentication with detailed error output
           echo "Testing Firebase authentication..."
-          firebase projects:list --service-account $HOME/firebase-key.json || { echo "Authentication failed"; exit 1; }
-
+          firebase projects:list || { echo "Authentication failed"; cat ~/.firebase-debug.log; exit 1; }
+          
           # Upload the APK to Firebase App Distribution
           echo "Uploading APK to Firebase App Distribution..."
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:293463341935:android:d00b98b794357778d0069a" \
-            --groups "testers" \
-            --service-account $HOME/firebase-key.json
+            --groups "testers"
         shell: bash
