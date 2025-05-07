@@ -29,13 +29,16 @@ jobs:
 
       - name: Authenticate and Upload to Firebase App Distribution
         run: |
+          # Copy service account key to a safe location
           cp firebase-service-account.json $HOME/firebase-key.json
+
+          # Export credentials for Firebase CLI
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
-          
-          # Optional: test that authentication is working
+
+          # Confirm authentication (optional)
           firebase projects:list
 
-          # Upload APK to App Distribution
+          # Upload APK to Firebase App Distribution
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:293463341935:android:d00b98b794357778d0069a" \
             --groups "testers"
