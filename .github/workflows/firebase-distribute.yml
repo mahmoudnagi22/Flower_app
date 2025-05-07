@@ -39,4 +39,5 @@ jobs:
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:293463341935:android:d00b98b794357778d0069a" \
             --token "1//03m2kNvWPpkqFCgYIARAAGAMSNwF-L9IrGgFJl629Rg4sZtxfJqX2iHpG95MS1ykdeDTD0irc6kiKDbdwvJKWliYpZ1N_LomrbzE" \
-            --groups "testers"
+            --groups "testers" \
+            --release-notes-file release-notes.txt
