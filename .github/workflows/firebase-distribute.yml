@@ -27,16 +27,17 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Copy service account file
-        run: cp firebase-service-account.json $HOME/firebase-key.json
-
-      - name: Authenticate with Firebase
+      - name: Copy service account key and authenticate
         run: |
+          cp firebase-service-account.json $HOME/firebase-key.json
           export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
+          firebase projects:list
         shell: bash
 
       - name: Upload to Firebase App Distribution
         run: |
+          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:1234567890:android:abcdef1234567890" \
             --groups "testers"
+        shell: bash
