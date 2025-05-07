@@ -28,17 +28,24 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Authenticate and Upload to Firebase App Distribution
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-key.json
         run: |
-          # Copy service account key to a safe location
+          # Show current directory contents
+          echo "Listing repo root:"
+          ls -la
+
+          # Copy service account key to home
           cp firebase-service-account.json $HOME/firebase-key.json
 
-          # Export credentials for Firebase CLI
-          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
+          # Confirm the key was copied
+          echo "Listing home directory:"
+          ls -la $HOME/firebase-key.json
 
-          # Confirm authentication (optional)
+          # Test Firebase authentication
           firebase projects:list
 
-          # Upload APK to Firebase App Distribution
+          # Upload the APK to Firebase App Distribution
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "1:293463341935:android:d00b98b794357778d0069a" \
             --groups "testers"
