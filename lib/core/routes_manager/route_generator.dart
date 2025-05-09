@@ -12,6 +12,7 @@ import 'package:flower_app/features/app_sections/terms_about_us/terms_conditions
 
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/best_seller.dart';
+import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flower_app/features/saved_address/presentation/view/screens/saved_address_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:flutter/material.dart';
