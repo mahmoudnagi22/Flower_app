@@ -1,7 +1,4 @@
-import 'dart:developer';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
@@ -16,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/features/app_sections/occasions/domain/entities/products_entity.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../../core/l10n/app_localizations.dart';
 
@@ -30,14 +26,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    HomeTabCubit homeTabCubit= context.read<HomeTabCubit>();
-    homeTabCubit.requestNotificationPermission();
-    homeTabCubit.getDeviceToken();
     super.initState();
-    homeTabCubit.getHomeData();
+    context.read<HomeTabCubit>().getHomeData();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,37 +80,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                   () => Navigator.pushNamed(
                                     context,
                                     Routes.productDetails,
-                                    arguments: ProductEntity(
+                                    arguments:ProductEntity(
                                       id: state.bestSeller[index].id,
                                       title: state.bestSeller[index].title,
                                       slug: state.bestSeller[index].slug,
-                                      description:
-                                          state.bestSeller[index].description,
-                                      imgCover:
-                                          state.bestSeller[index].imgCover,
+                                      description: state.bestSeller[index].description,
+                                      imgCover: state.bestSeller[index].imgCover,
                                       images: state.bestSeller[index].images,
                                       price: state.bestSeller[index].price,
-                                      priceAfterDiscount:
-                                          state
-                                              .bestSeller[index]
-                                              .priceAfterDiscount,
-                                      quantity:
-                                          state.bestSeller[index].quantity,
-                                      category:
-                                          state.bestSeller[index].category,
-                                      occasion:
-                                          state.bestSeller[index].occasion,
-                                      createdAt:
-                                          state.bestSeller[index].createdAt,
-                                      updatedAt:
-                                          state.bestSeller[index].updatedAt,
+                                      priceAfterDiscount: state.bestSeller[index].priceAfterDiscount,
+                                      quantity: state.bestSeller[index].quantity,
+                                      category: state.bestSeller[index].category,
+                                      occasion: state.bestSeller[index].occasion,
+                                      createdAt: state.bestSeller[index].createdAt,
+                                      updatedAt: state.bestSeller[index].updatedAt,
                                       v: state.bestSeller[index].v,
-                                      discount:
-                                          state.bestSeller[index].discount,
+                                      discount: state.bestSeller[index].discount,
                                       sold: state.bestSeller[index].sold,
                                       rateAvg: state.bestSeller[index].rateAvg,
-                                      rateCount:
-                                          state.bestSeller[index].rateCount,
+                                      rateCount: state.bestSeller[index].rateCount,
+
                                     ),
                                   ),
                               child: BestSellerItem(
@@ -142,45 +122,33 @@ class _HomeScreenState extends State<HomeScreen> {
                             return GestureDetector(
                               onTap:
                                   () => Navigator.pushNamed(
-                                    context,
-                                    Routes.productDetails,
-                                    arguments: ProductEntity(
-                                      id: state.bestSeller[index].id,
-                                      title: state.bestSeller[index].title,
-                                      slug: state.bestSeller[index].slug,
-                                      description:
-                                          state.bestSeller[index].description,
-                                      imgCover:
-                                          state.bestSeller[index].imgCover,
-                                      images: state.bestSeller[index].images,
-                                      price: state.bestSeller[index].price,
-                                      priceAfterDiscount:
-                                          state
-                                              .bestSeller[index]
-                                              .priceAfterDiscount,
-                                      quantity:
-                                          state.bestSeller[index].quantity,
-                                      category:
-                                          state.bestSeller[index].category,
-                                      occasion:
-                                          state.bestSeller[index].occasion,
-                                      createdAt:
-                                          state.bestSeller[index].createdAt,
-                                      updatedAt:
-                                          state.bestSeller[index].updatedAt,
-                                      v: state.bestSeller[index].v,
-                                      discount:
-                                          state.bestSeller[index].discount,
-                                      sold: state.bestSeller[index].sold,
-                                      rateAvg: state.bestSeller[index].rateAvg,
-                                      rateCount:
-                                          state.bestSeller[index].rateCount,
-                                    ),
-                                  ),
-                              child: OccasionItem(
-                                occasions: state.occasions[index],
+                                context,
+                                Routes.productDetails,
+                                arguments:ProductEntity(
+                                  id: state.bestSeller[index].id,
+                                  title: state.bestSeller[index].title,
+                                  slug: state.bestSeller[index].slug,
+                                  description: state.bestSeller[index].description,
+                                  imgCover: state.bestSeller[index].imgCover,
+                                  images: state.bestSeller[index].images,
+                                  price: state.bestSeller[index].price,
+                                  priceAfterDiscount: state.bestSeller[index].priceAfterDiscount,
+                                  quantity: state.bestSeller[index].quantity,
+                                  category: state.bestSeller[index].category,
+                                  occasion: state.bestSeller[index].occasion,
+                                  createdAt: state.bestSeller[index].createdAt,
+                                  updatedAt: state.bestSeller[index].updatedAt,
+                                  v: state.bestSeller[index].v,
+                                  discount: state.bestSeller[index].discount,
+                                  sold: state.bestSeller[index].sold,
+                                  rateAvg: state.bestSeller[index].rateAvg,
+                                  rateCount: state.bestSeller[index].rateCount,
+
+                                ),
                               ),
-                            );
+                              child: OccasionItem(
+                              occasions: state.occasions[index],),
+                                );
                           },
                           itemCount: state.occasions.length,
                           scrollDirection: Axis.horizontal,
