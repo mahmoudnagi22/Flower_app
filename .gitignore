@@ -42,5 +42,3 @@ fuchsia/.dart_tool/
 fuchsia/build/
 app.*.symbols
 app.*.map.json
-android/app/.cxx/
-
