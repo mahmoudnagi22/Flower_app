@@ -1,0 +1,2 @@
+D:/Elevate/projects/team7/Flower_app/android/app/.cxx/Debug/14614n46/x86_64/CMakeFiles/edit_cache.dir
+D:/Elevate/projects/team7/Flower_app/android/app/.cxx/Debug/14614n46/x86_64/CMakeFiles/rebuild_cache.dir
