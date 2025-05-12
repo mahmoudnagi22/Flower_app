@@ -120,6 +120,34 @@ import '../../features/auth/signUp/domain/use_cases/signup_use_case.dart'
     as _i211;
 import '../../features/auth/signUp/presentation/cubit/signup_cubit.dart'
     as _i959;
+import '../../features/checkout_page/data/data_source/contract/cash_contract/cash_order_datasource_contract.dart'
+    as _i841;
+import '../../features/checkout_page/data/data_source/contract/credit_contract/credit_order_datasource_contract.dart'
+    as _i976;
+import '../../features/checkout_page/data/data_source/remote/cash_remote/cash_order_datasource_remote.dart'
+    as _i1009;
+import '../../features/checkout_page/data/data_source/remote/credit_remote/credit_order_datasource_remote.dart'
+    as _i413;
+import '../../features/checkout_page/data/repository/cash_repo_impl/cash_repository_impl.dart'
+    as _i979;
+import '../../features/checkout_page/data/repository/credit_repo_impl/credit_repository_impl.dart'
+    as _i769;
+import '../../features/checkout_page/data/service/cash_api_call/cash_order_service.dart'
+    as _i552;
+import '../../features/checkout_page/data/service/credit_api_call/credit_order_service.dart'
+    as _i945;
+import '../../features/checkout_page/domain/repository/cash_repo/cash_order_repository.dart'
+    as _i27;
+import '../../features/checkout_page/domain/repository/credit_repo/credit_order_repository.dart'
+    as _i303;
+import '../../features/checkout_page/domain/use_case/cash_usecase/cash_use_case.dart'
+    as _i1048;
+import '../../features/checkout_page/domain/use_case/credit_usecase/credit_use_case.dart'
+    as _i1066;
+import '../../features/checkout_page/presentation/cubit/checkout_cubit.dart'
+    as _i862;
+import '../../features/checkout_page/presentation/cubit/payment_cubit.dart'
+    as _i796;
 import '../../features/localization/data/data_source/data_source.dart' as _i254;
 import '../../features/localization/data/data_source_impl/data_source_impl.dart'
     as _i178;
@@ -165,6 +193,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    gh.factory<_i796.PaymentMethodCubit>(() => _i796.PaymentMethodCubit());
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
@@ -172,6 +201,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
     gh.singleton<_i663.ChangePasswordService>(
       () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i552.CashOrderService>(
+      () => _i552.CashOrderService(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i945.CreditOrderService>(
+      () => _i945.CreditOrderService(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i976.CreditOrderDatasourceContract>(
+      () => _i413.CreditCheckoutServiceRemote(
+        checkoutService: gh<_i945.CreditOrderService>(),
+      ),
     );
     gh.factory<_i702.GetLanguageUseCase>(
       () => _i702.GetLanguageUseCase(gh<_i254.LocalDataSource>()),
@@ -246,14 +286,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i496.AddressRepoContract>(
       () => _i896.AddressRepoImpl(gh<_i541.RemoteAddressDsContract>()),
     );
+    gh.factory<_i303.CreditOrderRepository>(
+      () => _i769.CreditOrderRepoImpl(
+        creditCheckoutServiceContract:
+            gh<_i976.CreditOrderDatasourceContract>(),
+      ),
+    );
+    gh.factory<_i841.CashCheckoutServiceContract>(
+      () => _i1009.CashCheckoutServiceRemote(
+        checkoutPageService: gh<_i552.CashOrderService>(),
+      ),
+    );
     gh.factory<_i886.DeleteCartUseCase>(
       () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
     );
-    gh.factory<_i287.UpdateQuantityUseCase>(
-      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
-    );
     gh.factory<_i318.GetCartsUseCase>(
       () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
@@ -266,6 +317,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1013.ChangePasswordRepository>(
       () => _i419.ChangePasswordRepositoryImpl(
         changePasswordContract: gh<_i107.ChangePasswordContract>(),
+      ),
+    );
+    gh.factory<_i1066.CreditOrderUseCase>(
+      () => _i1066.CreditOrderUseCase(
+        orderRepository: gh<_i303.CreditOrderRepository>(),
       ),
     );
     gh.factory<_i959.SignupCubit>(
@@ -283,23 +339,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i372.AutoLoginRepo>(
       () => _i146.AutoLoginRepoImp(gh<_i537.AutoLoginDataSource>()),
     );
-    gh.factory<_i457.UpdateAddressUseCase>(
-      () => _i457.UpdateAddressUseCase(gh<_i366.AddressRepo>()),
-    );
     gh.factory<_i573.GetCitiesUseCase>(
       () => _i573.GetCitiesUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i340.GetStateUseCase>(
       () => _i340.GetStateUseCase(gh<_i366.AddressRepo>()),
     );
-    gh.factory<_i512.GetPermissionUseCase>(
-      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
+    gh.factory<_i457.UpdateAddressUseCase>(
+      () => _i457.UpdateAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i280.AddAddressUseCase>(
       () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i403.GetCurrentAddressInfo>(
       () => _i403.GetCurrentAddressInfo(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i512.GetPermissionUseCase>(
+      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i177.AddressCubit>(
       () => _i177.AddressCubit(
@@ -312,8 +368,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
     );
-    gh.factory<_i722.UpdateAddressUsecase>(
-      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i27.CashOrderRepository>(
+      () => _i979.CashOrderRepoImpl(
+        cashCheckoutServiceContract: gh<_i841.CashCheckoutServiceContract>(),
+      ),
+    );
+    gh.factory<_i685.AddAddressUsecase>(
+      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i498.DeleteAddressUsecase>(
       () => _i498.DeleteAddressUsecase(gh<_i496.AddressRepoContract>()),
@@ -321,8 +382,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i150.GetAddressesUsecase>(
       () => _i150.GetAddressesUsecase(gh<_i496.AddressRepoContract>()),
     );
-    gh.factory<_i685.AddAddressUsecase>(
-      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i722.UpdateAddressUsecase>(
+      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i370.ChangePasswordUseCase>(
       () => _i370.ChangePasswordUseCase(
@@ -342,6 +403,11 @@ extension GetItInjectableX on _i174.GetIt {
         updateUseCase: gh<_i287.UpdateQuantityUseCase>(),
         getUseCase: gh<_i318.GetCartsUseCase>(),
         deleteCartUseCase: gh<_i886.DeleteCartUseCase>(),
+      ),
+    );
+    gh.factory<_i1048.CashOrderUseCase>(
+      () => _i1048.CashOrderUseCase(
+        orderRepository: gh<_i27.CashOrderRepository>(),
       ),
     );
     gh.factory<_i824.ProductsUseCase>(
@@ -368,6 +434,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i150.GetAddressesUsecase>(),
         gh<_i722.UpdateAddressUsecase>(),
         gh<_i498.DeleteAddressUsecase>(),
+      ),
+    );
+    gh.factory<_i862.CheckoutCubit>(
+      () => _i862.CheckoutCubit(
+        cashOrderUseCase: gh<_i1048.CashOrderUseCase>(),
+        creditOrderUseCase: gh<_i1066.CreditOrderUseCase>(),
       ),
     );
     return this;
