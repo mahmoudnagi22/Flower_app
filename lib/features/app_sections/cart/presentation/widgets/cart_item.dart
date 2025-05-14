@@ -1,6 +1,6 @@
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
-import 'package:flower_app/features/checkout_page/presentation/screens/checkout_page_page.dart';
+import 'package:flower_app/features/checkout_page/presentation/screens/checkout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

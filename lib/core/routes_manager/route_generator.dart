@@ -23,7 +23,7 @@ import 'package:flower_app/features/app_sections/terms_about_us/about_us/pages/a
 import 'package:flower_app/features/app_sections/terms_about_us/terms_conditions.dart/terms_conditions.dart';
 import 'package:flower_app/features/auth/login/presentation/screens/login.dart';
 import 'package:flower_app/features/auth/signUp/presentation/pages/signup_screen.dart';
-import 'package:flower_app/features/checkout_page/presentation/screens/checkout_page_page.dart';
+import 'package:flower_app/features/checkout_page/presentation/screens/checkout_page.dart';
 import 'package:flower_app/features/splash/domain/use_cases/get_user_data.dart';
 import 'package:flower_app/features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
 import 'package:flower_app/features/best_seller.dart';
