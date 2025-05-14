@@ -46,13 +46,10 @@ class AddressRepoImpl implements AddressRepo {
   }
 
   @override
-  Future<ApiResult> addAddress(Address address) async{
-    return await _dataSource.addAddress(address);
+  Future<ApiResult> addAddress(Address address,String? id) async{
+    return await _dataSource.addAddress(address,id);
   }
 
 
-  @override
-  Future<ApiResult> updateAddress(Address address, String id) async{
-    return await _dataSource.updateAddress(address, id);
-  }
+
 }

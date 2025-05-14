@@ -9,6 +9,7 @@ class AddressLoading extends AddressState {}
 class AddressSuccess extends AddressState {
   final List<AddressEntity> addresses;
   AddressSuccess(this.addresses);
+
 }
 
 class AddressError extends AddressState {

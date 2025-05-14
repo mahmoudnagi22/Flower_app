@@ -78,12 +78,13 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
     String? endpoint,
     dynamic data, {
     Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
               #postRequest,
               [endpoint, data],
-              {#headers: headers},
+              {#headers: headers, #queryParameters: queryParameters},
             ),
             returnValue: _i3.Future<_i4.Response<dynamic>?>.value(),
           )

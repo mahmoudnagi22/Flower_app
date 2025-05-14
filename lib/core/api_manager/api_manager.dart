@@ -57,25 +57,25 @@ class ApiManager {
   // TODO : =================== PostRequest ==============
 
   Future<Response?> postRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+      String endpoint,
+      dynamic data, {
+        Map<String, String>? headers,
+        Map<String, dynamic>? queryParameters,
+      }) async {
     try {
       Response response = await _dio.post(
         endpoint,
         data: data,
+        queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Post Error: "
-        '${error.message}',
-      );
+      print("Post Error: ${error.message}");
       return error.response;
     }
   }
+
 
   // TODO : =================== PutRequest ==============
   Future<Response?> putRequest(

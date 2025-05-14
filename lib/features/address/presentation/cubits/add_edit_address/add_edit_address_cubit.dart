@@ -12,10 +12,10 @@ class AddEditAddressCubit extends Cubit<AddEditAddressState> {
   AddEditAddressCubit(this._addAddressUseCase) : super(AddEditAddressInitial());
   final AddAddressUseCase _addAddressUseCase;
 static AddEditAddressCubit get(context) => BlocProvider.of(context);
-  Future<void> addAddress(Address params) async {
+  Future<void> addAddress(Address params,String? id) async {
     emit(AddEditAddressLoading());
 
-    final result = await _addAddressUseCase.call(params);
+    final result = await _addAddressUseCase.call(params,id);
     if (result is ApiSuccessResult) {
       emit(AddEditAddressSuccess());
     } else {

@@ -7,7 +7,7 @@ class DeleteAddressUsecase {
 
   DeleteAddressUsecase(this.addressRepoContract);
 
-  Future<void> call(int addressId) async {
+  Future<void> call(String addressId) async {
     return await addressRepoContract.deleteAddress(addressId);
   }
 }

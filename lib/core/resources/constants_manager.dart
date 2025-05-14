@@ -14,5 +14,7 @@ static const String changePasswordEndpoint = 'auth/change-password';
   static const String cart = 'cart';
   static const String addToCart = 'cart';
   static const String address = 'addresses';
+  static const String orders = 'orders';
+  static const String checkout = 'orders/checkout';
   static const String search = 'keyword=';
 }

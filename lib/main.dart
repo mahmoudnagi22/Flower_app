@@ -10,7 +10,7 @@ import 'features/auth/change_password/data/api_call/api_call.dart';
 import 'features/localization/domain/use_cases/get_language.dart';
 import 'features/localization/domain/use_cases/set_language.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = AppBlocObserver();
   await loadSavedUserToken();
@@ -33,7 +33,13 @@ class FlowerApp extends StatelessWidget {
                 getIt<SetLanguageUseCase>(),
               ),
         ),
-        BlocProvider(create: (context) => LocalizationCubit(getIt<GetLanguageUseCase>(), getIt<SetLanguageUseCase>())),
+        BlocProvider(
+          create:
+              (context) => LocalizationCubit(
+                getIt<GetLanguageUseCase>(),
+                getIt<SetLanguageUseCase>(),
+              ),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -49,10 +55,8 @@ class FlowerApp extends StatelessWidget {
                   supportedLocales: AppLocalizations.supportedLocales,
                   locale: Locale(state.language),
                   debugShowCheckedModeBanner: false,
-                  home: child,
+                  initialRoute: Routes.bottomNav,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: Routes.splash,
-
                 );
               },
             ),
