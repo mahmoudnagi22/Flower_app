@@ -1,9 +1,10 @@
 import 'package:flower_app/features/saved_address/domain/entities/address_entity.dart';
-import 'package:flower_app/features/saved_address/presentation/view/screens/address_form_screen.dart';
 import 'package:flower_app/features/saved_address/presentation/view_model/address_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../../core/routes_manager/routes.dart';
 
 class CustomAddressCard extends StatelessWidget {
   const CustomAddressCard({super.key, required this.address});
@@ -11,7 +12,7 @@ class CustomAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AddressCubit>();
+    final cubit = context.read<SavedAddressCubit>();
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.only(bottom: 14),
@@ -53,12 +54,7 @@ class CustomAddressCard extends StatelessWidget {
                     12.horizontalSpace,
                     InkWell(
                       onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AddressFormScreen(address: address),
-                          ),
-                        );
+                        Navigator.pushNamed(context, Routes.addAddress,arguments: address.id);
                       },
                       child: const Icon(
                         Icons.edit,
@@ -74,7 +70,7 @@ class CustomAddressCard extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 4),
               child: Text(
-                '2XVP+XC - Sheikh Zayed',
+                address.street,
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
             ),

@@ -20,7 +20,9 @@ import '../cubits/address_cubit/address_cubit.dart';
 import '../cubits/address_cubit/address_state.dart';
 
 class AddAddressScreen extends StatefulWidget {
-  const AddAddressScreen({super.key});
+  AddAddressScreen({super.key, this.id});
+
+  String? id;
 
   @override
   State<AddAddressScreen> createState() => _AddAddressScreenState();
@@ -40,6 +42,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
   String? selectedCityId;
   String? selectedStateId;
   LatLng? currentLocation;
+  late String cityName;
 
   @override
   void initState() {
@@ -89,6 +92,8 @@ class _AddAddressScreenState extends State<AddAddressScreen>
 
   @override
   Widget build(BuildContext context) {
+    print(55555555555555);
+    print(widget.id);
     var cubit = AddressCubit.get(context);
     final lang = AppLocalizations.of(context)!;
     return Scaffold(
@@ -97,6 +102,7 @@ class _AddAddressScreenState extends State<AddAddressScreen>
         builder: (context, state) {
           if (state is AddressSuccess) {
             addressController.text = state.searchResult.address;
+            currentLocation = state.searchResult.location;
           }
 
           return SingleChildScrollView(
@@ -201,7 +207,6 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            value: selectedCityId,
                             validator: AppValidators.validateFullName,
                             decoration: InputDecoration(
                               labelText: lang.cityLabel,
@@ -225,6 +230,11 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                 selectedCityId = cityId;
                                 selectedStateId = null;
                                 states = [];
+                                for (var i = 0; i < cities.length; i++) {
+                                  if (cities[i].id == cityId) {
+                                    cityName = cities[i].cityNameEn;
+                                  }
+                                }
                               });
                               _loadStatesForCity(cityId);
                             },
@@ -232,7 +242,6 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                         ),
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            value: selectedStateId,
                             validator: AppValidators.validateFullName,
                             decoration: InputDecoration(
                               labelText: lang.areaLabel,
@@ -254,6 +263,13 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                             onChanged: (String? stateId) {
                               setState(() {
                                 selectedStateId = stateId;
+
+                                for (var i = 0; i < states.length; i++) {
+                                  if (states[i].id == stateId) {
+                                    cityName =
+                                        "${states[i].stateNameEn}, $cityName";
+                                  }
+                                }
                               });
                             },
                           ),
@@ -264,7 +280,16 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                     BlocConsumer<AddEditAddressCubit, AddEditAddressState>(
                       listener: (context, state) {
                         if (state is AddEditAddressSuccess) {
-                          Navigator.pop(context);
+                          int count = 0;
+                          widget.id != null
+                              ? Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                Routes.savedAddress,
+                                (route) {
+                                  return count++ == 2;
+                                },
+                              )
+                              : Navigator.pop(context);
                         }
                       },
                       builder: (context, state) {
@@ -277,11 +302,12 @@ class _AddAddressScreenState extends State<AddAddressScreen>
                                   street:
                                       "${addressController.text} $selectedStateId",
                                   phone: phoneController.text,
-                                  city: selectedCityId!,
+                                  city: cityName,
                                   lat: currentLocation!.latitude.toString(),
                                   long: currentLocation!.longitude.toString(),
                                   username: recipientController.text,
                                 ),
+                                widget.id,
                               );
                             }
                           },

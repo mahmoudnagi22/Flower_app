@@ -26,7 +26,6 @@ import '../../features/address/domain/use_cases/get_current_address_info.dart'
 import '../../features/address/domain/use_cases/get_permission.dart' as _i512;
 import '../../features/address/domain/use_cases/get_state_use_case.dart'
     as _i340;
-import '../../features/address/domain/use_cases/update_address.dart' as _i457;
 import '../../features/address/presentation/cubits/address_cubit/address_cubit.dart'
     as _i177;
 import '../../features/app_sections/cart/data/data_sources/carts_contract.dart'
@@ -199,14 +198,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
     gh.singleton<_i266.ApiManager>(() => _i266.ApiManager(gh<_i361.Dio>()));
     gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
-    gh.singleton<_i663.ChangePasswordService>(
-      () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
+    gh.singleton<_i945.CreditOrderService>(
+      () => _i945.CreditOrderService(apiManager: gh<_i266.ApiManager>()),
     );
     gh.singleton<_i552.CashOrderService>(
       () => _i552.CashOrderService(apiManager: gh<_i266.ApiManager>()),
     );
-    gh.singleton<_i945.CreditOrderService>(
-      () => _i945.CreditOrderService(apiManager: gh<_i266.ApiManager>()),
+    gh.singleton<_i663.ChangePasswordService>(
+      () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
     );
     gh.factory<_i976.CreditOrderDatasourceContract>(
       () => _i413.CreditCheckoutServiceRemote(
@@ -300,11 +299,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i886.DeleteCartUseCase>(
       () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
     );
-    gh.factory<_i318.GetCartsUseCase>(
-      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
-    );
     gh.factory<_i287.UpdateQuantityUseCase>(
       () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i318.GetCartsUseCase>(
+      () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
@@ -345,17 +344,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i340.GetStateUseCase>(
       () => _i340.GetStateUseCase(gh<_i366.AddressRepo>()),
     );
-    gh.factory<_i457.UpdateAddressUseCase>(
-      () => _i457.UpdateAddressUseCase(gh<_i366.AddressRepo>()),
+    gh.factory<_i512.GetPermissionUseCase>(
+      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i280.AddAddressUseCase>(
       () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i403.GetCurrentAddressInfo>(
       () => _i403.GetCurrentAddressInfo(gh<_i366.AddressRepo>()),
-    );
-    gh.factory<_i512.GetPermissionUseCase>(
-      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i177.AddressCubit>(
       () => _i177.AddressCubit(
@@ -373,8 +369,8 @@ extension GetItInjectableX on _i174.GetIt {
         cashCheckoutServiceContract: gh<_i841.CashCheckoutServiceContract>(),
       ),
     );
-    gh.factory<_i685.AddAddressUsecase>(
-      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i722.UpdateAddressUsecase>(
+      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i498.DeleteAddressUsecase>(
       () => _i498.DeleteAddressUsecase(gh<_i496.AddressRepoContract>()),
@@ -382,8 +378,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i150.GetAddressesUsecase>(
       () => _i150.GetAddressesUsecase(gh<_i496.AddressRepoContract>()),
     );
-    gh.factory<_i722.UpdateAddressUsecase>(
-      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i685.AddAddressUsecase>(
+      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i370.ChangePasswordUseCase>(
       () => _i370.ChangePasswordUseCase(
@@ -428,8 +424,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i595.GetUserDataUseCase>(
       () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
     );
-    gh.factory<_i146.AddressCubit>(
-      () => _i146.AddressCubit(
+    gh.factory<_i146.SavedAddressCubit>(
+      () => _i146.SavedAddressCubit(
         gh<_i685.AddAddressUsecase>(),
         gh<_i150.GetAddressesUsecase>(),
         gh<_i722.UpdateAddressUsecase>(),

@@ -31,6 +31,7 @@ import 'package:flower_app/features/saved_address/presentation/view/screens/save
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../features/app_sections/occasions/domain/entities/products_entity.dart';
+import '../../features/saved_address/presentation/view_model/address_cubit.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -48,6 +49,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SignupScreen());
 
       case Routes.addAddress:
+        final id = settings.arguments as String?;
         return MaterialPageRoute(
           builder:
               (_) => MultiBlocProvider(
@@ -67,7 +69,7 @@ class RouteGenerator {
                             AddEditAddressCubit(getIt<AddAddressUseCase>()),
                   ),
                 ],
-                child: AddAddressScreen(),
+                child: AddAddressScreen(id: id),
               ),
         );
 
@@ -116,7 +118,13 @@ class RouteGenerator {
         );
 
       case Routes.savedAddress:
-        return MaterialPageRoute(builder: (_) => const SavedAddressScreen());
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (context) => getIt<SavedAddressCubit>()..getAddresses(),
+                child: SavedAddressScreen(),
+              ),
+        );
 
       case Routes.productDetails:
         final product = settings.arguments as ProductEntity;

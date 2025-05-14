@@ -8,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class AddressCubit extends Cubit<AddressState> {
+class SavedAddressCubit extends Cubit<AddressState> {
   final AddAddressUsecase addAddressUsecase;
   final GetAddressesUsecase getAddressesUsecase;
   final UpdateAddressUsecase updateAddressUsecase;
   final DeleteAddressUsecase deleteAddressUsecase;
 
-  AddressCubit(
+  SavedAddressCubit(
     this.addAddressUsecase,
     this.getAddressesUsecase,
     this.updateAddressUsecase,
