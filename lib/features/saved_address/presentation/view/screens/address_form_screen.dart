@@ -42,7 +42,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
   void onSubmit() {
     if (_formKey.currentState!.validate()) {
       final address = AddressEntity(
-        id: widget.address?.id ?? 0,
+        id: widget.address?.id ?? "",
         lat: addressController.text,
         phone: phoneController.text,
         userName: nameController.text,

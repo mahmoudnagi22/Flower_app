@@ -1,6 +1,7 @@
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
+import 'package:flower_app/features/checkout_page/presentation/widgets/adderess_widget.dart';
 import 'package:flower_app/features/checkout_page/presentation/widgets/payment_card_widget.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/order_entity_request.dart';
@@ -9,6 +10,7 @@ import 'package:flower_app/features/checkout_page/presentation/cubit/checkout_cu
 import 'package:flower_app/features/checkout_page/presentation/cubit/checkout_state.dart';
 import 'package:flower_app/features/checkout_page/presentation/cubit/payment_cubit.dart';
 import 'package:flower_app/features/checkout_page/presentation/widgets/switch_botton_widget.dart';
+import 'package:flower_app/features/saved_address/data/models/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,20 +61,21 @@ class _CheckoutContentState extends State<CheckoutContent> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Delivery time",
+                          Text(
+                            "Delivery time",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 20
+                              fontSize: 20,
                             ),
                           ),
-                          Text("Schedule",
+                          Text(
+                            "Schedule",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: ColorManager.appColor
+                              color: ColorManager.appColor,
                             ),
                           ),
-
                         ],
                       ),
                       RichText(
@@ -81,22 +84,79 @@ class _CheckoutContentState extends State<CheckoutContent> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w600
+                            fontWeight: FontWeight.w600,
                           ),
                           children: [
                             TextSpan(
                               text: " Arrive by 03 Sep 2024, 11:00 AM ",
                               style: TextStyle(
-                                  color: ColorManager.green,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
+                                color: ColorManager.green,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
                       ),
                       const Text(
-                        'Select Payment Method:',
+                        'Delivery address',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      AdderessWidget(
+                        addresses: [
+                          AddressModel(
+                            id: '',
+                            street: 'tanta -Qism awal',
+                            phone: '',
+                            city: 'cairo',
+                            userName: '',
+                            lat: '',
+                            long: '',
+                          ),
+                           AddressModel(
+                            id: '',
+                            street: 'tanta -Qism awal',
+                            phone: '',
+                            city: 'cairo',
+                            userName: '',
+                            lat: '',
+                            long: '',
+                          ),
+                           AddressModel(
+                            id: '',
+                            street: 'tanta -Qism awal',
+                            phone: '',
+                            city: 'cairo',
+                            userName: '',
+                            lat: '',
+                            long: '',
+                          ),
+                           AddressModel(
+                            id: '',
+                            street: 'sss',
+                            phone: '',
+                            city: 'cairo',
+                            userName: '',
+                            lat: '',
+                            long: '',
+                          ),
+                           AddressModel(
+                            id: '',
+                            street: 'tanta -Qism awal',
+                            phone: '',
+                            city: 'cairo',
+                            userName: '',
+                            lat: '',
+                            long: '',
+                          ),
+                        ],
+                      ),
+                       SizedBox(height: 16,child: Container(color: Colors.red,),),
+                      const Text(
+                        'Payment Method:',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -120,7 +180,8 @@ class _CheckoutContentState extends State<CheckoutContent> {
                                 .selectMethod(val),
                       ),
                       const SizedBox(height: 16),
-                      if (selectedMethod == 'Credit card') SwitchDialogExample(),
+                      if (selectedMethod == 'Credit card')
+                        SwitchDialogExample(),
                       const SizedBox(height: 16),
                       BlocBuilder<CartCubit, CartState>(
                         builder: (context, state) {
@@ -130,7 +191,8 @@ class _CheckoutContentState extends State<CheckoutContent> {
                             );
                           }
 
-                          final totalPrice = context.read<CartCubit>().totalPrice;
+                          final totalPrice =
+                              context.read<CartCubit>().totalPrice;
 
                           return Column(
                             children: [

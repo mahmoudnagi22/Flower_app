@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/api_manager/api_manager.dart';
 import 'package:flower_app/core/models/api_result.dart';
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/checkout_page/data/dto/cash_dto/requests/order_dto_request.dart';
@@ -39,7 +40,18 @@ class CashOrderService {
     try {
       final response = await apiManager.postRequest(
         AppConstants.baseUrl + AppConstants.orders,
+        headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        },
         request.toJson(),
+       /*{
+    "shippingAddress":{
+        "street": "details",
+        "phone": "01010800921",
+        "city": "Cairo",
+        "lat": "String",
+        "long": "String"
+        }
+}*/
       );
 
       if (response != null && response.statusCode != null) {

@@ -51,7 +51,7 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  Future<void> deleteAddress(int addressId) async {
+  Future<void> deleteAddress(String addressId) async {
     emit(AddressLoading());
     try {
       await deleteAddressUsecase(addressId);
