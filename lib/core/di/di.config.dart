@@ -217,8 +217,8 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.factory<_i796.PaymentMethodCubit>(() => _i796.PaymentMethodCubit());
-    gh.factory<_i711.SelectAddressCubit>(() => _i711.SelectAddressCubit());
     gh.factory<_i737.AddToCartCubit>(() => _i737.AddToCartCubit());
+    gh.factory<_i711.SelectAddressCubit>(() => _i711.SelectAddressCubit());
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
     gh.singleton<_i1040.LoginDataSource>(() => _i675.LoginDataSourceImpl());
