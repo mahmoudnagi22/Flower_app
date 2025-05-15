@@ -1,0 +1,7 @@
+import 'package:flower_app/core/models/api_result.dart';
+import 'package:flower_app/features/checkout_page/data/dto/cash_dto/requests/order_dto_request.dart';
+import 'package:flower_app/features/checkout_page/data/dto/cash_dto/responses/order_dto_response.dart';
+
+abstract class CashCheckoutServiceContract {
+  Future<ApiResult<CashOrderResponseDto>> performCashCheckout(CashOrderRequestDto request);
+}

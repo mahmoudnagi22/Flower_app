@@ -341,6 +341,24 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgetPassword;
 
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
   /// No description provided for @status.
   ///
   /// In en, this message translates to:
@@ -382,6 +400,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @titleAboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Flowery App'**
+  String get titleAboutUs;
+
+  /// No description provided for @titleTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions for Flowery App'**
+  String get titleTermsAndConditions;
+
+  /// No description provided for @addressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressTitle;
+
+  /// No description provided for @locationAccessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Access Denied'**
+  String get locationAccessDenied;
+
+  /// No description provided for @allow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get allow;
+
+  /// No description provided for @addressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressHint;
+
+  /// No description provided for @phoneNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNumberHint;
+
+  /// No description provided for @recipientNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient name'**
+  String get recipientNameHint;
+
+  /// No description provided for @cityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get cityLabel;
+
+  /// No description provided for @areaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get areaLabel;
+
+  /// No description provided for @saveAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save address'**
+  String get saveAddress;
+
+  /// No description provided for @allowLocationAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow access to location'**
+  String get allowLocationAccess;
+
+  /// No description provided for @selectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Location'**
+  String get selectLocation;
+
+  /// No description provided for @useCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use current location'**
+  String get useCurrentLocation;
+
+  /// No description provided for @searchLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for location'**
+  String get searchLocation;
+
+  /// No description provided for @useThisLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this location'**
+  String get useThisLocation;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

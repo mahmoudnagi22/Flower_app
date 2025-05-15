@@ -1,13 +1,10 @@
 import 'dart:async';
-
+import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
+import 'package:flower_app/features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
-import '../../../../core/resources/color_manager.dart';
-import '../../../../core/routes_manager/routes.dart';
-import '../cubits/auto_login_cubit/auto_login_cubit.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -37,7 +34,9 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _checkLoginState();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _checkLoginState();
+        });
       }
     });
   }
@@ -47,8 +46,6 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     cubit.autoLogin();
 
     _authSubscription = cubit.stream.listen((state) {
-
-
       if (state is AutoLoginSuccess) {
         if (mounted) {
           Navigator.pushReplacementNamed(context, Routes.bottomNav);
@@ -60,7 +57,6 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
       }
     });
   }
-
 
   @override
   void dispose() {
@@ -79,10 +75,10 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           child: const Text(
             'Flowerly',
             style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-                color: ColorManager.appColor,
-               ),
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: ColorManager.appColor,
+            ),
           ),
         ),
       ),

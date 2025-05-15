@@ -1,22 +1,18 @@
-import 'package:flower_app/core/routes_manager/route_generator.dart';
+import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/l10n/app_localizations.dart';
+import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
+import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/app_sections/bottom_navigation_screen.dart';
+import 'package:flower_app/features/auth/change_password/presentation/cubit/change_password_state.dart';
+import 'package:flower_app/features/auth/signUp/presentation/cubit/signup_cubit.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
+import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/di/di.dart';
-import '../../../../../core/l10n/app_localizations.dart';
-import '../../../../../core/resources/color_manager.dart';
-import '../../../../../core/routes_manager/routes.dart';
-import '../../../../../core/utils/dialog_utils.dart';
-import '../../../../../core/utils/status.dart';
-import '../../../login/presentation/screens/login.dart';
-import '../cubit/signup_cubit.dart';
-import '../widgets/custom_form_field.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -57,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BottomNavigationScreen(),
+                        builder: (context) => const BottomNavigationScreen(),
                       ),
                     );
                   }
@@ -227,7 +223,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   ),
                                   Text(
                                     lang.female,
-                                    style: TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -244,14 +240,19 @@ class _SignupScreenState extends State<SignupScreen> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            Text(
-                              lang.termsAndConditions,
-                              style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.black,
-                                decorationThickness: 3,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, Routes.termsConditions);
+                              },
+                              child: Text(
+                                lang.termsAndConditions,
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.black,
+                                  decorationThickness: 3,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ],

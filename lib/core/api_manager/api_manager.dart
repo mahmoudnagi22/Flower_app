@@ -2,12 +2,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
+import 'package:flower_app/features/app_sections/search/data/models/search_response_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_request_dto.dart';
 import 'package:flower_app/features/auth/signUp/data/models/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/app_sections/add_to_cart/data/model/AddToCaetResponse.dart';
-import '../../features/app_sections/add_to_cart/data/model/Product.dart';
 import '../../features/app_sections/add_to_cart/data/model/add_to_cart_parameters.dart';
 import '../../features/app_sections/cart/data/models/carts_response_dto.dart';
 import '../../features/app_sections/categories/data/models/categories_dto.dart';
@@ -57,25 +57,25 @@ class ApiManager {
   // TODO : =================== PostRequest ==============
 
   Future<Response?> postRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+      String endpoint,
+      dynamic data, {
+        Map<String, String>? headers,
+        Map<String, dynamic>? queryParameters,
+      }) async {
     try {
       Response response = await _dio.post(
         endpoint,
         data: data,
+        queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Post Error: "
-        '${error.message}',
-      );
+      print("Post Error: ${error.message}");
       return error.response;
     }
   }
+
 
   // TODO : =================== PutRequest ==============
   Future<Response?> putRequest(
@@ -102,23 +102,31 @@ class ApiManager {
   // TODO : =================== PatchRequest ==============
   Future<Response?> patchRequest(
     String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
+    Map<String, dynamic> data, {
+    String? token,
   }) async {
     try {
       Response response = await _dio.patch(
         endpoint,
         data: data,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${UserModel.instance.token}',
+            'Content-Type': 'application/json',
+          },
+        ),
+
       );
       return response;
     } on DioException catch (error) {
       print(
         "Patch Error: "
-        '${error.message}',
+            '${error.message}',
       );
       return error.response;
-    }
+  }
+
+
   }
 
   // TODO : =================== DeleteRequest ==============
@@ -243,6 +251,9 @@ class ApiManager {
 
       if (filter.categoryId != null) {
         queryParameters['category'] = filter.categoryId;
+      }
+      if (filter.filter != null) {
+        queryParameters['sort'] = filter.filter;
       }
 
       final response = await getRequest(
@@ -415,6 +426,8 @@ class ApiManager {
       );
     }
   }
+
+
   Future<ApiResult<List<CartItemsDto>>> getCartsItem() async {
     if (!await _isConnected()) {
       return ApiErrorResult(
@@ -464,9 +477,8 @@ class ApiManager {
     try {
       final response = await putRequest(
         '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-        headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-        },
+         headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        },
         {
           'quantity': quantity,
         },
@@ -511,9 +523,8 @@ class ApiManager {
     try {
       final response = await deleteRequest(
           '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-          }
+           headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        }
       );
       // print('Response Delete is: $response');
 
@@ -541,7 +552,57 @@ class ApiManager {
       );
     }
   }
+
+//TODO:====================== Function IS Get Products By Search =======
+  Future<ApiResult<SearchDto>> fetchProducts(String keyWord) async {
+    if (!await _isConnected()) {
+      return ApiErrorResult(
+        failures: NetworkError(errorMessage: 'Please Check your internet'),
+      );
+    }
+    try {
+      final response = await getRequest(
+        'https://flower.elevateegy.com/api/v1/products',
+        queryParameters: {
+          'keyword': keyWord,
+        },
+        // queryParameters: {
+        //   'keyword':keyWord
+        // },
+        // headers: {
+        //   "Authorization": "Bearer ${UserModel.instance.token}",}
+
+      );
+      print("Response data: ${response?.data}");
+
+      if (response != null && response.statusCode != null) {
+        if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          final result = SearchDto.fromJson(response.data);
+          print("Parsed products count: ${result.products?.length}");
+          return ApiSuccessResult(data: result);
+        } else {
+          return ApiErrorResult(
+            failures: ServerError(errorMessage: response.data.toString()),
+          );
+        }
+      } else {
+        return ApiErrorResult(
+          failures: ServerError(errorMessage: 'No response from server'),
+        );
+      }
+    } on DioException catch (e) {
+      return ApiErrorResult(
+        failures: ServerError(
+          errorMessage: e.message ?? 'An unexpected error occurred',
+        ),
+      );
+    }
+  }
+
+
+
 }
+
 @module
 abstract class RegisterModule {
   @singleton

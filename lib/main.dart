@@ -6,26 +6,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/cubits/local_cubit/local_cubit.dart';
 import 'core/di/di.dart';
 import 'core/l10n/app_localizations.dart';
-import 'features/auth/login/presentation/cubit/login_cubit.dart';
-
+import 'features/auth/change_password/data/api_call/api_call.dart';
 import 'features/localization/domain/use_cases/get_language.dart';
 import 'features/localization/domain/use_cases/set_language.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Bloc.observer = AppBlocObserver();
+  await loadSavedUserToken();
   configureDependencies();
-  runApp(const MyApp());
+  runApp(const FlowerApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FlowerApp extends StatelessWidget {
+  const FlowerApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create:
+              (context) => LocalizationCubit(
+                getIt<GetLanguageUseCase>(),
+                getIt<SetLanguageUseCase>(),
+              ),
+        ),
         BlocProvider(
           create:
               (context) => LocalizationCubit(
@@ -48,7 +55,7 @@ class MyApp extends StatelessWidget {
                   supportedLocales: AppLocalizations.supportedLocales,
                   locale: Locale(state.language),
                   debugShowCheckedModeBanner: false,
-                  home: child,
+                  initialRoute: Routes.bottomNav,
                   onGenerateRoute: RouteGenerator.getRoute,
                 );
               },
