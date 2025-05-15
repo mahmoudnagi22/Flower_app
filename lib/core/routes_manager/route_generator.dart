@@ -1,3 +1,4 @@
+import 'package:flower_app/core/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/di.dart';
@@ -31,6 +32,10 @@ import 'package:flower_app/features/saved_address/presentation/view/screens/save
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../features/app_sections/occasions/domain/entities/products_entity.dart';
+import '../../features/edit_profile/domain/use_cases/change_pass_usecase.dart';
+import '../../features/edit_profile/domain/use_cases/update_profile_usecase.dart';
+import '../../features/edit_profile/presentation/view/edit_profile_screen.dart';
+import '../../features/edit_profile/presentation/view_model/edit_profile_cubit.dart';
 import '../../features/saved_address/presentation/view_model/address_cubit.dart';
 
 class RouteGenerator {
@@ -112,8 +117,22 @@ class RouteGenerator {
           builder:
               (context) => BlocProvider(
                 create:
-                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>())..autoLogin(),
+                    (context) =>
+                        AutoLoginCubit(getIt<GetUserDataUseCase>())
+                          ..autoLogin(),
                 child: const SplashView(),
+              ),
+        );
+      case Routes.editProfile:
+        return MaterialPageRoute(
+          builder:
+              (context) => BlocProvider(
+                create:
+                    (context) => EditProfileCubit(
+                      getIt<UpdateProfileUsecase>(),
+                      getIt<ChangePassUsecase>(),
+                    ),
+                child: EditProfileScreen(userModel: UserModel.instance),
               ),
         );
 

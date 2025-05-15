@@ -144,7 +144,7 @@ class Profile extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, Routes.changePasswordRoute);
+                Navigator.pushNamed(context, Routes.editProfile);
               },
               child: Image.asset('assets/images/edit.png', height: 50.h),
             ),
