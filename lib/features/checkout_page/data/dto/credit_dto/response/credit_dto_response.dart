@@ -26,15 +26,15 @@ class CreditOrderResponseDto extends CreditOrderResponseEntity {
 
   factory CreditOrderResponseDto.fromJson(Map<String, dynamic> json) {
     return CreditOrderResponseDto(
-      message: json['message'],
-      sessionId: json['sessionId'],
-      sessionUrl: json['sessionUrl'],
-      amountTotal: json['amountTotal'],
-      amountSubtotal: json['amountSubtotal'],
-      currency: json['currency'],
-      customerEmail: json['customerEmail'],
-      expiresAt: json['expiresAt'],
-      status: json['status'],
+      message:json['message'],
+      sessionId: '',
+      sessionUrl: json['session']['url'],
+      amountTotal:0, //json['amountTotal'],
+      amountSubtotal: 0,//json['amountSubtotal'],
+      currency: '',//json['currency'],
+      customerEmail:'', //json['customerEmail'],
+      expiresAt: 0,//json['expiresAt'],
+      status: '',//json['status'],
     );
   }
 

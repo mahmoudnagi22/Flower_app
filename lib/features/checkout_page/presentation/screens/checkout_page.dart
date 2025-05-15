@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
+import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/shipping_address.dart';
 import 'package:flower_app/features/checkout_page/presentation/widgets/adderess_widget.dart';
 import 'package:flower_app/features/checkout_page/presentation/widgets/payment_card_widget.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
@@ -11,8 +14,11 @@ import 'package:flower_app/features/checkout_page/presentation/cubit/checkout_st
 import 'package:flower_app/features/checkout_page/presentation/cubit/payment_cubit.dart';
 import 'package:flower_app/features/checkout_page/presentation/widgets/switch_botton_widget.dart';
 import 'package:flower_app/features/saved_address/data/models/address_model.dart';
+import 'package:flower_app/features/saved_address/presentation/view_model/address_cubit.dart';
+import 'package:flower_app/features/saved_address/presentation/view_model/address_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -24,6 +30,7 @@ class CheckoutScreen extends StatelessWidget {
         BlocProvider(create: (_) => getIt<PaymentMethodCubit>()),
         BlocProvider(create: (_) => getIt<CheckoutCubit>()),
         BlocProvider(create: (_) => getIt<CartCubit>()),
+        BlocProvider(create: (_) => getIt<AddressCubit>()..getAddresses()),
       ],
       child: const CheckoutContent(),
     );
@@ -105,56 +112,29 @@ class _CheckoutContentState extends State<CheckoutContent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      AdderessWidget(
-                        addresses: [
-                          AddressModel(
-                            id: '',
-                            street: 'tanta -Qism awal',
-                            phone: '',
-                            city: 'cairo',
-                            userName: '',
-                            lat: '',
-                            long: '',
-                          ),
-                           AddressModel(
-                            id: '',
-                            street: 'tanta -Qism awal',
-                            phone: '',
-                            city: 'cairo',
-                            userName: '',
-                            lat: '',
-                            long: '',
-                          ),
-                           AddressModel(
-                            id: '',
-                            street: 'tanta -Qism awal',
-                            phone: '',
-                            city: 'cairo',
-                            userName: '',
-                            lat: '',
-                            long: '',
-                          ),
-                           AddressModel(
-                            id: '',
-                            street: 'sss',
-                            phone: '',
-                            city: 'cairo',
-                            userName: '',
-                            lat: '',
-                            long: '',
-                          ),
-                           AddressModel(
-                            id: '',
-                            street: 'tanta -Qism awal',
-                            phone: '',
-                            city: 'cairo',
-                            userName: '',
-                            lat: '',
-                            long: '',
-                          ),
-                        ],
+                      BlocBuilder<AddressCubit, AddressState>(
+                        builder: (context, state) {
+                          if (state is AddressLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is AddressError) {
+                            return Center(child: Text(state.message));
+                          } else if (state is AddressSuccess) {
+                            return AdderessWidget(
+                              addresses: state.addresses,
+                              selected: (val) {
+                                context.read<CheckoutCubit>().selectAddress(
+                                  val,
+                                );
+                              },
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
                       ),
-                       SizedBox(height: 16,child: Container(color: Colors.red,),),
+                      SizedBox(height: 16),
                       const Text(
                         'Payment Method:',
                         style: TextStyle(
@@ -282,51 +262,63 @@ class _CheckoutContentState extends State<CheckoutContent> {
         }
       },
       builder: (context, state) {
-        final selectedMethod = context.read<PaymentMethodCubit>().state;
+        final selectedMethod =context.read<PaymentMethodCubit>().state;
 
         final totalPrice = context.read<CartCubit>().totalPrice;
 
-        return Column(
-          children: [
-            CustomButton(
-              onPressed: () {
-                if (state.status == Status.loading) return;
-
-                if (selectedMethod == 'Cash on delivery') {
-                  context.read<CheckoutCubit>().placeCashOrder(
-                    CashOrderRequestEntity(
-                      createdAt: DateTime.now().toIso8601String(),
-                      orderNumber: "ORDER123",
-                      updatedAt: DateTime.now().toIso8601String(),
-                      user: "user.email",
-                      orderItems: [],
-                      totalPrice: totalPrice,
-                      paymentType: 'Cash on delivery',
-                      isPaid: false,
-                      isDelivered: false,
-                      state: 'Pending',
-                    ),
-                  );
-                } else {
-                  context.read<CheckoutCubit>().placeCreditOrder(
-                    CreditOrderRequestEntity(
-                      city: 'Dummy City',
-                      clientReferenceId: '123456',
-                      customerEmail: "user.email",
-                      lat: '0.0',
-                      long: '0.0',
-                      phone: '1234567890',
-                      street: 'Dummy Street',
-                    ),
-                  );
-                }
-              },
-              text: 'Place Order',
-            ),
-            const SizedBox(height: 16),
-            if (state.status == Status.loading)
-              const CircularProgressIndicator(),
-          ],
+        return BlocBuilder<AddressCubit, AddressState>(
+          builder: (context, addState) {
+            return Column(
+              children: [
+                CustomButton(
+                  onPressed: () {
+                    if (state.status == Status.loading) return;
+                    if (addState is AddressSuccess &&
+                        addState.addresses.isNotEmpty) {
+                      final address =
+                          addState.addresses[int.parse(
+                            context.read<CheckoutCubit>().SelectedAddrees,
+                          )];
+                      if (selectedMethod == 'Cash on delivery') {
+                        context.read<CheckoutCubit>().placeCashOrder(
+                          RequestShippingBody(
+                            shippingAddress: ShippingAddress(
+                              city: address.city,
+                              lat: address.lat,
+                              long: address.long,
+                              phone: address.phone,
+                              street: address.street,
+                            ),
+                          ),
+                        );
+                      } else {
+                        log(selectedMethod);
+                        context.read<CheckoutCubit>().placeCreditOrder(
+                          RequestShippingBody(
+                            shippingAddress: ShippingAddress(
+                              city: address.city,
+                              lat: address.lat,
+                              long: address.long,
+                              phone: address.phone,
+                              street: address.street,
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Please add Address')),
+                      );
+                    }
+                  },
+                  text: 'Place Order',
+                ),
+                const SizedBox(height: 16),
+                if (state.status == Status.loading)
+                  const CircularProgressIndicator(),
+              ],
+            );
+          },
         );
       },
     );

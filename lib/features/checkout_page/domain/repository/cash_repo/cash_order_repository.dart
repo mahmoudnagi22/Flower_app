@@ -1,5 +1,6 @@
 import 'package:flower_app/core/models/api_result.dart';
 import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/order_entity_request.dart';
+import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/shipping_address.dart';
 import 'package:flower_app/features/checkout_page/domain/entity/cash_order/response/order_entity_response.dart';
 
 abstract class CashOrderRepository {
@@ -7,5 +8,5 @@ abstract class CashOrderRepository {
   ///
   /// [request] contains the details of the order being placed.
   /// Returns an [ApiResult] containing the [OrderEntityResponse].
-  Future<ApiResult<CashOrderResponseEntity>> placeCashOrder(CashOrderRequestEntity request);
+  Future<ApiResult<CashOrderResponseEntity>> placeCashOrder(RequestShippingBody request);
 }
