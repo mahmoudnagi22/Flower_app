@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../address/presentation/cubits/address_cubit/address_cubit.dart';
+
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
@@ -30,7 +32,7 @@ class CheckoutScreen extends StatelessWidget {
         BlocProvider(create: (_) => getIt<PaymentMethodCubit>()),
         BlocProvider(create: (_) => getIt<CheckoutCubit>()),
         BlocProvider(create: (_) => getIt<CartCubit>()),
-        BlocProvider(create: (_) => getIt<AddressCubit>()..getAddresses()),
+        BlocProvider(create: (_) => getIt<SavedAddressCubit>()..getAddresses()),
       ],
       child: const CheckoutContent(),
     );
@@ -112,7 +114,7 @@ class _CheckoutContentState extends State<CheckoutContent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      BlocBuilder<AddressCubit, AddressState>(
+                      BlocBuilder<SavedAddressCubit, AddressState>(
                         builder: (context, state) {
                           if (state is AddressLoading) {
                             return const Center(
@@ -266,7 +268,7 @@ class _CheckoutContentState extends State<CheckoutContent> {
 
         final totalPrice = context.read<CartCubit>().totalPrice;
 
-        return BlocBuilder<AddressCubit, AddressState>(
+        return BlocBuilder<SavedAddressCubit, AddressState>(
           builder: (context, addState) {
             return Column(
               children: [

@@ -149,6 +149,8 @@ import '../../features/checkout_page/presentation/cubit/checkout_cubit.dart'
     as _i862;
 import '../../features/checkout_page/presentation/cubit/payment_cubit.dart'
     as _i796;
+import '../../features/checkout_page/presentation/cubit/select_address_cubit.dart'
+    as _i711;
 import '../../features/edit_profile/data/data_sources/change_pass_ds_contract.dart'
     as _i781;
 import '../../features/edit_profile/data/data_sources/change_pass_ds_impl.dart'
@@ -215,6 +217,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.factory<_i796.PaymentMethodCubit>(() => _i796.PaymentMethodCubit());
+    gh.factory<_i711.SelectAddressCubit>(() => _i711.SelectAddressCubit());
     gh.factory<_i737.AddToCartCubit>(() => _i737.AddToCartCubit());
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
