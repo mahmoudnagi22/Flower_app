@@ -98,17 +98,17 @@ class DataSourceImpl implements AddressDataSource {
   }
 
   @override
-  Future<ApiResult> addAddress(Address address) async {
+  Future<ApiResult> addAddress(Address address,String? id) async {
     try {
       final response = await _apiManager.patchRequest(
-        AppConstants.address,
+       id==null? AppConstants.address:"${AppConstants.address}/$id",
         address.toJson(),
       );
 
       if (response != null && response.statusCode != null) {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           List<Address> addresses =
-              (response.data["address"] as List)
+              (response.data["address"]??response.data["addresses"] as List)
                   .map<Address>((e) => Address.fromJson(e))
                   .toList();
           return ApiSuccessResult(data: addresses);

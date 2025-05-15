@@ -10,7 +10,7 @@ class AddAddressUseCase {
 
   AddAddressUseCase(this._repo);
 
-  Future<ApiResult> call(Address address) async {
-    return await _repo.addAddress(address);
+  Future<ApiResult> call(Address address,String? id) async {
+    return await _repo.addAddress(address,id);
   }
 }

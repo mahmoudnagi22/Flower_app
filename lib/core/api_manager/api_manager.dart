@@ -57,25 +57,25 @@ class ApiManager {
   // TODO : =================== PostRequest ==============
 
   Future<Response?> postRequest(
-    String endpoint,
-    dynamic data, {
-    Map<String, String>? headers,
-  }) async {
+      String endpoint,
+      dynamic data, {
+        Map<String, String>? headers,
+        Map<String, dynamic>? queryParameters,
+      }) async {
     try {
       Response response = await _dio.post(
         endpoint,
         data: data,
+        queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Post Error: "
-        '${error.message}',
-      );
+      print("Post Error: ${error.message}");
       return error.response;
     }
   }
+
 
   // TODO : =================== PutRequest ==============
   Future<Response?> putRequest(
@@ -477,9 +477,8 @@ class ApiManager {
     try {
       final response = await putRequest(
         '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-        headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-        },
+         headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        },
         {
           'quantity': quantity,
         },
@@ -524,9 +523,8 @@ class ApiManager {
     try {
       final response = await deleteRequest(
           '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-          }
+           headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        }
       );
       // print('Response Delete is: $response');
 

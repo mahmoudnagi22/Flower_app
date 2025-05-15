@@ -10,7 +10,6 @@ abstract class AddressRepo {
   Future<List<StatesModel>> getStates(String? id);
 
 
-  Future<ApiResult> addAddress(Address address);
-  Future<ApiResult> updateAddress(Address address,String id);
+  Future<ApiResult> addAddress(Address address,String? id);
 
 }

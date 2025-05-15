@@ -10,6 +10,6 @@ class GetCurrentAddressInfo {
   GetCurrentAddressInfo(this._repo);
 
   Future<ApiResult> call() async {
-    return _repo.getCurrentAddressInfo();
+    return await _repo.getCurrentAddressInfo();
   }
 }

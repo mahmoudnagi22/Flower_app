@@ -19,7 +19,7 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
   }
 
   @override
-  Future<void> deleteAddress(int addressId) async {
+  Future<void> deleteAddress(String addressId) async {
     await apiManager.deleteRequest(
       'addresses/$addressId',
       headers: {"Authorization": "Bearer ${UserModel.instance.token}"},
@@ -32,7 +32,7 @@ class RemoteAddressDsImpl implements RemoteAddressDsContract {
       'addresses',
       headers: {"Authorization": "Bearer ${UserModel.instance.token}"},
     );
-    final rawData = response?.data['address'];
+    final rawData = response?.data['addresses'];
     if (rawData == null || rawData is! List) {
       return [];
     }

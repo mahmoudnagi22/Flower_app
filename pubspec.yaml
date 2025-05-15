@@ -37,10 +37,13 @@ dependencies:
   google_maps_flutter: ^2.12.1
   geolocator: ^14.0.0
   geocoding: ^3.0.0
+  group_button: ^5.3.4
+  analyzer: ^7.4.4
   image_picker: ^1.1.2
 
 dependency_overrides:
   analyzer: ^7.4.5
+
 
 
 dev_dependencies:
@@ -48,7 +51,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.15
   injectable_generator: ^2.7.0
-
+  mockito: ^5.4.6
   flutter_lints: ^5.0.0
   json_serializable: ^6.9.5
 

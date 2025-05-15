@@ -5,11 +5,12 @@ import 'package:flower_app/features/app_sections/add_to_cart/data/add_to_cart_re
 import 'package:flower_app/features/app_sections/add_to_cart/domain/add_to_cart_use_cases/add_to_cart_use_cases.dart';
 import 'package:flower_app/features/app_sections/add_to_cart/presentation/cubit/add_to_cart_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../core/models/api_result.dart';
 import '../../data/model/AddToCaetResponse.dart';
 import '../../data/model/add_to_cart_parameters.dart';
-
+@injectable
 class AddToCartCubit extends Cubit<AddToCartState> {
   AddToCartCubit() : super(AddToCartInitState());
 
