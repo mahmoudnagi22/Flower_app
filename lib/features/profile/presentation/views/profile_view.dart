@@ -3,6 +3,7 @@ import 'package:flower_app/core/resources/assets_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../core/cubits/local_cubit/local_cubit.dart';
 import '../../../../core/l10n/app_localizations.dart';
 
@@ -20,12 +21,12 @@ class Profile extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 20),
-            _buildHeader(context),
+            _buildHeader(context, lang!),
             const SizedBox(height: 20),
             _buildClickableTile(
               context,
               icon: const Icon(Icons.assignment_outlined),
-              label: "My orders",
+              label: lang.myOrders,
               onTap: () {
                 // Navigate to orders
               },
@@ -33,114 +34,124 @@ class Profile extends StatelessWidget {
             _buildClickableTile(
               context,
               icon: const Icon(Icons.location_on_outlined),
-              label: "Saved address",
+              label: lang.savedAddress,
               onTap: () {
-                // Navigate to saved addresses
+                Navigator.pushNamed(context, Routes.savedAddress);
               },
             ),
             const Divider(height: 32),
             _buildSwitchTile(
               context,
-              label: "Notification",
+              label: lang.notification,
               value: true,
-              onChanged: (val) {
-
-              },
+              onChanged: (val) {},
             ),
             const Divider(height: 32),
             _buildClickableTile(
               context,
               icon: const Icon(Icons.sort_by_alpha),
-              label: lang!.lang,
-              trailing: Text(cubit.state.language == "ar" ? "عربى" : "English", style: const TextStyle(color: Colors.pink)),
+              label: lang.lang,
+              trailing: Text(
+                cubit.state.language == "ar" ? "عربى" : "English",
+                style: const TextStyle(color: Colors.pink),
+              ),
               onTap: () {
-                showLanguageBottomSheet(context, cubit,Text(cubit.state.language == "ar" ? "تغيير اللغة" : "Change Language",
-                  style: const TextStyle(
-                      fontSize: 18,fontWeight: FontWeight.bold,
-                      color: Colors.pink
-                  ),));
+                showLanguageBottomSheet(
+                  context,
+                  cubit,
+                  Text(
+                    cubit.state.language == "ar"
+                        ? "تغيير اللغة"
+                        : "Change Language",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.pink,
+                    ),
+                  ),
+                );
               },
             ),
             _buildClickableTile(
               context,
               icon: const Icon(Icons.info_outline),
-              label: "About us",
+              label: lang.aboutUs,
               onTap: () {
-                // Navigate to About Us
+                Navigator.pushNamed(context, Routes.aboutUs);
               },
             ),
             _buildClickableTile(
               context,
               icon: const Icon(Icons.description_outlined),
-              label: "Terms & conditions",
+              label: lang.termsAndConditions,
               onTap: () {
-                // Navigate to Terms & Conditions
+                Navigator.pushNamed(context, Routes.termsConditions);
               },
             ),
             const Divider(height: 32),
             _buildClickableTile(
               context,
               icon: const Icon(Icons.logout),
-              label: "Logout",
+              label: lang.logout,
               onTap: () {
-                showLogoutDialog(context,()
-                {
-                  // logout cubit
-                },);
+                showLogoutDialog(context, () async {
+                  const storage = FlutterSecureStorage();
+                 await storage.delete(key: 'user_token');
+                 UserModel.instance.token = null;
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.loginRoute,
+                    (route) => false,
+                  );
+                }, lang);
               },
             ),
 
-            const Center(child: Text("v 6.3.0 - (446)", style: TextStyle(color: Colors.grey))),
             const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
-  Widget _buildHeader(BuildContext context) {
+
+  Widget _buildHeader(BuildContext context, AppLocalizations lang) {
     return Column(
       children: [
         Row(
           children: [
             Image.asset(ImageAssets.flower),
-            SizedBox(width: 5.w,),
+            SizedBox(width: 5.w),
             Image.asset(ImageAssets.flowery),
             const Spacer(),
-            IconButton(onPressed: (){},
-                icon: Badge.count(
-                  count: 3,
-                  child: Icon(Icons.notifications),
-                ))
-
-
+            IconButton(
+              onPressed: () {},
+              icon: Badge.count(count: 3, child: Icon(Icons.notifications)),
+            ),
           ],
         ), // Replace with your asset
         const SizedBox(height: 10),
         const CircleAvatar(
           radius: 40,
-          backgroundImage: NetworkImage("https://your-image-url.com/image.jpg"),
+          // backgroundImage: NetworkImage("https://your-image-url.com/image.jpg"),
         ),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Edit Profile',
+            Text(
+              lang.editProfile,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, Routes.changePasswordRoute);
               },
-              child: Image.asset(
-                'assets/images/edit.png',
-                height: 50.h,
-              ),
+              child: Image.asset('assets/images/edit.png', height: 50.h),
             ),
           ],
         ),
-        const Text(
-          "Nour_Mohamed@gmail.com",
+        Text(
+          UserModel.instance.email??"Guest",
           style: TextStyle(color: Colors.grey, fontSize: 16),
         ),
       ],
@@ -148,12 +159,12 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildClickableTile(
-      BuildContext context, {
-        required Widget icon,
-        required String label,
-        Widget? trailing,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required Widget icon,
+    required String label,
+    Widget? trailing,
+    required VoidCallback onTap,
+  }) {
     return ListTile(
       leading: icon,
       title: Text(label),
@@ -163,11 +174,11 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildSwitchTile(
-      BuildContext context, {
-        required String label,
-        required bool value,
-        required Function(bool) onChanged,
-      }) {
+    BuildContext context, {
+    required String label,
+    required bool value,
+    required Function(bool) onChanged,
+  }) {
     return ListTile(
       title: Text(label),
       leading: Switch(
@@ -177,9 +188,10 @@ class Profile extends StatelessWidget {
         onChanged: onChanged,
       ),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: (){},
+      onTap: () {},
     );
   }
+
   void showLanguageBottomSheet(BuildContext context, cubit, Widget title) {
     showModalBottomSheet(
       context: context,
@@ -192,11 +204,7 @@ class Profile extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  title,
-                ],
-              ),
+              Row(children: [title]),
               const SizedBox(height: 16),
               _buildLanguageOption(
                 context,
@@ -228,12 +236,12 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildLanguageOption(
-      BuildContext context, {
-        required String label,
-        required String value,
-        required String groupValue,
-        required Function(String) onChanged,
-      }) {
+    BuildContext context, {
+    required String label,
+    required String value,
+    required String groupValue,
+    required Function(String) onChanged,
+  }) {
     final bool isSelected = value == groupValue;
     return GestureDetector(
       onTap: () => onChanged(value),
@@ -242,7 +250,9 @@ class Profile extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: isSelected ? Colors.pink : Colors.grey.shade300),
+          border: Border.all(
+            color: isSelected ? Colors.pink : Colors.grey.shade300,
+          ),
         ),
         child: Row(
           children: [
@@ -258,7 +268,12 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-  void showLogoutDialog(BuildContext context, VoidCallback onConfirmLogout) {
+
+  void showLogoutDialog(
+    BuildContext context,
+    VoidCallback onConfirmLogout,
+    AppLocalizations lang,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -266,19 +281,13 @@ class Profile extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          title: const Center(
+          title: Center(
             child: Text(
-              'LOGOUT',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              lang.logout,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
           ),
-          content: const Text(
-            'Confirm logout!!',
-            textAlign: TextAlign.center,
-          ),
+          content: Text(lang.confirmLogout, textAlign: TextAlign.center),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             OutlinedButton(
@@ -287,13 +296,13 @@ class Profile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
               ),
               onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: Colors.black),
-              ),
+              child: Text(lang.cancel, style: TextStyle(color: Colors.black)),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -301,16 +310,16 @@ class Profile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
               ),
               onPressed: () {
                 Navigator.pop(context); // Close dialog
-                onConfirmLogout();     // Call your logout function
+                onConfirmLogout(); // Call your logout function
               },
-              child: const Text(
-                'Logout',
-                style: TextStyle(color: Colors.white),
-              ),
+              child: Text(lang.logout, style: TextStyle(color: Colors.white)),
             ),
           ],
         );

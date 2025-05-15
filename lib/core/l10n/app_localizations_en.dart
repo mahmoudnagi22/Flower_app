@@ -208,4 +208,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get useThisLocation => 'Use this location';
+
+  @override
+  String get myOrders => 'My orders';
+
+  @override
+  String get savedAddress => 'Saved address';
+
+  @override
+  String get notification => 'Notification';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get aboutUs => 'About us';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get confirmLogout => 'Confirm logout!!';
+
+  @override
+  String get checkOut => 'Check out';
+
+  @override
+  String get cartEmpty => 'Cart is empty';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get items => 'Items';
+
+  @override
+  String get deliveryFee => 'Delivery Fee';
 }

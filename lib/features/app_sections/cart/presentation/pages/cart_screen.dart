@@ -7,11 +7,14 @@ import 'package:flower_app/features/app_sections/cart/presentation/widgets/cart_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/l10n/app_localizations.dart';
+
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var lang =AppLocalizations.of(context);
     return BlocProvider(
       create: (context) => getIt.get<CartCubit>()..getCarts(),
       child: Scaffold(
@@ -22,7 +25,7 @@ class CartScreen extends StatelessWidget {
               if (state.cartStatus == Status.success) {
                 itemCount = state.cartsList?.length ?? 0;
               }
-              return Text('Cart ($itemCount items)');
+              return Text('${lang!.cart} ($itemCount ${lang.items})');
             },
           ),
         ),

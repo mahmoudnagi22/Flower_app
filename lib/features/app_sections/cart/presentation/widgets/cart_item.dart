@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../core/l10n/app_localizations.dart';
 import '../../../../../core/resources/assets_manager.dart';
 import '../../../../../core/resources/color_manager.dart';
 import '../../../../../core/utils/status.dart';
@@ -26,6 +27,7 @@ class _CartItemState extends State<CartItem> {
 
   @override
   Widget build(BuildContext context) {
+    var lang =AppLocalizations.of(context);
     return Column(
       children: [
         Expanded(
@@ -240,9 +242,9 @@ class _CartItemState extends State<CartItem> {
                                     );
                                   },
                                 )
-                                : const Center(
+                                :  Center(
                                   child: Text(
-                                    "Your cart is empty!",
+                                    lang!.cartEmpty,
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: ColorManager.appColor,
@@ -255,7 +257,7 @@ class _CartItemState extends State<CartItem> {
                         Row(
                           children: [
                             Text(
-                              'Sub Total',
+                             lang!.total,
                               style: TextStyle(
                                 color: ColorManager.gray,
                                 fontSize: 16,
@@ -274,7 +276,7 @@ class _CartItemState extends State<CartItem> {
                         Row(
                           children: [
                             Text(
-                              'Delivery Fee',
+                              lang.deliveryFee,
                               style: TextStyle(
                                 color: ColorManager.gray,
                                 fontSize: 16,
@@ -293,8 +295,8 @@ class _CartItemState extends State<CartItem> {
                         const Divider(),
                         Row(
                           children: [
-                            const Text(
-                              'Total',
+                             Text(
+                              lang.total,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -321,7 +323,7 @@ class _CartItemState extends State<CartItem> {
                               ),
                             );
                           },
-                          text: 'Checkout',
+                          text: lang.checkOut,
                         ),
                       ],
                     ],

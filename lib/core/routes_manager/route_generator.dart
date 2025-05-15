@@ -27,7 +27,6 @@ import 'package:flower_app/features/checkout_page/presentation/screens/checkout_
 import 'package:flower_app/features/splash/domain/use_cases/get_user_data.dart';
 import 'package:flower_app/features/splash/presentation/cubits/auto_login_cubit/auto_login_cubit.dart';
 import 'package:flower_app/features/best_seller.dart';
-import 'package:flower_app/features/edit_profile/presentation/view/edit_profile_screen.dart';
 import 'package:flower_app/features/saved_address/presentation/view/screens/saved_address_screen.dart';
 import 'package:flower_app/features/splash/presentation/views/spalsh.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -113,7 +112,7 @@ class RouteGenerator {
           builder:
               (context) => BlocProvider(
                 create:
-                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
+                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>())..autoLogin(),
                 child: const SplashView(),
               ),
         );

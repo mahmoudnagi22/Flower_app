@@ -65,5 +65,18 @@
   "selectLocation": "Select Location",
   "useCurrentLocation": "Use current location",
   "searchLocation": "Search for location",
-  "useThisLocation": "Use this location"
+  "useThisLocation": "Use this location",
+  "myOrders": "My orders",
+  "savedAddress": "Saved address",
+  "notification": "Notification",
+  "language": "Language",
+  "aboutUs": "About us",
+  "logout": "Logout",
+  "editProfile": "Edit Profile",
+  "confirmLogout": "Confirm logout!!",
+  "checkOut": "Check out",
+  "cartEmpty": "Cart is empty",
+  "total": "Total",
+  "items": "Items",
+  "deliveryFee": "Delivery Fee"
 }

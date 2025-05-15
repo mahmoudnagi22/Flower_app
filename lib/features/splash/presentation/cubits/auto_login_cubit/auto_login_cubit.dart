@@ -11,12 +11,13 @@ class AutoLoginCubit extends Cubit<AutoLoginState> {
   final GetUserDataUseCase _autoLoginUseCase;
 
   Future<void> autoLogin() async {
+    print("cubit");
     emit(AutoLoginLoading());
     final result = await _autoLoginUseCase.call();
     if (result is ApiSuccessResult) {
       emit(AutoLoginSuccess());
     } else if (result is ApiErrorResult) {
-      emit(AutoLoginFailure(result.failures!.errorMessage));
+      emit(AutoLoginFailure(result.failures.errorMessage));
     }
   }
 }
