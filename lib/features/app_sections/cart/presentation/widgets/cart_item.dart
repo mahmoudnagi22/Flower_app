@@ -314,14 +314,17 @@ class _CartItemState extends State<CartItem> {
                           ],
                         ),
                         50.verticalSpace,
-                        CustomButton(
-                          onPressed: () {
-                            Navigator.push(
+                         CustomButton(
+                          onPressed: () async{
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const CheckoutScreen(),
                               ),
                             );
+                            setState(() async{
+                              await context.read<CartCubit>().getCarts();
+                            });
                           },
                           text: lang.checkOut,
                         ),
