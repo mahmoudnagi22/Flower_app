@@ -112,7 +112,7 @@ class RouteGenerator {
           builder:
               (context) => BlocProvider(
                 create:
-                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>()),
+                    (context) => AutoLoginCubit(getIt<GetUserDataUseCase>())..autoLogin(),
                 child: const SplashView(),
               ),
         );

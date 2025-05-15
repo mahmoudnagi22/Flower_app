@@ -19,4 +19,5 @@ class Routes {
   static const String search = "search";
   static const String checkoutScreen = "CheckoutScreen";
   static const String savedAddress = "/savedAddress";
+  static const String changePasswordRoute = "/ChangePasswordScreen";
 }

@@ -23,7 +23,7 @@ class HomeTabCubit extends Cubit<HomeStates> {
 
   Future<ApiResult<HomeDataResponse>> getHomeData() async {
     emit(HomeLoadingStates());
-    log("Load");
+
     var response = await homeTabUseCases.call();
     switch (response) {
       case ApiSuccessResult<HomeDataResponse>():
@@ -35,10 +35,9 @@ class HomeTabCubit extends Cubit<HomeStates> {
             bestSeller: response.data.bestSeller,
           ),
         );
-        log("Success Home Cubit");
-      //  log("${response.data.categories}");
+
       case ApiErrorResult<HomeDataResponse>():
-        log("EEEEEEERror");
+
         emit(HomeErrorStates(massage: response.failures.errorMessage));
     }
     return ApiErrorResult(failures: Failures(errorMessage: "Unknown error"));

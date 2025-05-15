@@ -46,10 +46,6 @@ class ApiManager {
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Get Error: "
-        '${error.message}',
-      );
       return error.response;
     }
   }

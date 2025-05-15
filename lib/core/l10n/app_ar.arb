@@ -65,5 +65,18 @@
   "selectLocation": "حدد الموقع",
   "useCurrentLocation": "استخدام الموقع الحالي",
   "searchLocation": "ابحث عن الموقع",
-  "useThisLocation": "استخدام هذا الموقع"
+  "useThisLocation": "استخدام هذا الموقع",
+  "myOrders": "طلباتي",
+  "savedAddress": "العناوين المحفوظة",
+  "notification": "الإشعارات",
+  "language": "اللغة",
+  "aboutUs": "معلومات عنا",
+  "logout": "تسجيل الخروج",
+  "editProfile": "تعديل الملف الشخصي",
+  "confirmLogout": "تأكيد تسجيل الخروج!!",
+  "checkOut": "الدفع",
+  "cartEmpty": "السلة فارغة",
+  "total": "المجموع",
+  "items": "العناصر" ,
+  "deliveryFee": "رسوم التوصيل"
 }
