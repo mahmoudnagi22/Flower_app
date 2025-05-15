@@ -7,6 +7,7 @@ import 'package:flower_app/core/resources/constants_manager.dart';
 import 'package:flower_app/core/utils/failures.dart';
 import 'package:flower_app/features/checkout_page/data/dto/cash_dto/requests/order_dto_request.dart';
 import 'package:flower_app/features/checkout_page/data/dto/cash_dto/responses/order_dto_response.dart';
+import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/shipping_address.dart';
 import 'package:injectable/injectable.dart';
 
 
@@ -29,7 +30,7 @@ class CashOrderService {
 
   //TODO:====================== Function IS Checkout page =======
   Future<ApiResult<CashOrderResponseDto>> CashCheckOutMethod(
-      CashOrderRequestDto request) async {
+      RequestShippingBody request) async {
     if (!await _isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
@@ -43,15 +44,6 @@ class CashOrderService {
         headers: {
           "Authorization": "Bearer ${UserModel.instance.token}"        },
         request.toJson(),
-       /*{
-    "shippingAddress":{
-        "street": "details",
-        "phone": "01010800921",
-        "city": "Cairo",
-        "lat": "String",
-        "long": "String"
-        }
-}*/
       );
 
       if (response != null && response.statusCode != null) {

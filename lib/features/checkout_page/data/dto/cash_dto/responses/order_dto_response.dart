@@ -3,6 +3,7 @@ import 'package:flower_app/features/checkout_page/domain/entity/cash_order/respo
 
 class CashOrderResponseDto extends CashOrderResponseEntity {
   CashOrderResponseDto({
+
     required String id,
     required String user,
     required List<OrderEntityItemResponse> orderItems,
@@ -31,19 +32,19 @@ class CashOrderResponseDto extends CashOrderResponseEntity {
   // تحويل JSON إلى OrderResponse
   factory CashOrderResponseDto.fromJson(Map<String, dynamic> json) {
     return CashOrderResponseDto(
-      id: json['id'],
-      user: json['user'],
-      orderItems: (json['orderItems'] as List)
-          .map((item) => OrderItemResponse.fromJson(item))
-          .toList(),
-      totalPrice: json['totalPrice'],
-      paymentType: json['paymentType'],
-      isPaid: json['isPaid'],
-      isDelivered: json['isDelivered'],
-      state: json['state'],
-      orderNumber: json['orderNumber'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      id:'' ,//json['id'],
+      user:'' ,//json['user'],
+      orderItems:[],// (json['orderItems'] as List)
+          //.map((item) => OrderItemResponse.fromJson(item))
+          //.toList(),
+      totalPrice:0,// json['totalPrice'],
+      paymentType:'',// json['paymentType'],
+      isPaid: false,//json['isPaid'],
+      isDelivered:false,// json['isDelivered'],
+      state: '',//json['state'],
+      orderNumber:'',// json['orderNumber'],
+      createdAt: '',//json['createdAt'],
+      updatedAt: '',//json['updatedAt'],
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flower_app/features/checkout_page/data/data_source/contract/cred
 import 'package:flower_app/features/checkout_page/data/dto/credit_dto/request/credit_dto_request.dart';
 import 'package:flower_app/features/checkout_page/data/dto/credit_dto/response/credit_dto_response.dart';
 import 'package:flower_app/features/checkout_page/data/service/credit_api_call/credit_order_service.dart';
+import 'package:flower_app/features/checkout_page/domain/entity/cash_order/request/shipping_address.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/utils/failures.dart';
@@ -13,7 +14,7 @@ class CreditCheckoutServiceRemote implements CreditOrderDatasourceContract{
   CreditCheckoutServiceRemote({required this.checkoutService});
 
   @override
-  Future<ApiResult<CreditOrderResponseDto>> performCreditCheckout(CreditOrderRequestDto request) async{
+  Future<ApiResult<CreditOrderResponseDto>> performCreditCheckout(RequestShippingBody request) async{
     try {
       var response = await checkoutService.CreditCheckOutMethod(request);
       return response;
