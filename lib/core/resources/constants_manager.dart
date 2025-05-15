@@ -17,4 +17,5 @@ static const String changePasswordEndpoint = 'auth/change-password';
   static const String orders = 'orders';
   static const String checkout = 'orders/checkout';
   static const String search = 'keyword=';
+  static const String editProfile = 'auth/editProfile=';
 }

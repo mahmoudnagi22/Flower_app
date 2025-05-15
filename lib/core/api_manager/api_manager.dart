@@ -46,10 +46,6 @@ class ApiManager {
       );
       return response;
     } on DioException catch (error) {
-      print(
-        "Get Error: "
-        '${error.message}',
-      );
       return error.response;
     }
   }
@@ -477,9 +473,8 @@ class ApiManager {
     try {
       final response = await putRequest(
         '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-        headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-        },
+         headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        },
         {
           'quantity': quantity,
         },
@@ -524,9 +519,8 @@ class ApiManager {
     try {
       final response = await deleteRequest(
           '${AppConstants.baseUrl}${AppConstants.addToCart}/$cartId',
-          headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjgwMTA1NzhhOTgzMmQ4MzU5ZTM5ZGQzIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDQ4OTc0MDF9.5LqsIKrKy5MZ6OKH1lw4xaN-Mpd20GzS8DHUhE_-aG8',
-          }
+           headers: {
+          "Authorization": "Bearer ${UserModel.instance.token}"        }
       );
       // print('Response Delete is: $response');
 

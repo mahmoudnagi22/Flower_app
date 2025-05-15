@@ -208,4 +208,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get useThisLocation => 'استخدام هذا الموقع';
+
+  @override
+  String get myOrders => 'طلباتي';
+
+  @override
+  String get savedAddress => 'العناوين المحفوظة';
+
+  @override
+  String get notification => 'الإشعارات';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get aboutUs => 'معلومات عنا';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get confirmLogout => 'تأكيد تسجيل الخروج!!';
+
+  @override
+  String get checkOut => 'الدفع';
+
+  @override
+  String get cartEmpty => 'السلة فارغة';
+
+  @override
+  String get total => 'المجموع';
+
+  @override
+  String get items => 'العناصر';
+
+  @override
+  String get deliveryFee => 'رسوم التوصيل';
 }

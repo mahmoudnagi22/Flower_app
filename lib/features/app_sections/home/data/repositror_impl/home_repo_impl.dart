@@ -15,8 +15,6 @@ class HomeRepoImpl implements HomeRepo{
   Future<ApiResult<HomeDataResponse>> getHomeData()async {
 
       var response = await homeDataSources.getHomeData();
-      log("Data Sourceeeeeeeeeeeeeeeeeee");
-      // log("${response}");
       return response;
 
   }

@@ -17,10 +17,8 @@ class HomeDataSourceImpl implements HomeDataSources{
   Future<ApiResult<HomeDataResponse>> getHomeData()async {
     try{
       var response = await apiManager.homeTab();
-      log("al data tamam");
       return response;
     }on DioException catch (e) {
-      log("Dioo EX");
       return ApiErrorResult(
           failures: NetworkError(
               errorMessage: e.message ?? 'An unexpected error occurred'));
