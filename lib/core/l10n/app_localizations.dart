@@ -116,7 +116,7 @@ abstract class AppLocalizations {
   /// No description provided for @occasions.
   ///
   /// In en, this message translates to:
-  /// **'Occasion'**
+  /// **'Occasions'**
   String get occasions;
 
   /// No description provided for @viewAll.
@@ -128,7 +128,7 @@ abstract class AppLocalizations {
   /// No description provided for @deliverTO.
   ///
   /// In en, this message translates to:
-  /// **'Deliver to'**
+  /// **'Deliver To'**
   String get deliverTO;
 
   /// No description provided for @home.
@@ -152,7 +152,7 @@ abstract class AppLocalizations {
   /// No description provided for @addToCart.
   ///
   /// In en, this message translates to:
-  /// **'Add to cart'**
+  /// **'Add to Cart'**
   String get addToCart;
 
   /// No description provided for @currency.
@@ -167,40 +167,22 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get lang;
 
-  /// No description provided for @login.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
   /// No description provided for @rememberMe.
   ///
   /// In en, this message translates to:
-  /// **'Remember me'**
+  /// **'Remember Me'**
   String get rememberMe;
 
   /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Forget password?'**
+  /// **'Forgot Password?'**
   String get forgotPassword;
 
   /// No description provided for @continueAsGuest.
   ///
   /// In en, this message translates to:
-  /// **'Continue as guest'**
+  /// **'Continue as Guest'**
   String get continueAsGuest;
 
   /// No description provided for @dontHaveAccount.
@@ -208,12 +190,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
   String get dontHaveAccount;
-
-  /// No description provided for @signUp.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign up'**
-  String get signUp;
 
   /// No description provided for @register.
   ///
@@ -236,14 +212,20 @@ abstract class AppLocalizations {
   /// No description provided for @enterFirstName.
   ///
   /// In en, this message translates to:
-  /// **'Enter first name'**
+  /// **'Enter First Name'**
   String get enterFirstName;
 
   /// No description provided for @enterLastName.
   ///
   /// In en, this message translates to:
-  /// **'Enter last name'**
+  /// **'Enter Last Name'**
   String get enterLastName;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
 
   /// No description provided for @enterEmail.
   ///
@@ -251,16 +233,16 @@ abstract class AppLocalizations {
   /// **'Enter your Email'**
   String get enterEmail;
 
-  /// No description provided for @enterPhoneNumber.
+  /// No description provided for @password.
   ///
   /// In en, this message translates to:
-  /// **'Enter your phone number'**
-  String get enterPhoneNumber;
+  /// **'Password'**
+  String get password;
 
   /// No description provided for @confirmPassword.
   ///
   /// In en, this message translates to:
-  /// **'Confirm password'**
+  /// **'Confirm Password'**
   String get confirmPassword;
 
   /// No description provided for @enterPassword.
@@ -272,14 +254,20 @@ abstract class AppLocalizations {
   /// No description provided for @enterConfirmPassword.
   ///
   /// In en, this message translates to:
-  /// **'Confirm password...'**
+  /// **'Re-enter Password...'**
   String get enterConfirmPassword;
 
   /// No description provided for @phoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Phone number'**
+  /// **'Phone Number'**
   String get phoneNumber;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Phone Number'**
+  String get enterPhoneNumber;
 
   /// No description provided for @gender.
   ///
@@ -302,14 +290,20 @@ abstract class AppLocalizations {
   /// No description provided for @termsAndConditionsNotice.
   ///
   /// In en, this message translates to:
-  /// **'Creating an account, you agree to our'**
+  /// **'By creating an account, you agree to the'**
   String get termsAndConditionsNotice;
 
   /// No description provided for @termsAndConditions.
   ///
   /// In en, this message translates to:
-  /// **'Terms & Conditions'**
+  /// **'Terms and Conditions'**
   String get termsAndConditions;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
 
   /// No description provided for @alreadyHaveAccount.
   ///
@@ -317,16 +311,22 @@ abstract class AppLocalizations {
   /// **'Already have an account?'**
   String get alreadyHaveAccount;
 
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
   /// No description provided for @invalidEmail.
   ///
   /// In en, this message translates to:
-  /// **'This Email is not valid'**
+  /// **'Invalid Email'**
   String get invalidEmail;
 
   /// No description provided for @invalidPassword.
   ///
   /// In en, this message translates to:
-  /// **'Invalid password'**
+  /// **'Incorrect Password'**
   String get invalidPassword;
 
   /// No description provided for @loading.
@@ -380,7 +380,7 @@ abstract class AppLocalizations {
   /// No description provided for @tax.
   ///
   /// In en, this message translates to:
-  /// **'All prices include tax'**
+  /// **'All prices include VAT'**
   String get tax;
 
   /// No description provided for @description.
@@ -392,7 +392,7 @@ abstract class AppLocalizations {
   /// No description provided for @haveAccount.
   ///
   /// In en, this message translates to:
-  /// **'You should create an account'**
+  /// **'You must have an account'**
   String get haveAccount;
 
   /// No description provided for @cancel.
@@ -410,7 +410,7 @@ abstract class AppLocalizations {
   /// No description provided for @titleTermsAndConditions.
   ///
   /// In en, this message translates to:
-  /// **'Terms and Conditions for Flowery App'**
+  /// **'Flowery App Terms and Conditions'**
   String get titleTermsAndConditions;
 
   /// No description provided for @addressTitle.
@@ -440,13 +440,13 @@ abstract class AppLocalizations {
   /// No description provided for @phoneNumberHint.
   ///
   /// In en, this message translates to:
-  /// **'Phone number'**
+  /// **'Phone Number'**
   String get phoneNumberHint;
 
   /// No description provided for @recipientNameHint.
   ///
   /// In en, this message translates to:
-  /// **'Recipient name'**
+  /// **'Recipient Name'**
   String get recipientNameHint;
 
   /// No description provided for @cityLabel.
@@ -464,13 +464,13 @@ abstract class AppLocalizations {
   /// No description provided for @saveAddress.
   ///
   /// In en, this message translates to:
-  /// **'Save address'**
+  /// **'Save Address'**
   String get saveAddress;
 
   /// No description provided for @allowLocationAccess.
   ///
   /// In en, this message translates to:
-  /// **'Allow access to location'**
+  /// **'Allow Location Access'**
   String get allowLocationAccess;
 
   /// No description provided for @selectLocation.
@@ -482,37 +482,37 @@ abstract class AppLocalizations {
   /// No description provided for @useCurrentLocation.
   ///
   /// In en, this message translates to:
-  /// **'Use current location'**
+  /// **'Use Current Location'**
   String get useCurrentLocation;
 
   /// No description provided for @searchLocation.
   ///
   /// In en, this message translates to:
-  /// **'Search for location'**
+  /// **'Search Location'**
   String get searchLocation;
 
   /// No description provided for @useThisLocation.
   ///
   /// In en, this message translates to:
-  /// **'Use this location'**
+  /// **'Use This Location'**
   String get useThisLocation;
 
   /// No description provided for @myOrders.
   ///
   /// In en, this message translates to:
-  /// **'My orders'**
+  /// **'My Orders'**
   String get myOrders;
 
   /// No description provided for @savedAddress.
   ///
   /// In en, this message translates to:
-  /// **'Saved address'**
+  /// **'Saved Addresses'**
   String get savedAddress;
 
   /// No description provided for @notification.
   ///
   /// In en, this message translates to:
-  /// **'Notification'**
+  /// **'Notifications'**
   String get notification;
 
   /// No description provided for @language.
@@ -524,7 +524,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutUs.
   ///
   /// In en, this message translates to:
-  /// **'About us'**
+  /// **'About Us'**
   String get aboutUs;
 
   /// No description provided for @logout.
@@ -542,19 +542,19 @@ abstract class AppLocalizations {
   /// No description provided for @confirmLogout.
   ///
   /// In en, this message translates to:
-  /// **'Confirm logout!!'**
+  /// **'Confirm Logout!!'**
   String get confirmLogout;
 
   /// No description provided for @checkOut.
   ///
   /// In en, this message translates to:
-  /// **'Check out'**
+  /// **'Checkout'**
   String get checkOut;
 
   /// No description provided for @cartEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Cart is empty'**
+  /// **'Cart is Empty'**
   String get cartEmpty;
 
   /// No description provided for @total.
@@ -574,6 +574,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delivery Fee'**
   String get deliveryFee;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @forgotpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotpassword;
+
+  /// No description provided for @didntreceivecode.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive the code?'**
+  String get didntreceivecode;
+
+  /// No description provided for @resend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resend;
+
+  /// No description provided for @emailverification.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Verification'**
+  String get emailverification;
+
+  /// No description provided for @invalidcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Code'**
+  String get invalidcode;
+
+  /// No description provided for @resetpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetpassword;
+
+  /// No description provided for @verificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'verification Code'**
+  String get verificationCode;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

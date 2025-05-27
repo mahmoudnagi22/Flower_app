@@ -4,8 +4,8 @@ import 'package:flower_app/features/auth/change_password/domain/entity/request_m
 extension ChangePasswordRequestMapper on ChangePasswordRequest {
   ChangePasswordRequestDto toDto() {
     return ChangePasswordRequestDto(
-      password: this.password,
-      newPassword: this.newPassword,
+      password: password,
+      newPassword: newPassword,
     );
   }
 }

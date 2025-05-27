@@ -146,7 +146,7 @@ class ApiManager {
   }
 
   //TODO:====================== Function IS Connected =======
-  Future<bool> _isConnected() async {
+  Future<bool> isConnected() async {
     final List<ConnectivityResult> connectivityResult =
         await Connectivity().checkConnectivity();
     return connectivityResult.contains(ConnectivityResult.mobile) ||
@@ -156,7 +156,7 @@ class ApiManager {
 
   //TODO:====================== Function IS SignUp =======
   Future<ApiResult<SignupResponseDto>> signup(SignupRequestDto signup) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -193,7 +193,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Occasion =======
   Future<ApiResult<List<OccasionsDto>>> getOccasions() async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -230,7 +230,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Products By Id=======
   Future<ApiResult<List<ProductDto>>> getProducts(ProductFilter filter) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
           errorMessage: 'Please check your internet connection',
@@ -279,7 +279,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Get Categories =======
   Future<ApiResult<List<CategoryDto>>> getCategories() async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -318,7 +318,7 @@ class ApiManager {
   Future<ApiResult<CategoriesByIdDto>> getCategoriesById(
     String categoryId,
   ) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
           errorMessage: 'Please check your internet connection',
@@ -352,7 +352,7 @@ class ApiManager {
 
 //TODO:====================== Function IS home tab =======
   Future<ApiResult<HomeDataResponse>> homeTab() async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -389,7 +389,7 @@ class ApiManager {
 
   //TODO:====================== Function IS Add to cart =======
   Future<ApiResult<AddToCartResponse>> addToCart(AddToCartParameters parameters) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -425,7 +425,7 @@ class ApiManager {
 
 
   Future<ApiResult<List<CartItemsDto>>> getCartsItem() async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );
@@ -464,7 +464,7 @@ class ApiManager {
     }
   }
   Future<ApiResult<List<Product>>> updateQuantity(String cartId,int quantity) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
             errorMessage: 'Please check your internet connection'),
@@ -509,7 +509,7 @@ class ApiManager {
 
 //TODO:====================== Function IS Delete Carts Products =======
   Future<ApiResult<List<Product>>> deleteCart(String cartId) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(
             errorMessage: 'Please check your internet connection'),
@@ -551,7 +551,7 @@ class ApiManager {
 
 //TODO:====================== Function IS Get Products By Search =======
   Future<ApiResult<SearchDto>> fetchProducts(String keyWord) async {
-    if (!await _isConnected()) {
+    if (!await isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );

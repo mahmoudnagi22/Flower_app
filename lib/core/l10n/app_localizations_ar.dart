@@ -45,15 +45,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lang => 'اللغة';
 
   @override
-  String get login => 'تسجيل الدخول';
-
-  @override
-  String get email => 'البريد الإلكتروني';
-
-  @override
-  String get password => 'كلمة المرور';
-
-  @override
   String get rememberMe => 'تذكرني';
 
   @override
@@ -64,9 +55,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dontHaveAccount => 'ليس لديك حساب؟';
-
-  @override
-  String get signUp => 'سجل الآن';
 
   @override
   String get register => 'إنشاء حساب';
@@ -84,10 +72,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterLastName => 'أدخل الاسم الأخير';
 
   @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
   String get enterEmail => 'أدخل بريدك الإلكتروني';
 
   @override
-  String get enterPhoneNumber => 'ادخل رقم الهاتف';
+  String get password => 'كلمة المرور';
 
   @override
   String get confirmPassword => 'تأكيد كلمة المرور';
@@ -100,6 +91,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get enterPhoneNumber => 'ادخل رقم الهاتف';
 
   @override
   String get gender => 'النوع:';
@@ -117,7 +111,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get termsAndConditions => 'الشروط والأحكام';
 
   @override
+  String get signUp => 'سجل الآن';
+
+  @override
   String get alreadyHaveAccount => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get login => 'تسجيل الدخول';
 
   @override
   String get invalidEmail => 'هذا البريد الإلكتروني غير صالح';
@@ -159,7 +159,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get haveAccount => 'يجب ان يكون لديك حساب';
 
   @override
-  String get cancel => 'الغاء';
+  String get cancel => 'إلغاء';
 
   @override
   String get titleAboutUs => 'عن تطبيق فلاوري';
@@ -247,4 +247,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deliveryFee => 'رسوم التوصيل';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get forgotpassword => 'نسيت كلمة المرور';
+
+  @override
+  String get didntreceivecode => 'لم يصلك الرمز؟';
+
+  @override
+  String get resend => 'إعادة الإرسال';
+
+  @override
+  String get emailverification => 'تأكيد البريد الإلكتروني';
+
+  @override
+  String get invalidcode => 'رمز غير صالح';
+
+  @override
+  String get resetpassword => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get verificationCode => 'رمز التحقق';
 }
