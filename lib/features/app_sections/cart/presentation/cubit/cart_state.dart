@@ -4,8 +4,8 @@ class CartState extends Equatable {
   final Status cartStatus;
   final String? updateError;
   final List<CartItemsEntity>? cartsList;
-  final List<ProductEntity>? updateList;
-  final List<ProductEntity>? deleteItem;
+  final List<CartProductEntity>? updateList;
+  final List<CartProductEntity>? deleteItem;
 
   @override
   // TODO: implement props
@@ -23,8 +23,8 @@ class CartState extends Equatable {
     Status? cartStatus,
     String? updateError,
     List<CartItemsEntity>? cartsList,
-    List<ProductEntity>? updateList,
-    List<ProductEntity>? deleteItem,
+    List<CartProductEntity>? updateList,
+    List<CartProductEntity>? deleteItem,
   }) {
     return CartState(
       cartStatus: cartStatus ?? this.cartStatus,

@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/models/user_model.dart';
-import 'package:flower_app/core/resources/assets_manager.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
@@ -13,8 +12,6 @@ import 'package:flower_app/features/app_sections/occasions/domain/entities/produ
 import 'package:flower_app/features/app_sections/product_details/presentation/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({required this.product, super.key});
@@ -137,8 +134,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                             Text(
                               widget.product.quantity != 0
-                                  ? '${lang.inStock}'
-                                  : '${lang.outStock}',
+                                  ? lang.inStock
+                                  : lang.outStock,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
@@ -150,7 +147,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '${lang.tax}',
+                          lang.tax,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13,
@@ -169,7 +166,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          '${lang.description}',
+                          lang.description,
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -209,13 +206,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                   context: context,
                   builder: (BuildContext ctx) {
                     return AlertDialog(
-                      content: Text('${lang.haveAccount}'),
+                      content: Text(lang.haveAccount),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("${lang.cancel}"),
+                          child: Text(lang.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -224,7 +221,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Routes.loginRoute,
                             );
                           },
-                          child: Text("${lang.login}"),
+                          child: Text(lang.login),
                         ),
                       ],
                     );
@@ -238,7 +235,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               }
             },
             child: Text(
-              '${lang.addToCart}',
+              lang.addToCart,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ),

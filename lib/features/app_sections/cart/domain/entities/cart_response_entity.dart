@@ -33,14 +33,14 @@ class CartEntity {
 class CartItemsEntity {
   CartItemsEntity({this.product, this.price, this.quantity, this.id});
 
-  ProductEntity? product;
+  CartProductEntity? product;
   num? price;
   num? quantity;
   String? id;
 }
 
-class ProductEntity {
-  ProductEntity({
+class CartProductEntity {
+  CartProductEntity({
     this.rateAvg,
     this.rateCount,
     this.id,

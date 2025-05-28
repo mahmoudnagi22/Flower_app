@@ -32,17 +32,17 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> updateQuantity(String cartId, int quantity) async {
     emit(state.copyWith(cartStatus: Status.loading));
-    ApiResult<List<ProductEntity>> result = await updateUseCase.call(
+    ApiResult<List<CartProductEntity>> result = await updateUseCase.call(
       cartId,
       quantity,
     );
 
     switch (result) {
-      case ApiSuccessResult<List<ProductEntity>>():
+      case ApiSuccessResult<List<CartProductEntity>>():
         emit(
           state.copyWith(cartStatus: Status.success, updateList: result.data),
         );
-      case ApiErrorResult<List<ProductEntity>>():
+      case ApiErrorResult<List<CartProductEntity>>():
         emit(
           state.copyWith(
             cartStatus: Status.error,
@@ -74,17 +74,17 @@ class CartCubit extends Cubit<CartState> {
   Future<void> deleteItem(String cartId) async {
     emit(state.copyWith(cartStatus: Status.loading));
 
-    ApiResult<List<ProductEntity>> result = await deleteCartUseCase.call(
+    ApiResult<List<CartProductEntity>> result = await deleteCartUseCase.call(
       cartId,
     );
 
     switch (result) {
-      case ApiSuccessResult<List<ProductEntity>>():
+      case ApiSuccessResult<List<CartProductEntity>>():
         emit(
           state.copyWith(cartStatus: Status.success, deleteItem: result.data),
         );
         getCarts();
-      case ApiErrorResult<List<ProductEntity>>():
+      case ApiErrorResult<List<CartProductEntity>>():
         emit(
           state.copyWith(
             cartStatus: Status.error,

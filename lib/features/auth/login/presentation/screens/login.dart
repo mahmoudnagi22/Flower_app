@@ -8,6 +8,7 @@ import 'package:flower_app/features/auth/login/data/model/login_user_response.da
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_status.dart';
 import 'package:flower_app/features/auth/login/presentation/widgets/text_field.dart';
+import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,26 +23,30 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool checkboxState = false;
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  GlobalKey<FormState> formState = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   @override
   void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
-    email.dispose();
-    password.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = AppLocalizations.of(context)!;
     LoginCubit loginCubit = LoginCubit.get(context);
+
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
-        leading: const Icon(Icons.arrow_back_ios_new_outlined),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           lang.login,
           style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 20),
@@ -55,26 +60,30 @@ class _LoginState extends State<Login> {
               key: formState,
               child: Column(
                 children: [
-                  Padding(
-                    padding: REdgeInsets.only(top: 8.0),
-                    child: BuildTextField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: email,
-                      hintText: lang.enterEmail,
-                      labelText: lang.email,
-                      validatorMessage: lang.invalidEmail,
-                      validation: AppValidators.validateEmail,
-                    ),
+                  CustomTextFormField(
+                    labelText: lang.email,
+                    hintText: lang.enterEmail,
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: AppValidators.validateEmail,
+                    autoFocus: false,
+                    isObscure: false,
+                    onChanged: (value) {},
+                    readOnly: false,
+                    suffix: null,
                   ),
                   SizedBox(height: 25.h),
-
-                  BuildTextField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    controller: password,
+                  CustomTextFormField(
                     labelText: lang.password,
                     hintText: lang.enterPassword,
-                    validatorMessage: lang.invalidPassword,
-                    validation: AppValidators.validatePassword,
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    validator: AppValidators.validatePassword,
+                    autoFocus: false,
+                    isObscure: true,
+                    onChanged: (value) {},
+                    readOnly: false,
+                    suffix: null,
                   ),
                   SizedBox(height: 15.h),
                   Row(
@@ -103,7 +112,9 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // ضع هنا وظيفة "نسيت كلمة المرور"
+                        },
                         child: Text(
                           lang.forgetPassword,
                           style: GoogleFonts.inter(
@@ -121,42 +132,30 @@ class _LoginState extends State<Login> {
                     listener: (context, state) {
                       if (state is LoginLoadingState) {
                         DialogUtils.showLoading(context, lang.loading);
-                      }
-                      if (state is LoginErrorState) {
+                      } else if (state is LoginErrorState) {
                         DialogUtils.hideLoading(context);
                         DialogUtils.showError(context, state.massage);
-                      }
-                      if (state is LoginSuccessState) {
+                      } else if (state is LoginSuccessState) {
                         DialogUtils.hideLoading(context);
-                        Navigator.push(
-                          context,
-                          RouteGenerator.getRoute(
-                            const RouteSettings(name: Routes.bottomNav),
-                          ),
-                        );
+                        Navigator.pushReplacementNamed(context, Routes.bottomNav);
                       }
                     },
                     child: MaterialButton(
                       elevation: 0,
-                      padding: EdgeInsets.only(
-                        top: 10.sp,
-                        right: 24.sp,
-                        bottom: 10.sp,
-                        left: 24.sp,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 24.sp, vertical: 10.sp),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       height: 48.h,
                       minWidth: 343.w,
-                      textColor: ColorManager.white,
                       color: ColorManager.bank,
+                      textColor: ColorManager.white,
                       onPressed: () {
                         if (formState.currentState!.validate()) {
                           loginCubit.login(
                             LoginUserResponse(
-                              email: email.text,
-                              password: password.text,
+                              email: emailController.text,
+                              password: passwordController.text,
                               rememberMe: checkboxState,
                             ),
                           );
@@ -175,27 +174,17 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 25.h),
                   MaterialButton(
                     elevation: 0,
-                    padding: EdgeInsets.only(
-                      top: 10.sp,
-                      right: 24.sp,
-                      bottom: 10.sp,
-                      left: 24.sp,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24.sp, vertical: 10.sp),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       side: BorderSide(color: ColorManager.gray, width: 1.5),
                     ),
                     height: 48.h,
                     minWidth: 343.w,
-                    textColor: ColorManager.gray,
                     color: ColorManager.white,
+                    textColor: ColorManager.gray,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        RouteGenerator.getRoute(
-                          const RouteSettings(name: Routes.bottomNav),
-                        ),
-                      );
+                      Navigator.pushReplacementNamed(context, Routes.bottomNav);
                     },
                     child: Text(
                       lang.continueAsGuest,
@@ -219,10 +208,7 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            Routes.registerRoute,
-                          );
+                          Navigator.pushReplacementNamed(context, Routes.registerRoute);
                         },
                         child: Text(
                           lang.signUp,

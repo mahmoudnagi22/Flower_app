@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flower_app/core/di/di.dart';
+import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/utils/status.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/widgets/cart_item.dart';
@@ -18,7 +19,9 @@ class CartScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt.get<CartCubit>()..getCarts(),
       child: Scaffold(
+        backgroundColor: ColorManager.white,
         appBar: AppBar(
+          backgroundColor: ColorManager.white,
           title: BlocBuilder<CartCubit, CartState>(
             builder: (context, state) {
               int itemCount = 0;

@@ -1,4 +1,5 @@
 import 'package:flower_app/core/l10n/app_localizations.dart';
+import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/features/app_sections/cart/presentation/pages/cart_screen.dart';
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
 import 'package:flower_app/features/profile/presentation/views/profile_view.dart';
@@ -39,47 +40,52 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     });
   }
 
- @override
-Widget build(BuildContext context) {
-  var lang = AppLocalizations.of(context);
+  @override
+  Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context);
 
-  return Scaffold(
-    body: _selectedItem == 2
-        ? const CartScreen() // Rebuild every time
-        : IndexedStack(
-            index: _selectedItem > 2 ? _selectedItem - 1 : _selectedItem,
-            children: [
-              _pages[0], // Home
-              _pages[1], // Categories
-              _pages[3], // Profile (skipping cart)
-            ],
-          ),
-    bottomNavigationBar: BottomNavigationBar(
-      showUnselectedLabels: true,
-      unselectedItemColor: Colors.grey,
-      selectedItemColor: Colors.pink,
-      currentIndex: _selectedItem,
-      onTap: _onItemTapped,
-      items: [
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.home_outlined),
-          label: lang!.home,
+    return Scaffold(
+      body: _selectedItem == 2
+          ? const CartScreen()
+          : IndexedStack(
+        index: _selectedItem > 2 ? _selectedItem - 1 : _selectedItem,
+        children: [
+          _pages[0], // Home
+          _pages[1], // Categories
+          _pages[3], // Profile (skipping cart)
+        ],
+      ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: ColorManager.white,
         ),
-        BottomNavigationBarItem(
-          icon: const FaIcon(FontAwesomeIcons.shapes),
-          label: lang.categories,
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          showUnselectedLabels: true,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Colors.pink,
+          currentIndex: _selectedItem,
+          onTap: _onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home_outlined),
+              label: lang!.home,
+            ),
+            BottomNavigationBarItem(
+              icon: const FaIcon(FontAwesomeIcons.shapes),
+              label: lang.categories,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.shopping_cart_outlined),
+              label: lang.cart,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.person_2_outlined),
+              label: lang.profile,
+            ),
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.shopping_cart_outlined),
-          label: lang.cart,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.person_2_outlined),
-          label: lang.profile,
-        ),
-      ],
-    ),
-  );
-}
-
+      ),
+    );
+  }
 }

@@ -10,7 +10,7 @@ class DeleteCartUseCase {
   CartsRepo repo;
   DeleteCartUseCase({required this.repo});
 
-  Future<ApiResult<List<ProductEntity>>> call(String cartId){
+  Future<ApiResult<List<CartProductEntity>>> call(String cartId){
     return repo.deleteCart(cartId);
   }
 }

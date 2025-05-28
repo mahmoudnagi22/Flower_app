@@ -52,6 +52,7 @@ class ChangePasswordScreen extends StatelessWidget {
           final cubit = context.read<ChangePasswordCubit>();
 
           return Scaffold(
+            backgroundColor: ColorManager.white,
             appBar: AppBar(
               backgroundColor: ColorManager.white,
               title: Text(lang.changePassword),

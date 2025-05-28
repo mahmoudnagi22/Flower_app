@@ -10,7 +10,7 @@ class CartRepoImpl implements CartsRepo {
   CartsContract dataSource;
   CartRepoImpl({required this.dataSource});
   @override
-  Future<ApiResult<List<ProductEntity>>> updateQuantity(String cartId,int quantity) {
+  Future<ApiResult<List<CartProductEntity>>> updateQuantity(String cartId,int quantity) {
     return dataSource.updateQuantity(cartId, quantity);
   }
 
@@ -20,7 +20,7 @@ class CartRepoImpl implements CartsRepo {
   }
 
   @override
-  Future<ApiResult<List<ProductEntity>>> deleteCart(String cartId) async{
+  Future<ApiResult<List<CartProductEntity>>> deleteCart(String cartId) async{
     return await dataSource.deleteCart(cartId);
   }
 
