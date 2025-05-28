@@ -24,28 +24,33 @@ class ChangePasswordScreen extends StatelessWidget {
             storage.delete(key: 'user_token').then((_) {
               showDialog(
                 context: context,
-                builder: (_) => AlertDialog(
-                  title: Center(child: const Text("Successfully completed")),
-                  content: const Text("Your password has been changed successfully, you will be logged out."),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/login',
+                builder:
+                    (_) => AlertDialog(
+                      title: Center(
+                        child: const Text("Successfully completed"),
+                      ),
+                      content: const Text(
+                        "Your password has been changed successfully, you will be logged out.",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/login',
                               (route) => false,
-                        );
-                      },
-                      child: const Text("OK"),
+                            );
+                          },
+                          child: const Text("OK"),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
               );
             });
           } else if (state.status == Status.error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("${state.message}")),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text("${state.message}")));
           }
         },
         builder: (context, state) {
@@ -68,8 +73,11 @@ class ChangePasswordScreen extends StatelessWidget {
                       hintText: "Enter current password",
                       controller: cubit.currentPasswordController,
                       keyboardType: TextInputType.visiblePassword,
-                      validator: (value) =>
-                      value == null || value.isEmpty ? "Required" : null,
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? "Required"
+                                  : null,
                       key: const ValueKey("current_password"),
                       autoFocus: false,
                       isObscure: true,
@@ -83,8 +91,11 @@ class ChangePasswordScreen extends StatelessWidget {
                       hintText: "Enter new password",
                       controller: cubit.newPasswordController,
                       keyboardType: TextInputType.visiblePassword,
-                      validator: (value) =>
-                      value == null || value.isEmpty ? "Required" : null,
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? "Required"
+                                  : null,
                       key: const ValueKey("new_password"),
                       autoFocus: false,
                       isObscure: true,
@@ -117,12 +128,12 @@ class ChangePasswordScreen extends StatelessWidget {
                     state.status == Status.loading
                         ? const CircularProgressIndicator()
                         : CustomButton(
-                      onPressed: () {
-                        cubit.changePassword();
-                      },
-                      text: "${lang.changePassword}",
-                      backgroundColor: ColorManager.bank,
-                    ),
+                          onPressed: () {
+                            cubit.changePassword();
+                          },
+                          text: lang.changePassword,
+                          backgroundColor: ColorManager.bank,
+                        ),
                   ],
                 ),
               ),

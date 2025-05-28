@@ -21,4 +21,8 @@ class Routes {
   static const String checkoutScreen = "CheckoutScreen";
   static const String savedAddress = "/savedAddress";
   static const String changePasswordRoute = "/ChangePasswordScreen";
+  static const String verifyCodeScreen = "/verifyCodeScreen";
+
+  static const String sendEmailScreen = "/sendEmailScreen";
+  static const String resetPasswordScreen = "/resetPasswordScreen";
 }

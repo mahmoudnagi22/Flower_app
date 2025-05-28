@@ -18,13 +18,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categories => 'Categories';
 
   @override
-  String get occasions => 'Occasion';
+  String get occasions => 'Occasions';
 
   @override
   String get viewAll => 'View All';
 
   @override
-  String get deliverTO => 'Deliver to';
+  String get deliverTO => 'Deliver To';
 
   @override
   String get home => 'Home';
@@ -36,7 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile => 'Profile';
 
   @override
-  String get addToCart => 'Add to cart';
+  String get addToCart => 'Add to Cart';
 
   @override
   String get currency => 'EGP';
@@ -45,28 +45,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lang => 'Language';
 
   @override
-  String get login => 'Login';
+  String get rememberMe => 'Remember Me';
 
   @override
-  String get email => 'Email';
+  String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get password => 'Password';
-
-  @override
-  String get rememberMe => 'Remember me';
-
-  @override
-  String get forgotPassword => 'Forget password?';
-
-  @override
-  String get continueAsGuest => 'Continue as guest';
+  String get continueAsGuest => 'Continue as Guest';
 
   @override
   String get dontHaveAccount => 'Don\'t have an account?';
-
-  @override
-  String get signUp => 'Sign up';
 
   @override
   String get register => 'Register';
@@ -78,28 +66,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lastName => 'Last Name';
 
   @override
-  String get enterFirstName => 'Enter first name';
+  String get enterFirstName => 'Enter First Name';
 
   @override
-  String get enterLastName => 'Enter last name';
+  String get enterLastName => 'Enter Last Name';
+
+  @override
+  String get email => 'Email';
 
   @override
   String get enterEmail => 'Enter your Email';
 
   @override
-  String get enterPhoneNumber => 'Enter your phone number';
+  String get password => 'Password';
 
   @override
-  String get confirmPassword => 'Confirm password';
+  String get confirmPassword => 'Confirm Password';
 
   @override
   String get enterPassword => 'Enter Password';
 
   @override
-  String get enterConfirmPassword => 'Confirm password...';
+  String get enterConfirmPassword => 'Re-enter Password...';
 
   @override
-  String get phoneNumber => 'Phone number';
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get enterPhoneNumber => 'Enter Phone Number';
 
   @override
   String get gender => 'Gender:';
@@ -111,19 +105,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get female => 'Female';
 
   @override
-  String get termsAndConditionsNotice => 'Creating an account, you agree to our';
+  String get termsAndConditionsNotice => 'By creating an account, you agree to the';
 
   @override
-  String get termsAndConditions => 'Terms & Conditions';
+  String get termsAndConditions => 'Terms and Conditions';
+
+  @override
+  String get signUp => 'Sign Up';
 
   @override
   String get alreadyHaveAccount => 'Already have an account?';
 
   @override
-  String get invalidEmail => 'This Email is not valid';
+  String get login => 'Login';
 
   @override
-  String get invalidPassword => 'Invalid password';
+  String get invalidEmail => 'Invalid Email';
+
+  @override
+  String get invalidPassword => 'Incorrect Password';
 
   @override
   String get loading => 'Loading...';
@@ -150,13 +150,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get outStock => 'Out of Stock';
 
   @override
-  String get tax => 'All prices include tax';
+  String get tax => 'All prices include VAT';
 
   @override
   String get description => 'Description';
 
   @override
-  String get haveAccount => 'You should create an account';
+  String get haveAccount => 'You must have an account';
 
   @override
   String get cancel => 'Cancel';
@@ -165,7 +165,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get titleAboutUs => 'About Flowery App';
 
   @override
-  String get titleTermsAndConditions => 'Terms and Conditions for Flowery App';
+  String get titleTermsAndConditions => 'Flowery App Terms and Conditions';
 
   @override
   String get addressTitle => 'Address';
@@ -180,10 +180,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addressHint => 'Address';
 
   @override
-  String get phoneNumberHint => 'Phone number';
+  String get phoneNumberHint => 'Phone Number';
 
   @override
-  String get recipientNameHint => 'Recipient name';
+  String get recipientNameHint => 'Recipient Name';
 
   @override
   String get cityLabel => 'City';
@@ -192,37 +192,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get areaLabel => 'Area';
 
   @override
-  String get saveAddress => 'Save address';
+  String get saveAddress => 'Save Address';
 
   @override
-  String get allowLocationAccess => 'Allow access to location';
+  String get allowLocationAccess => 'Allow Location Access';
 
   @override
   String get selectLocation => 'Select Location';
 
   @override
-  String get useCurrentLocation => 'Use current location';
+  String get useCurrentLocation => 'Use Current Location';
 
   @override
-  String get searchLocation => 'Search for location';
+  String get searchLocation => 'Search Location';
 
   @override
-  String get useThisLocation => 'Use this location';
+  String get useThisLocation => 'Use This Location';
 
   @override
-  String get myOrders => 'My orders';
+  String get myOrders => 'My Orders';
 
   @override
-  String get savedAddress => 'Saved address';
+  String get savedAddress => 'Saved Addresses';
 
   @override
-  String get notification => 'Notification';
+  String get notification => 'Notifications';
 
   @override
   String get language => 'Language';
 
   @override
-  String get aboutUs => 'About us';
+  String get aboutUs => 'About Us';
 
   @override
   String get logout => 'Logout';
@@ -231,13 +231,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editProfile => 'Edit Profile';
 
   @override
-  String get confirmLogout => 'Confirm logout!!';
+  String get confirmLogout => 'Confirm Logout!!';
 
   @override
-  String get checkOut => 'Check out';
+  String get checkOut => 'Checkout';
 
   @override
-  String get cartEmpty => 'Cart is empty';
+  String get cartEmpty => 'Cart is Empty';
 
   @override
   String get total => 'Total';
@@ -247,4 +247,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deliveryFee => 'Delivery Fee';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get forgotpassword => 'Forgot Password';
+
+  @override
+  String get didntreceivecode => 'Didn\'t receive the code?';
+
+  @override
+  String get resend => 'Resend';
+
+  @override
+  String get emailverification => 'Email Verification';
+
+  @override
+  String get invalidcode => 'Invalid Code';
+
+  @override
+  String get resetpassword => 'Reset Password';
+
+  @override
+  String get verificationCode => 'verification Code';
 }

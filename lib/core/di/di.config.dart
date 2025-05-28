@@ -30,20 +30,6 @@ import '../../features/address/presentation/cubits/address_cubit/address_cubit.d
     as _i177;
 import '../../features/app_sections/add_to_cart/presentation/cubit/add_to_cart_cubit.dart'
     as _i737;
-import '../../features/app_sections/best_seller/data/datasources/contract/best_seller_contract_data_source.dart'
-    as _i582;
-import '../../features/app_sections/best_seller/data/datasources/remote/best_seller_remote_data_source.dart'
-    as _i574;
-import '../../features/app_sections/best_seller/data/repositories/best_seller_repo_impl.dart'
-    as _i652;
-import '../../features/app_sections/best_seller/data/service/api_call.dart'
-    as _i904;
-import '../../features/app_sections/best_seller/domain/repositories/bestseller_repositories.dart'
-    as _i617;
-import '../../features/app_sections/best_seller/domain/usecases/best_seller_use_case.dart'
-    as _i933;
-import '../../features/app_sections/best_seller/presentation/cubit/best_seller_cubit.dart'
-    as _i1031;
 import '../../features/app_sections/cart/data/data_sources/carts_contract.dart'
     as _i1027;
 import '../../features/app_sections/cart/data/data_sources/carts_impl.dart'
@@ -116,6 +102,40 @@ import '../../features/auth/change_password/domain/use_case/change_password_use_
     as _i370;
 import '../../features/auth/change_password/presentation/cubit/change_password_cubit.dart'
     as _i81;
+import '../../features/auth/forgot_password/data/api_call/forgot_password_api_call.dart'
+    as _i961;
+import '../../features/auth/forgot_password/data/data_source/contract/forgot_password_contract_datasource.dart'
+    as _i115;
+import '../../features/auth/forgot_password/data/data_source/contract/reset_password_contract_datasource.dart'
+    as _i99;
+import '../../features/auth/forgot_password/data/data_source/contract/verify_code_contract_datasource.dart'
+    as _i561;
+import '../../features/auth/forgot_password/data/data_source/remote/forgot_password_remote_datasource.dart'
+    as _i842;
+import '../../features/auth/forgot_password/data/data_source/remote/reset_password_remote_datasource.dart'
+    as _i321;
+import '../../features/auth/forgot_password/data/data_source/remote/verify_code_remote_datasource.dart'
+    as _i271;
+import '../../features/auth/forgot_password/data/repository/forgot_password_repo_impl.dart'
+    as _i395;
+import '../../features/auth/forgot_password/data/repository/reset_password_repo_impl.dart'
+    as _i185;
+import '../../features/auth/forgot_password/data/repository/verify_code_repo_impl.dart'
+    as _i611;
+import '../../features/auth/forgot_password/domain/repository/forgot_password_repository.dart'
+    as _i656;
+import '../../features/auth/forgot_password/domain/repository/reset_password_repository.dart'
+    as _i991;
+import '../../features/auth/forgot_password/domain/repository/verify_reset_repository.dart'
+    as _i512;
+import '../../features/auth/forgot_password/domain/use_case/forgot_password_usecase.dart'
+    as _i31;
+import '../../features/auth/forgot_password/domain/use_case/reset_password_usecase.dart'
+    as _i632;
+import '../../features/auth/forgot_password/domain/use_case/verify_reset_usecase.dart'
+    as _i775;
+import '../../features/auth/forgot_password/presentation/cubit/forgot_password_cubit.dart'
+    as _i846;
 import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
     as _i1040;
 import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
@@ -244,6 +264,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i663.ChangePasswordService>(
       () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
     );
+    gh.singleton<_i961.ForgotPasswordService>(
+      () => _i961.ForgotPasswordService(apiManager: gh<_i266.ApiManager>()),
+    );
     gh.singleton<_i552.CashOrderService>(
       () => _i552.CashOrderService(apiManager: gh<_i266.ApiManager>()),
     );
@@ -253,6 +276,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i976.CreditOrderDatasourceContract>(
       () => _i413.CreditCheckoutServiceRemote(
         checkoutService: gh<_i945.CreditOrderService>(),
+      ),
+    );
+    gh.factory<_i115.ForgotPasswordContractDataSource>(
+      () => _i842.ForgotPasswordRemoteDataSource(
+        forgotPasswordService: gh<_i961.ForgotPasswordService>(),
       ),
     );
     gh.factory<_i702.GetLanguageUseCase>(
@@ -275,6 +303,11 @@ extension GetItInjectableX on _i174.GetIt {
         changePasswordService: gh<_i663.ChangePasswordService>(),
       ),
     );
+    gh.factory<_i656.ForgotPasswordRepository>(
+      () => _i395.ForgotPasswordRepositoryImpl(
+        contractDataSource: gh<_i115.ForgotPasswordContractDataSource>(),
+      ),
+    );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
           _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
@@ -282,6 +315,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i580.LoginRepositoryImpl>(
       () => _i580.LoginRepositoryImpl(
         loginDataSource: gh<_i1040.LoginDataSource>(),
+      ),
+    );
+    gh.factory<_i561.VerifyCodeContractDataSource>(
+      () => _i271.VerifyCodeRemoteDataSource(
+        verifyCodeService: gh<_i961.ForgotPasswordService>(),
       ),
     );
     gh.factory<_i1027.CartsContract>(
@@ -298,8 +336,10 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
     );
-    gh.singleton<_i904.BestSellerApiCall>(
-      () => _i904.BestSellerApiCall(gh<_i266.ApiManager>()),
+    gh.factory<_i31.ForgotPasswordUseCase>(
+      () => _i31.ForgotPasswordUseCase(
+        repo: gh<_i656.ForgotPasswordRepository>(),
+      ),
     );
     gh.factory<_i541.RemoteAddressDsContract>(
       () => _i836.RemoteAddressDsImpl(gh<_i266.ApiManager>()),
@@ -327,6 +367,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
+    );
+    gh.factory<_i99.ResetPasswordContractDataSource>(
+      () => _i321.ResetPasswordRemoteDataSource(
+        resetPasswordService: gh<_i961.ForgotPasswordService>(),
+      ),
     );
     gh.factory<_i67.SearchRepo>(
       () => _i859.SearchRepoImpl(dataSource: gh<_i190.SearchDataSource>()),
@@ -365,6 +410,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i887.GetProductsBySearch>(
       () => _i887.GetProductsBySearch(repo: gh<_i67.SearchRepo>()),
     );
+    gh.factory<_i512.VerifyResetRepository>(
+      () => _i611.VerifyCodeRepositoryImpl(
+        contractDataSource: gh<_i561.VerifyCodeContractDataSource>(),
+      ),
+    );
     gh.factory<_i1013.ChangePasswordRepository>(
       () => _i419.ChangePasswordRepositoryImpl(
         changePasswordContract: gh<_i107.ChangePasswordContract>(),
@@ -378,6 +428,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
     );
+    gh.factory<_i991.ResetPasswordRepository>(
+      () => _i185.ResetPasswordRepositoryImpl(
+        contractDataSource: gh<_i99.ResetPasswordContractDataSource>(),
+      ),
+    );
     gh.factory<_i942.OccasionRepo>(
       () => _i129.OccasionRepoImpl(
         remoteOccasionDataSourceContract:
@@ -386,9 +441,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i596.SearchCubit>(
       () => _i596.SearchCubit(useCase: gh<_i887.GetProductsBySearch>()),
-    );
-    gh.factory<_i582.BestSellerContractDataSource>(
-      () => _i574.BestSellerRemoteDataSource(gh<_i904.BestSellerApiCall>()),
     );
     gh.factory<_i725.EditProfileRepoContract>(
       () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
@@ -424,11 +476,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
-    );
-    gh.factory<_i617.BestSellerRepository>(
-      () => _i652.BestSellerRepoImpl(
-        contractDataSource: gh<_i582.BestSellerContractDataSource>(),
-      ),
     );
     gh.factory<_i27.CashOrderRepository>(
       () => _i979.CashOrderRepoImpl(
@@ -484,6 +531,13 @@ extension GetItInjectableX on _i174.GetIt {
         productsUseCase: gh<_i824.ProductsUseCase>(),
       ),
     );
+    gh.factory<_i775.VerifyResetUseCase>(
+      () => _i775.VerifyResetUseCase(repo: gh<_i512.VerifyResetRepository>()),
+    );
+    gh.factory<_i632.ResetPasswordUseCase>(
+      () =>
+          _i632.ResetPasswordUseCase(repo: gh<_i991.ResetPasswordRepository>()),
+    );
     gh.factory<_i618.OccasionCubit>(
       () => _i618.OccasionCubit(
         occasionUseCase: gh<_i85.OccasionUseCase>(),
@@ -493,8 +547,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i595.GetUserDataUseCase>(
       () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
     );
-    gh.factory<_i933.BestSellerUseCase>(
-      () => _i933.BestSellerUseCase(gh<_i617.BestSellerRepository>()),
+    gh.factory<_i846.ForgotPasswordCubit>(
+      () => _i846.ForgotPasswordCubit(
+        forgotPasswordUseCase: gh<_i31.ForgotPasswordUseCase>(),
+        resetPasswordUseCase: gh<_i632.ResetPasswordUseCase>(),
+        verifyResetUseCase: gh<_i775.VerifyResetUseCase>(),
+      ),
     );
     gh.factory<_i146.SavedAddressCubit>(
       () => _i146.SavedAddressCubit(
@@ -509,9 +567,6 @@ extension GetItInjectableX on _i174.GetIt {
         cashOrderUseCase: gh<_i1048.CashOrderUseCase>(),
         creditOrderUseCase: gh<_i1066.CreditOrderUseCase>(),
       ),
-    );
-    gh.factory<_i1031.BestSellerCubit>(
-      () => _i1031.BestSellerCubit(gh<_i933.BestSellerUseCase>()),
     );
     return this;
   }

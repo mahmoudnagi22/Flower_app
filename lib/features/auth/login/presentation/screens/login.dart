@@ -1,13 +1,11 @@
 import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
-import 'package:flower_app/core/routes_manager/route_generator.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/utils/dialog_utils.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/login/data/model/login_user_response.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:flower_app/features/auth/login/presentation/cubit/login_status.dart';
-import 'package:flower_app/features/auth/login/presentation/widgets/text_field.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +111,7 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // ضع هنا وظيفة "نسيت كلمة المرور"
+                          Navigator.pushNamed(context, "/sendEmailScreen");
                         },
                         child: Text(
                           lang.forgetPassword,
