@@ -17,18 +17,10 @@ class ChangePasswordService {
   ChangePasswordService({
     required this.apiManager,
   });
-  //TODO:====================== Function IS Connected =======
-  Future<bool> _isConnected() async {
-    final List<ConnectivityResult> connectivityResult =
-    await Connectivity().checkConnectivity();
-    return connectivityResult.contains(ConnectivityResult.mobile) ||
-        connectivityResult.contains(ConnectivityResult.wifi) ||
-        connectivityResult.contains(ConnectivityResult.vpn);
-  }
+
   //TODO:====================== Function IS change password =======
-  final token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjdmZDkzNDlhOTgzMmQ4MzU5ZTJjOGU3Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NDUwMjEwNjh9.crVh1rQDz-JskX4XyPYwDy-Rptv1Wt3-yJPHUHbU770';
   Future<ApiResult<ChangePasswordResponseDto>> changePassword(ChangePasswordRequestDto request) async {
-    if (!await _isConnected()) {
+    if (!await apiManager.isConnected()) {
       return ApiErrorResult(
         failures: NetworkError(errorMessage: 'Please Check your internet'),
       );

@@ -10,7 +10,7 @@ class AppConstants {
   static const String homeTab = 'home';
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
-static const String changePasswordEndpoint = 'auth/change-password';
+  static const String changePasswordEndpoint = 'auth/change-password';
   static const String cart = 'cart';
   static const String addToCart = 'cart';
   static const String address = 'addresses';
@@ -18,4 +18,8 @@ static const String changePasswordEndpoint = 'auth/change-password';
   static const String checkout = 'orders/checkout';
   static const String search = 'keyword=';
   static const String editProfile = 'auth/editProfile=';
+  static const String forgotPassword = 'auth/forgotPassword';
+static const String resetPassword = 'auth/resetPassword';
+static const String verifyResetCode = 'auth/verifyResetCode';
+
 }

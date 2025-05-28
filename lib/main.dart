@@ -55,6 +55,7 @@ class FlowerApp extends StatelessWidget {
                   supportedLocales: AppLocalizations.supportedLocales,
                   locale: Locale(state.language),
                   debugShowCheckedModeBanner: false,
+                  initialRoute: Routes.loginRoute,
                   onGenerateRoute: RouteGenerator.getRoute,
                 );
               },

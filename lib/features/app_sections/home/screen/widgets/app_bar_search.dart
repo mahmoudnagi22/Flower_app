@@ -1,5 +1,4 @@
 import 'package:flower_app/core/cubits/local_cubit/local_cubit.dart';
-import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,14 +28,20 @@ class AppBarSearch extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(
-              left: LocalizationCubit.get(context).state.language == "ar" ? 0 : 20.w,
-              right: LocalizationCubit.get(context).state.language == "ar" ? 20.w : 0,
+              left:
+                  LocalizationCubit.get(context).state.language == "ar"
+                      ? 0
+                      : 20.w,
+              right:
+                  LocalizationCubit.get(context).state.language == "ar"
+                      ? 20.w
+                      : 0,
             ),
-            child:InkWell(
+            child: InkWell(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  SearchScreen()),
+                  MaterialPageRoute(builder: (context) => SearchScreen()),
                 );
               },
               child: IgnorePointer(
@@ -78,7 +83,10 @@ class AppBarSearch extends StatelessWidget {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(width: 1, color: ColorManager.error),
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: ColorManager.error,
+                      ),
                     ),
                     prefixIcon: ImageIcon(
                       AssetImage(IconsAssets.icSearch),

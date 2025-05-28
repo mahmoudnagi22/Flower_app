@@ -103,7 +103,9 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/sendEmailScreen");
+                        },
                         child: Text(
                           lang.forgetPassword,
                           style: GoogleFonts.inter(

@@ -130,6 +130,14 @@ class MockApiManager extends _i1.Mock implements _i2.ApiManager {
           as _i3.Future<_i4.Response<dynamic>?>);
 
   @override
+  _i3.Future<bool> isConnected() =>
+      (super.noSuchMethod(
+            Invocation.method(#isConnected, []),
+            returnValue: _i3.Future<bool>.value(false),
+          )
+          as _i3.Future<bool>);
+
+  @override
   _i3.Future<_i5.ApiResult<_i6.SignupResponseDto>> signup(
     _i7.SignupRequestDto? signup,
   ) =>

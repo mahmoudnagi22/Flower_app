@@ -1,4 +1,7 @@
 import 'package:flower_app/core/models/user_model.dart';
+import 'package:flower_app/features/auth/forgot_password/presentation/screens/reset_password_screen.dart';
+import 'package:flower_app/features/auth/forgot_password/presentation/screens/send_email_screen.dart';
+import 'package:flower_app/features/auth/forgot_password/presentation/screens/verification_code_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/di.dart';
@@ -111,6 +114,14 @@ class RouteGenerator {
 
       case Routes.checkoutScreen:
         return MaterialPageRoute(builder: (_) => const CheckoutScreen());
+      case Routes.sendEmailScreen:
+        return MaterialPageRoute(builder: (_) => const SendEmailScreen());
+      case Routes.verifyCodeScreen:
+        return MaterialPageRoute(
+          builder: (_) => const VerificationCodeScreen(),
+        );
+      case Routes.resetPasswordScreen:
+        return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
 
       case Routes.splash:
         return MaterialPageRoute(

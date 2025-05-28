@@ -102,6 +102,40 @@ import '../../features/auth/change_password/domain/use_case/change_password_use_
     as _i370;
 import '../../features/auth/change_password/presentation/cubit/change_password_cubit.dart'
     as _i81;
+import '../../features/auth/forgot_password/data/api_call/forgot_password_api_call.dart'
+    as _i961;
+import '../../features/auth/forgot_password/data/data_source/contract/forgot_password_contract_datasource.dart'
+    as _i115;
+import '../../features/auth/forgot_password/data/data_source/contract/reset_password_contract_datasource.dart'
+    as _i99;
+import '../../features/auth/forgot_password/data/data_source/contract/verify_code_contract_datasource.dart'
+    as _i561;
+import '../../features/auth/forgot_password/data/data_source/remote/forgot_password_remote_datasource.dart'
+    as _i842;
+import '../../features/auth/forgot_password/data/data_source/remote/reset_password_remote_datasource.dart'
+    as _i321;
+import '../../features/auth/forgot_password/data/data_source/remote/verify_code_remote_datasource.dart'
+    as _i271;
+import '../../features/auth/forgot_password/data/repository/forgot_password_repo_impl.dart'
+    as _i395;
+import '../../features/auth/forgot_password/data/repository/reset_password_repo_impl.dart'
+    as _i185;
+import '../../features/auth/forgot_password/data/repository/verify_code_repo_impl.dart'
+    as _i611;
+import '../../features/auth/forgot_password/domain/repository/forgot_password_repository.dart'
+    as _i656;
+import '../../features/auth/forgot_password/domain/repository/reset_password_repository.dart'
+    as _i991;
+import '../../features/auth/forgot_password/domain/repository/verify_reset_repository.dart'
+    as _i512;
+import '../../features/auth/forgot_password/domain/use_case/forgot_password_usecase.dart'
+    as _i31;
+import '../../features/auth/forgot_password/domain/use_case/reset_password_usecase.dart'
+    as _i632;
+import '../../features/auth/forgot_password/domain/use_case/verify_reset_usecase.dart'
+    as _i775;
+import '../../features/auth/forgot_password/presentation/cubit/forgot_password_cubit.dart'
+    as _i846;
 import '../../features/auth/login/data/datasource_contract/login_datasource.dart'
     as _i1040;
 import '../../features/auth/login/data/datasource_impl/login_datasource_impl.dart'
@@ -216,8 +250,8 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    gh.factory<_i796.PaymentMethodCubit>(() => _i796.PaymentMethodCubit());
     gh.factory<_i737.AddToCartCubit>(() => _i737.AddToCartCubit());
+    gh.factory<_i796.PaymentMethodCubit>(() => _i796.PaymentMethodCubit());
     gh.factory<_i711.SelectAddressCubit>(() => _i711.SelectAddressCubit());
     gh.singleton<_i361.Dio>(() => registerModule.dio());
     gh.singleton<_i126.LoginCubit>(() => _i126.LoginCubit());
@@ -227,18 +261,26 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i393.ChangePassDsImpl(gh<_i266.ApiManager>()),
     );
     gh.factory<_i254.LocalDataSource>(() => _i178.LocalDataSourceImpl());
-    gh.singleton<_i945.CreditOrderService>(
-      () => _i945.CreditOrderService(apiManager: gh<_i266.ApiManager>()),
+    gh.singleton<_i663.ChangePasswordService>(
+      () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
+    );
+    gh.singleton<_i961.ForgotPasswordService>(
+      () => _i961.ForgotPasswordService(apiManager: gh<_i266.ApiManager>()),
     );
     gh.singleton<_i552.CashOrderService>(
       () => _i552.CashOrderService(apiManager: gh<_i266.ApiManager>()),
     );
-    gh.singleton<_i663.ChangePasswordService>(
-      () => _i663.ChangePasswordService(apiManager: gh<_i266.ApiManager>()),
+    gh.singleton<_i945.CreditOrderService>(
+      () => _i945.CreditOrderService(apiManager: gh<_i266.ApiManager>()),
     );
     gh.factory<_i976.CreditOrderDatasourceContract>(
       () => _i413.CreditCheckoutServiceRemote(
         checkoutService: gh<_i945.CreditOrderService>(),
+      ),
+    );
+    gh.factory<_i115.ForgotPasswordContractDataSource>(
+      () => _i842.ForgotPasswordRemoteDataSource(
+        forgotPasswordService: gh<_i961.ForgotPasswordService>(),
       ),
     );
     gh.factory<_i702.GetLanguageUseCase>(
@@ -261,6 +303,11 @@ extension GetItInjectableX on _i174.GetIt {
         changePasswordService: gh<_i663.ChangePasswordService>(),
       ),
     );
+    gh.factory<_i656.ForgotPasswordRepository>(
+      () => _i395.ForgotPasswordRepositoryImpl(
+        contractDataSource: gh<_i115.ForgotPasswordContractDataSource>(),
+      ),
+    );
     gh.factory<_i807.RemoteSignupDataSourceContract>(
       () =>
           _i364.RemoteSignupDataSourceImpl(apiManager: gh<_i266.ApiManager>()),
@@ -268,6 +315,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i580.LoginRepositoryImpl>(
       () => _i580.LoginRepositoryImpl(
         loginDataSource: gh<_i1040.LoginDataSource>(),
+      ),
+    );
+    gh.factory<_i561.VerifyCodeContractDataSource>(
+      () => _i271.VerifyCodeRemoteDataSource(
+        verifyCodeService: gh<_i961.ForgotPasswordService>(),
       ),
     );
     gh.factory<_i1027.CartsContract>(
@@ -282,6 +334,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i234.SignupRepoImpl(
         remoteSignupDataSourceContract:
             gh<_i807.RemoteSignupDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i31.ForgotPasswordUseCase>(
+      () => _i31.ForgotPasswordUseCase(
+        repo: gh<_i656.ForgotPasswordRepository>(),
       ),
     );
     gh.factory<_i541.RemoteAddressDsContract>(
@@ -311,6 +368,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i317.RemoteProfileDatasorceContract>(
       () => _i520.RemoteProfileDatasourceImpl(gh<_i266.ApiManager>()),
     );
+    gh.factory<_i99.ResetPasswordContractDataSource>(
+      () => _i321.ResetPasswordRemoteDataSource(
+        resetPasswordService: gh<_i961.ForgotPasswordService>(),
+      ),
+    );
     gh.factory<_i67.SearchRepo>(
       () => _i859.SearchRepoImpl(dataSource: gh<_i190.SearchDataSource>()),
     );
@@ -334,11 +396,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i886.DeleteCartUseCase>(
       () => _i886.DeleteCartUseCase(repo: gh<_i112.CartsRepo>()),
     );
-    gh.factory<_i287.UpdateQuantityUseCase>(
-      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
-    );
     gh.factory<_i318.GetCartsUseCase>(
       () => _i318.GetCartsUseCase(repo: gh<_i112.CartsRepo>()),
+    );
+    gh.factory<_i287.UpdateQuantityUseCase>(
+      () => _i287.UpdateQuantityUseCase(repo: gh<_i112.CartsRepo>()),
     );
     gh.factory<_i509.CategoriesRepo>(
       () => _i109.CategoriesRepoImpl(
@@ -347,6 +409,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i887.GetProductsBySearch>(
       () => _i887.GetProductsBySearch(repo: gh<_i67.SearchRepo>()),
+    );
+    gh.factory<_i512.VerifyResetRepository>(
+      () => _i611.VerifyCodeRepositoryImpl(
+        contractDataSource: gh<_i561.VerifyCodeContractDataSource>(),
+      ),
     );
     gh.factory<_i1013.ChangePasswordRepository>(
       () => _i419.ChangePasswordRepositoryImpl(
@@ -360,6 +427,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i959.SignupCubit>(
       () => _i959.SignupCubit(signupUseCase: gh<_i211.SignupUseCase>()),
+    );
+    gh.factory<_i991.ResetPasswordRepository>(
+      () => _i185.ResetPasswordRepositoryImpl(
+        contractDataSource: gh<_i99.ResetPasswordContractDataSource>(),
+      ),
     );
     gh.factory<_i942.OccasionRepo>(
       () => _i129.OccasionRepoImpl(
@@ -382,14 +454,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i340.GetStateUseCase>(
       () => _i340.GetStateUseCase(gh<_i366.AddressRepo>()),
     );
-    gh.factory<_i512.GetPermissionUseCase>(
-      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
-    );
     gh.factory<_i280.AddAddressUseCase>(
       () => _i280.AddAddressUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i403.GetCurrentAddressInfo>(
       () => _i403.GetCurrentAddressInfo(gh<_i366.AddressRepo>()),
+    );
+    gh.factory<_i512.GetPermissionUseCase>(
+      () => _i512.GetPermissionUseCase(gh<_i366.AddressRepo>()),
     );
     gh.factory<_i233.ChangePassUsecase>(
       () => _i233.ChangePassUsecase(gh<_i66.ChangePassRepoContract>()),
@@ -410,8 +482,8 @@ extension GetItInjectableX on _i174.GetIt {
         cashCheckoutServiceContract: gh<_i841.CashCheckoutServiceContract>(),
       ),
     );
-    gh.factory<_i722.UpdateAddressUsecase>(
-      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i685.AddAddressUsecase>(
+      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i498.DeleteAddressUsecase>(
       () => _i498.DeleteAddressUsecase(gh<_i496.AddressRepoContract>()),
@@ -419,8 +491,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i150.GetAddressesUsecase>(
       () => _i150.GetAddressesUsecase(gh<_i496.AddressRepoContract>()),
     );
-    gh.factory<_i685.AddAddressUsecase>(
-      () => _i685.AddAddressUsecase(gh<_i496.AddressRepoContract>()),
+    gh.factory<_i722.UpdateAddressUsecase>(
+      () => _i722.UpdateAddressUsecase(gh<_i496.AddressRepoContract>()),
     );
     gh.factory<_i370.ChangePasswordUseCase>(
       () => _i370.ChangePasswordUseCase(
@@ -459,6 +531,13 @@ extension GetItInjectableX on _i174.GetIt {
         productsUseCase: gh<_i824.ProductsUseCase>(),
       ),
     );
+    gh.factory<_i775.VerifyResetUseCase>(
+      () => _i775.VerifyResetUseCase(repo: gh<_i512.VerifyResetRepository>()),
+    );
+    gh.factory<_i632.ResetPasswordUseCase>(
+      () =>
+          _i632.ResetPasswordUseCase(repo: gh<_i991.ResetPasswordRepository>()),
+    );
     gh.factory<_i618.OccasionCubit>(
       () => _i618.OccasionCubit(
         occasionUseCase: gh<_i85.OccasionUseCase>(),
@@ -467,6 +546,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i595.GetUserDataUseCase>(
       () => _i595.GetUserDataUseCase(gh<_i372.AutoLoginRepo>()),
+    );
+    gh.factory<_i846.ForgotPasswordCubit>(
+      () => _i846.ForgotPasswordCubit(
+        forgotPasswordUseCase: gh<_i31.ForgotPasswordUseCase>(),
+        resetPasswordUseCase: gh<_i632.ResetPasswordUseCase>(),
+        verifyResetUseCase: gh<_i775.VerifyResetUseCase>(),
+      ),
     );
     gh.factory<_i146.SavedAddressCubit>(
       () => _i146.SavedAddressCubit(
