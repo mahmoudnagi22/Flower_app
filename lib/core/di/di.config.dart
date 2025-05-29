@@ -30,6 +30,20 @@ import '../../features/address/presentation/cubits/address_cubit/address_cubit.d
     as _i177;
 import '../../features/app_sections/add_to_cart/presentation/cubit/add_to_cart_cubit.dart'
     as _i737;
+import '../../features/app_sections/best_seller/data/datasources/contract/best_seller_contract_data_source.dart'
+    as _i582;
+import '../../features/app_sections/best_seller/data/datasources/remote/best_seller_remote_data_source.dart'
+    as _i574;
+import '../../features/app_sections/best_seller/data/repositories/best_seller_repo_impl.dart'
+    as _i652;
+import '../../features/app_sections/best_seller/data/service/api_call.dart'
+    as _i904;
+import '../../features/app_sections/best_seller/domain/repositories/bestseller_repositories.dart'
+    as _i617;
+import '../../features/app_sections/best_seller/domain/usecases/best_seller_use_case.dart'
+    as _i933;
+import '../../features/app_sections/best_seller/presentation/cubit/best_seller_cubit.dart'
+    as _i1031;
 import '../../features/app_sections/cart/data/data_sources/carts_contract.dart'
     as _i1027;
 import '../../features/app_sections/cart/data/data_sources/carts_impl.dart'
@@ -336,6 +350,9 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i807.RemoteSignupDataSourceContract>(),
       ),
     );
+    gh.singleton<_i904.BestSellerApiCall>(
+      () => _i904.BestSellerApiCall(gh<_i266.ApiManager>()),
+    );
     gh.factory<_i31.ForgotPasswordUseCase>(
       () => _i31.ForgotPasswordUseCase(
         repo: gh<_i656.ForgotPasswordRepository>(),
@@ -442,6 +459,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i596.SearchCubit>(
       () => _i596.SearchCubit(useCase: gh<_i887.GetProductsBySearch>()),
     );
+    gh.factory<_i582.BestSellerContractDataSource>(
+      () => _i574.BestSellerRemoteDataSource(gh<_i904.BestSellerApiCall>()),
+    );
     gh.factory<_i725.EditProfileRepoContract>(
       () => _i158.ProfileRepoImpl(gh<_i317.RemoteProfileDatasorceContract>()),
     );
@@ -476,6 +496,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i85.OccasionUseCase>(
       () => _i85.OccasionUseCase(occasionRepo: gh<_i942.OccasionRepo>()),
+    );
+    gh.factory<_i617.BestSellerRepository>(
+      () => _i652.BestSellerRepoImpl(
+        contractDataSource: gh<_i582.BestSellerContractDataSource>(),
+      ),
     );
     gh.factory<_i27.CashOrderRepository>(
       () => _i979.CashOrderRepoImpl(
@@ -554,6 +579,9 @@ extension GetItInjectableX on _i174.GetIt {
         verifyResetUseCase: gh<_i775.VerifyResetUseCase>(),
       ),
     );
+    gh.factory<_i933.BestSellerUseCase>(
+      () => _i933.BestSellerUseCase(gh<_i617.BestSellerRepository>()),
+    );
     gh.factory<_i146.SavedAddressCubit>(
       () => _i146.SavedAddressCubit(
         gh<_i685.AddAddressUsecase>(),
@@ -567,6 +595,9 @@ extension GetItInjectableX on _i174.GetIt {
         cashOrderUseCase: gh<_i1048.CashOrderUseCase>(),
         creditOrderUseCase: gh<_i1066.CreditOrderUseCase>(),
       ),
+    );
+    gh.factory<_i1031.BestSellerCubit>(
+      () => _i1031.BestSellerCubit(gh<_i933.BestSellerUseCase>()),
     );
     return this;
   }

@@ -1,4 +1,4 @@
-
+import 'package:flower_app/core/l10n/app_localizations.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/features/app_sections/home/screen/cubit/home_cubit.dart';
@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/features/app_sections/occasions/domain/entities/products_entity.dart';
 
-import '../../../../core/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,6 +29,29 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeTabCubit>().getHomeData();
   }
 
+  ProductEntity productToEntity(dynamic product) {
+    return ProductEntity(
+      id: product.id,
+      title: product.title,
+      slug: product.slug,
+      description: product.description,
+      imgCover: product.imgCover,
+      images: product.images,
+      price: product.price,
+      priceAfterDiscount: product.priceAfterDiscount,
+      quantity: product.quantity,
+      category: product.category,
+      occasion: product.occasion,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+      v: product.v,
+      discount: product.discount,
+      sold: product.sold,
+      rateAvg: product.rateAvg,
+      rateCount: product.rateCount,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var lang = AppLocalizations.of(context);
@@ -41,121 +63,78 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         if (state is HomeSuccessStates) {
-          return Padding(
-            padding: REdgeInsets.only(top: 40.0),
-            child: Scaffold(
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Column(
-                    children: [
-                      const AppBarSearch(),
-                      const Location(),
-                      TitleOfGroup(
-                        nameOfGroup: lang!.categories,
-                        routesNamed: Routes.categories,
+          return Scaffold(
+            backgroundColor: ColorManager.white,
+            body: Padding(
+              padding: REdgeInsets.only(top: 40.0, left: 25.w, right: 25.w),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const AppBarSearch(),
+                    const Location(),
+                    TitleOfGroup(
+                      nameOfGroup: lang!.categories,
+                      routesNamed: Routes.categories,
+                    ),
+                    SizedBox(
+                      height: 100.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.categories.length,
+                        itemBuilder: (context, index) {
+                          return CategoriesItem(
+                            category: state.categories[index],
+                          );
+                        },
                       ),
-                      SizedBox(
-                        height: 100.h,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return CategoriesItem(
-                              category: state.categories[index],
-                            );
-                          },
-                          itemCount: state.categories.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
+                    ),
+                    TitleOfGroup(
+                      nameOfGroup: lang.bestSeller,
+                      routesNamed: Routes.bestSellerScreen,
+                    ),
+                    SizedBox(
+                      height: 195.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.bestSeller.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              Routes.productDetails,
+                              arguments: productToEntity(state.bestSeller[index]),
+                            ),
+                            child: BestSellerItem(
+                              bestSeller: state.bestSeller[index],
+                            ),
+                          );
+                        },
                       ),
-                      TitleOfGroup(
-                        nameOfGroup: lang.bestSeller,
-                        routesNamed: "",
+                    ),
+                    TitleOfGroup(
+                      nameOfGroup: lang.occasions,
+                      routesNamed: Routes.occasions,
+                    ),
+                    SizedBox(
+                      height: 195.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.occasions.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              Routes.productDetails,
+                              arguments: productToEntity(state.occasions[index]),
+                            ),
+                            child: OccasionItem(
+                              occasions: state.occasions[index],
+                            ),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        height: 195.h,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap:
-                                  () => Navigator.pushNamed(
-                                    context,
-                                    Routes.productDetails,
-                                    arguments:ProductEntity(
-                                      id: state.bestSeller[index].id,
-                                      title: state.bestSeller[index].title,
-                                      slug: state.bestSeller[index].slug,
-                                      description: state.bestSeller[index].description,
-                                      imgCover: state.bestSeller[index].imgCover,
-                                      images: state.bestSeller[index].images,
-                                      price: state.bestSeller[index].price,
-                                      priceAfterDiscount: state.bestSeller[index].priceAfterDiscount,
-                                      quantity: state.bestSeller[index].quantity,
-                                      category: state.bestSeller[index].category,
-                                      occasion: state.bestSeller[index].occasion,
-                                      createdAt: state.bestSeller[index].createdAt,
-                                      updatedAt: state.bestSeller[index].updatedAt,
-                                      v: state.bestSeller[index].v,
-                                      discount: state.bestSeller[index].discount,
-                                      sold: state.bestSeller[index].sold,
-                                      rateAvg: state.bestSeller[index].rateAvg,
-                                      rateCount: state.bestSeller[index].rateCount,
-
-                                    ),
-                                  ),
-                              child: BestSellerItem(
-                                bestSeller: state.bestSeller[index],
-                              ),
-                            );
-                          },
-                          itemCount: state.bestSeller.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      ),
-                      TitleOfGroup(
-                        nameOfGroup: lang.occasions,
-                        routesNamed: Routes.occasions,
-                      ),
-                      SizedBox(
-                        height: 195.h,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap:
-                                  () => Navigator.pushNamed(
-                                context,
-                                Routes.productDetails,
-                                arguments:ProductEntity(
-                                  id: state.bestSeller[index].id,
-                                  title: state.bestSeller[index].title,
-                                  slug: state.bestSeller[index].slug,
-                                  description: state.bestSeller[index].description,
-                                  imgCover: state.bestSeller[index].imgCover,
-                                  images: state.bestSeller[index].images,
-                                  price: state.bestSeller[index].price,
-                                  priceAfterDiscount: state.bestSeller[index].priceAfterDiscount,
-                                  quantity: state.bestSeller[index].quantity,
-                                  category: state.bestSeller[index].category,
-                                  occasion: state.bestSeller[index].occasion,
-                                  createdAt: state.bestSeller[index].createdAt,
-                                  updatedAt: state.bestSeller[index].updatedAt,
-                                  v: state.bestSeller[index].v,
-                                  discount: state.bestSeller[index].discount,
-                                  sold: state.bestSeller[index].sold,
-                                  rateAvg: state.bestSeller[index].rateAvg,
-                                  rateCount: state.bestSeller[index].rateCount,
-
-                                ),
-                              ),
-                              child: OccasionItem(
-                              occasions: state.occasions[index],),
-                                );
-                          },
-                          itemCount: state.occasions.length,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -167,47 +146,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-//
-// BlocProvider(
-// create: (context) => HomeTabCubit(),
-// child: Padding(
-// padding:  REdgeInsets.only(top: 40.0),
-// child: Scaffold(
-// body: SingleChildScrollView(
-// child: Padding(
-// padding: const EdgeInsets.symmetric(horizontal: 25.0),
-// child: Column(
-// children: [
-// AppBarSearch(),
-// Location(),
-// TitleOfGroup(nameOfGroup: "Categories"),
-// SizedBox(
-// height: 100.h,
-// child: ListView.builder(itemBuilder: (context, index) {
-// return CategoriesItem();
-// //BestSellerItem();
-// //CategoriesItem();
-// },itemCount: 20,scrollDirection: Axis.horizontal,),
-// ),
-// TitleOfGroup(nameOfGroup: "Best seller"),
-// SizedBox(
-// height: 195.h,
-// child: ListView.builder(itemBuilder: (context, index) {
-// return BestSellerItem();
-// },itemCount: 20,scrollDirection: Axis.horizontal,),
-// ),
-// TitleOfGroup(nameOfGroup: "Occasion"),
-// SizedBox(
-// height: 195.h,
-// child: ListView.builder(itemBuilder: (context, index) {
-// return OccasionItem();
-// },itemCount: 20,scrollDirection: Axis.horizontal,),
-// ),
-// ],
-// ),
-// ),
-// ),
-// ),
-// ),
-// );

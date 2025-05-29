@@ -10,7 +10,7 @@ class Routes {
   static const String addAddress = "/addAddress";
   static const String selectLocation = "/selectLocation";
 
-  static const String cart = "/cart";
+  static const String cart = "/cart";static const String bestSellerScreen = "/BestSellerTestScreen";
   static const String changepassword = "/changepassword";
 
   static const String aboutUs = '/aboutUs';

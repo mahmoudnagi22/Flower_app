@@ -91,7 +91,7 @@ class CartItemsDto extends CartItemsEntity {
 }
 
 
-class Product extends ProductEntity {
+class Product extends CartProductEntity {
   Product({
     super.rateAvg,
     super.rateCount,

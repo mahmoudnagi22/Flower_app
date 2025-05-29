@@ -14,7 +14,7 @@ class CartsImpl implements CartsContract {
   CartsImpl({required this.apiManager});
 
   @override
-  Future<ApiResult<List<ProductEntity>>> updateQuantity(
+  Future<ApiResult<List<CartProductEntity>>> updateQuantity(
     String cartId,
     int quantity,
   ) async {
@@ -42,7 +42,7 @@ class CartsImpl implements CartsContract {
   }
 
   @override
-  Future<ApiResult<List<ProductEntity>>> deleteCart(String cartId) async{
+  Future<ApiResult<List<CartProductEntity>>> deleteCart(String cartId) async{
     try {
       var response = await apiManager.deleteCart(cartId);
       return response;

@@ -1,5 +1,6 @@
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/assets_manager.dart';
+import 'package:flower_app/core/resources/color_manager.dart';
 import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,103 +13,94 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = LocalizationCubit.get(context);
-    var lang = AppLocalizations.of(context);
-    print(UserModel.instance.token);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: SafeArea(
-        child: ListView(
-          children: [
-            const SizedBox(height: 20),
-            _buildHeader(context, lang!),
-            const SizedBox(height: 20),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.assignment_outlined),
-              label: lang.myOrders,
-              onTap: () {
-                // Navigate to orders
-              },
-            ),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.location_on_outlined),
-              label: lang.savedAddress,
-              onTap: () {
-                Navigator.pushNamed(context, Routes.savedAddress);
-              },
-            ),
-            const Divider(height: 32),
-            _buildSwitchTile(
-              context,
-              label: lang.notification,
-              value: true,
-              onChanged: (val) {},
-            ),
-            const Divider(height: 32),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.sort_by_alpha),
-              label: lang.lang,
-              trailing: Text(
-                cubit.state.language == "ar" ? "عربى" : "English",
-                style: const TextStyle(color: Colors.pink),
-              ),
-              onTap: () {
-                showLanguageBottomSheet(
-                  context,
-                  cubit,
-                  Text(
-                    cubit.state.language == "ar"
-                        ? "تغيير اللغة"
-                        : "Change Language",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pink,
-                    ),
-                  ),
-                );
-              },
-            ),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.info_outline),
-              label: lang.aboutUs,
-              onTap: () {
-                Navigator.pushNamed(context, Routes.aboutUs);
-              },
-            ),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.description_outlined),
-              label: lang.termsAndConditions,
-              onTap: () {
-                Navigator.pushNamed(context, Routes.termsConditions);
-              },
-            ),
-            const Divider(height: 32),
-            _buildClickableTile(
-              context,
-              icon: const Icon(Icons.logout),
-              label: lang.logout,
-              onTap: () {
-                showLogoutDialog(context, () async {
-                  const storage = FlutterSecureStorage();
-                 await storage.delete(key: 'user_token');
-                 UserModel.instance.token = null;
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.loginRoute,
-                    (route) => false,
-                  );
-                }, lang);
-              },
-            ),
+    final cubit = LocalizationCubit.get(context);
+    final lang = AppLocalizations.of(context)!;
 
-            const SizedBox(height: 30),
-          ],
+    print(UserModel.instance.token);
+
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body:  Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              const SizedBox(height: 20),
+              _buildHeader(context, lang),
+              const SizedBox(height: 20),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.assignment_outlined),
+                label: lang.myOrders,
+                onTap: () {
+                  // TODO: Navigate to orders screen
+                },
+              ),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.location_on_outlined),
+                label: lang.savedAddress,
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.savedAddress);
+                },
+              ),
+              const Divider(height: 32),
+              _buildSwitchTile(
+                context,
+                label: lang.notification,
+                value: true,
+                onChanged: (val) {
+                  // TODO: Handle notification toggle
+                },
+              ),
+              const Divider(height: 32),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.sort_by_alpha),
+                label: lang.lang,
+                trailing: Text(
+                  cubit.state.language == "ar" ? "عربى" : "English",
+                  style: const TextStyle(color: Colors.pink),
+                ),
+                onTap: () => showLanguageBottomSheet(context, cubit, lang),
+              ),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.info_outline),
+                label: lang.aboutUs,
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.aboutUs);
+                },
+              ),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.description_outlined),
+                label: lang.termsAndConditions,
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.termsConditions);
+                },
+              ),
+              const Divider(height: 32),
+              _buildClickableTile(
+                context,
+                icon: const Icon(Icons.logout),
+                label: lang.logout,
+                onTap: () {
+                  showLogoutDialog(context, () async {
+                    const storage = FlutterSecureStorage();
+                    await storage.delete(key: 'user_token');
+                    UserModel.instance.token = null;
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Routes.loginRoute,
+                          (route) => false,
+                    );
+                  }, lang);
+                },
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
@@ -124,11 +116,16 @@ class Profile extends StatelessWidget {
             Image.asset(ImageAssets.flowery),
             const Spacer(),
             IconButton(
-              onPressed: () {},
-              icon: Badge.count(count: 3, child: Icon(Icons.notifications)),
+              onPressed: () {
+                // TODO: Handle notifications tap
+              },
+              icon: Badge.count(
+                count: 3,
+                child: const Icon(Icons.notifications),
+              ),
             ),
           ],
-        ), // Replace with your asset
+        ),
         const SizedBox(height: 10),
         const CircleAvatar(
           radius: 40,
@@ -140,7 +137,7 @@ class Profile extends StatelessWidget {
           children: [
             Text(
               lang.editProfile,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             GestureDetector(
               onTap: () {
@@ -151,20 +148,20 @@ class Profile extends StatelessWidget {
           ],
         ),
         Text(
-          UserModel.instance.email??"Guest",
-          style: TextStyle(color: Colors.grey, fontSize: 16),
+          UserModel.instance.email ?? "Guest",
+          style: const TextStyle(color: Colors.grey, fontSize: 16),
         ),
       ],
     );
   }
 
   Widget _buildClickableTile(
-    BuildContext context, {
-    required Widget icon,
-    required String label,
-    Widget? trailing,
-    required VoidCallback onTap,
-  }) {
+      BuildContext context, {
+        required Widget icon,
+        required String label,
+        Widget? trailing,
+        required VoidCallback onTap,
+      }) {
     return ListTile(
       leading: icon,
       title: Text(label),
@@ -174,11 +171,11 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildSwitchTile(
-    BuildContext context, {
-    required String label,
-    required bool value,
-    required Function(bool) onChanged,
-  }) {
+      BuildContext context, {
+        required String label,
+        required bool value,
+        required Function(bool) onChanged,
+      }) {
     return ListTile(
       title: Text(label),
       leading: Switch(
@@ -192,7 +189,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  void showLanguageBottomSheet(BuildContext context, cubit, Widget title) {
+  void showLanguageBottomSheet(BuildContext context, LocalizationCubit cubit, AppLocalizations lang) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -204,7 +201,14 @@ class Profile extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(children: [title]),
+              Text(
+                cubit.state.language == "ar" ? "تغيير اللغة" : "Change Language",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.pink,
+                ),
+              ),
               const SizedBox(height: 16),
               _buildLanguageOption(
                 context,
@@ -236,12 +240,12 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildLanguageOption(
-    BuildContext context, {
-    required String label,
-    required String value,
-    required String groupValue,
-    required Function(String) onChanged,
-  }) {
+      BuildContext context, {
+        required String label,
+        required String value,
+        required String groupValue,
+        required Function(String) onChanged,
+      }) {
     final bool isSelected = value == groupValue;
     return GestureDetector(
       onTap: () => onChanged(value),
@@ -270,10 +274,10 @@ class Profile extends StatelessWidget {
   }
 
   void showLogoutDialog(
-    BuildContext context,
-    VoidCallback onConfirmLogout,
-    AppLocalizations lang,
-  ) {
+      BuildContext context,
+      VoidCallback onConfirmLogout,
+      AppLocalizations lang,
+      ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -284,7 +288,7 @@ class Profile extends StatelessWidget {
           title: Center(
             child: Text(
               lang.logout,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
           ),
           content: Text(lang.confirmLogout, textAlign: TextAlign.center),
@@ -296,13 +300,10 @@ class Profile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               onPressed: () => Navigator.pop(context),
-              child: Text(lang.cancel, style: TextStyle(color: Colors.black)),
+              child: Text(lang.cancel, style: const TextStyle(color: Colors.black)),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -310,16 +311,13 @@ class Profile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               onPressed: () {
-                Navigator.pop(context); // Close dialog
-                onConfirmLogout(); // Call your logout function
+                Navigator.pop(context);
+                onConfirmLogout();
               },
-              child: Text(lang.logout, style: TextStyle(color: Colors.white)),
+              child: Text(lang.logout, style: const TextStyle(color: Colors.white)),
             ),
           ],
         );

@@ -32,7 +32,9 @@ class _SignupScreenState extends State<SignupScreen> {
           final viewModel = context.read<SignupCubit>();
 
           return Scaffold(
+            backgroundColor: ColorManager.white,
             appBar: AppBar(
+              backgroundColor: ColorManager.white,
               title: Text(lang!.register),
               leading: const SizedBox(),
             ),

@@ -1,4 +1,5 @@
 import 'package:flower_app/core/models/user_model.dart';
+import 'package:flower_app/features/app_sections/best_seller/presentation/pages/best_seller_Screen.dart';
 import 'package:flower_app/features/auth/forgot_password/presentation/screens/reset_password_screen.dart';
 import 'package:flower_app/features/auth/forgot_password/presentation/screens/send_email_screen.dart';
 import 'package:flower_app/features/auth/forgot_password/presentation/screens/verification_code_screen.dart';
@@ -96,6 +97,8 @@ class RouteGenerator {
 
       case Routes.occasions:
         return MaterialPageRoute(builder: (_) => OccasionScreen());
+case Routes.bestSellerScreen:
+        return MaterialPageRoute(builder: (_) => BestSellerScreen());
 
       case Routes.categories:
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());

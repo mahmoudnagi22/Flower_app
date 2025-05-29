@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flower_app/core/di/di.dart';
 import 'package:flower_app/core/models/user_model.dart';
 import 'package:flower_app/core/resources/color_manager.dart';
+import 'package:flower_app/core/routes_manager/routes.dart';
 import 'package:flower_app/core/widget/validators.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_button.dart';
 import 'package:flower_app/features/auth/signUp/presentation/widgets/custom_form_field.dart';
@@ -33,7 +34,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final formKey = GlobalKey<FormState>();
 
   bool isObscurePassword = true;
-  bool isObscureConfirmPassword = true;
   late String gender;
 
   @override
@@ -60,7 +60,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           final viewModel = context.read<EditProfileCubit>();
 
           return Scaffold(
+            backgroundColor: ColorManager.white,
             appBar: AppBar(
+              backgroundColor: ColorManager.white,
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -131,19 +133,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               CircleAvatar(
                                 radius: 40.r,
                                 backgroundImage:
-                                    viewModel.imageFile != null
-                                        ? FileImage(viewModel.imageFile!)
-                                        : (widget.userModel.profileImage != null
-                                                ? NetworkImage(
-                                                  widget
-                                                          .userModel
-                                                          .profileImage ??
-                                                      '',
-                                                )
-                                                : const AssetImage(
-                                                  'assets/images/user.png',
-                                                ))
-                                            as ImageProvider,
+                                viewModel.imageFile != null
+                                    ? FileImage(viewModel.imageFile!)
+                                    : (widget.userModel.profileImage != null
+                                    ? NetworkImage(
+                                    widget.userModel.profileImage!)
+                                    : const AssetImage(
+                                  'assets/images/user.png',
+                                )) as ImageProvider,
                               ),
                               InkWell(
                                 onTap: () async {
@@ -166,9 +163,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   controller: firstNameController,
                                   labelText: "First Name",
                                   keyboardType: TextInputType.text,
-                                  validator:
-                                      (value) =>
-                                          AppValidators.validateFullName(value), hintText: '',
+                                  validator: (value) =>
+                                      AppValidators.validateFullName(value),
+                                  hintText: '',
                                 ),
                               ),
                               10.horizontalSpace,
@@ -178,12 +175,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   controller: lastNameController,
                                   labelText: "Last Name",
                                   keyboardType: TextInputType.text,
-                                  validator:
-                                      (value) =>
-                                          AppValidators.validateFullName(value), hintText: '',
+                                  validator: (value) =>
+                                      AppValidators.validateFullName(value),
+                                  hintText: '',
                                 ),
                               ),
-                              10.verticalSpace,
                             ],
                           ),
                           15.verticalSpace,
@@ -192,8 +188,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             controller: emailController,
                             labelText: "Email",
                             keyboardType: TextInputType.emailAddress,
-                            validator:
-                                (value) => AppValidators.validateEmail(value), hintText: '',
+                            validator: (value) => AppValidators.validateEmail(value),
+                            hintText: '',
                           ),
                           15.verticalSpace,
                           CustomTextFormField(
@@ -201,27 +197,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             controller: phoneController,
                             labelText: "Phone number",
                             keyboardType: TextInputType.phone,
-                            validator:
-                                (value) =>
-                                    AppValidators.validatePhoneNumber(value), hintText: '',
+                            validator: (value) =>
+                                AppValidators.validatePhoneNumber(value),
+                            hintText: '',
                           ),
                           15.verticalSpace,
                           CustomTextFormField(
-                            readOnly: false,
+                            readOnly: true,
                             controller: passwordController,
                             labelText: "Password",
                             isObscure: isObscurePassword,
                             keyboardType: TextInputType.visiblePassword,
                             suffix: InkWell(
                               onTap: () {
-                                viewModel.changePassword(
-                                  token: UserModel.instance.token!,
-                                  currentPassword: "*********",
-                                  newPassword: passwordController.text.trim(),
-                                );
+                                Navigator.pushNamed(
+                                    context, Routes.changepassword);
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.only(right: 8),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
                                 child: Text(
                                   'Change',
                                   style: TextStyle(
@@ -231,9 +224,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ),
                             ),
-                            validator:
-                                (value) =>
-                                    AppValidators.validatePassword(value), hintText: '',
+                            validator: (value) =>
+                                AppValidators.validatePassword(value),
+                            hintText: '',
                           ),
                           15.verticalSpace,
                           IntrinsicWidth(
@@ -276,21 +269,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ],
                             ),
                           ),
-
-                          // 15.verticalSpace,
+                          15.verticalSpace,
                           CustomButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                final updatedUser =
-                                    UserModel.instance
-                                      ..firstName =
-                                          firstNameController.text.trim()
-                                      ..lastName =
-                                          lastNameController.text.trim()
-                                      ..email = emailController.text.trim()
-                                      ..phoneNumber =
-                                          phoneController.text.trim()
-                                      ..gender = gender;
+                                final updatedUser = UserModel.instance
+                                  ..firstName = firstNameController.text.trim()
+                                  ..lastName = lastNameController.text.trim()
+                                  ..email = emailController.text.trim()
+                                  ..phoneNumber = phoneController.text.trim()
+                                  ..gender = gender;
                                 viewModel.updateProfile(
                                   updatedUser,
                                   UserModel.instance.token!,

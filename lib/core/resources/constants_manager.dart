@@ -11,6 +11,7 @@ class AppConstants {
   static const String localKey = 'lang';
   static const String getUserData = 'auth/profile-data';
   static const String changePasswordEndpoint = 'auth/change-password';
+  static const String bestSeller = 'best-seller';
   static const String cart = 'cart';
   static const String addToCart = 'cart';
   static const String address = 'addresses';
